@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Check, ShieldCheck } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
-import { ACTIVITY_INTERESTS, ATTENDEE_TYPES, CATEGORIES, OCCUPATIONS, PROVINCES } from '../../data/event'
+import { ACTIVITY_INTERESTS, ATTENDEE_TYPES, CATEGORIES, OCCUPATIONS, ORG_OCCUPATIONS, PROVINCES } from '../../data/event'
 import { useDemoStore } from '../../store/demoStore'
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
@@ -15,6 +15,7 @@ type FormState = {
   email: string
   age: string
   occupation: string
+  organization: string
   province: string
   type: AttendeeType
   interests: string[]
@@ -23,9 +24,9 @@ type FormState = {
   consent: boolean
 }
 
-const EMPTY: FormState = { name: '', phone: '', email: '', age: '', occupation: '', province: '', type: 'visitor', interests: [], activities: [], wantsMatching: false, consent: false }
+const EMPTY: FormState = { name: '', phone: '', email: '', age: '', occupation: '', organization: '', province: '', type: 'visitor', interests: [], activities: [], wantsMatching: false, consent: false }
 
-const SAMPLE: FormState = { name: 'สมชาย ใจดี', phone: '081-234-5678', email: 'somchai@mail.example', age: '34', occupation: 'owner', province: 'bkk', type: 'visitor', interests: ['food', 'health'], activities: ['shopping', 'matching'], wantsMatching: true, consent: true }
+const SAMPLE: FormState = { name: 'สมชาย ใจดี', phone: '081-234-5678', email: 'somchai@mail.example', age: '34', occupation: 'owner', organization: 'บริษัท ใจดีฟู้ดส์ จำกัด', province: 'bkk', type: 'visitor', interests: ['food', 'health'], activities: ['shopping', 'matching'], wantsMatching: true, consent: true }
 
 export default function RegisterPage() {
   const { tr, L } = useI18n()
@@ -36,6 +37,9 @@ export default function RegisterPage() {
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({})
 
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) => setF((s) => ({ ...s, [k]: v }))
+  // ช่องบริษัท/หน่วยงาน แสดงเฉพาะพนักงานบริษัท เจ้าของกิจการ และข้าราชการ/รัฐวิสาหกิจ
+  const org = ORG_OCCUPATIONS[f.occupation]
+
   const toggle = (k: 'interests' | 'activities', v: string) =>
     setF((s) => ({ ...s, [k]: s[k].includes(v) ? s[k].filter((x) => x !== v) : [...s[k], v] }))
 
@@ -44,6 +48,7 @@ export default function RegisterPage() {
     if (f.name.trim().length < 2) e.name = tr('กรุณากรอกชื่อ-นามสกุล', 'Please enter your full name')
     if (!/^0\d{1,2}-?\d{3}-?\d{4}$/.test(f.phone.trim())) e.phone = tr('รูปแบบเบอร์โทรไม่ถูกต้อง เช่น 081-234-5678', 'Invalid phone, e.g. 081-234-5678')
     if (!/^\S+@\S+\.\S+$/.test(f.email.trim())) e.email = tr('รูปแบบอีเมลไม่ถูกต้อง', 'Invalid email address')
+    if (org && f.organization.trim().length < 2) e.organization = tr(`กรุณากรอก${org.label.th}`, `Please enter your ${org.label.en.toLowerCase()}`)
     if (!f.province) e.province = tr('กรุณาเลือกจังหวัด', 'Please select a province')
     setErrors(e)
     return Object.keys(e).length === 0
@@ -60,6 +65,7 @@ export default function RegisterPage() {
       email: f.email.trim(),
       age: f.age ? Number(f.age) : undefined,
       occupation: f.occupation || undefined,
+      organization: org ? f.organization.trim() : undefined,
       province: f.province,
       type: f.type,
       interests: f.interests,
@@ -113,11 +119,18 @@ export default function RegisterPage() {
               <Input value={f.age} onChange={(e) => set('age', e.target.value.replace(/\D/g, '').slice(0, 2))} inputMode="numeric" placeholder="30" />
             </Field>
             <Field label={tr('อาชีพ', 'Occupation')}>
-              <Select value={f.occupation} onChange={(e) => set('occupation', e.target.value)}>
+              <Select value={f.occupation} onChange={(e) => { const v = e.target.value; setF((s) => ({ ...s, occupation: v, organization: ORG_OCCUPATIONS[v] ? s.organization : '' })); setErrors((er) => ({ ...er, organization: undefined })) }}>
                 <option value="">{tr('เลือกอาชีพ', 'Select occupation')}</option>
                 {Object.entries(OCCUPATIONS).map(([k, v]) => <option key={k} value={k}>{L(v)}</option>)}
               </Select>
             </Field>
+            {org && (
+              <div className="sm:col-span-2">
+                <Field label={L(org.label)} required error={errors.organization}>
+                  <Input value={f.organization} onChange={(e) => set('organization', e.target.value)} autoComplete="organization" placeholder={L(org.placeholder)} />
+                </Field>
+              </div>
+            )}
             <Field label={tr('จังหวัด', 'Province')} required error={errors.province}>
               <Select value={f.province} onChange={(e) => set('province', e.target.value)}>
                 <option value="">{tr('เลือกจังหวัด', 'Select province')}</option>

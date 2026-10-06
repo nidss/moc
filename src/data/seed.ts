@@ -19,6 +19,14 @@ const pick = <T,>(arr: readonly T[]) => arr[Math.floor(rand() * arr.length)]
 const FIRST = ['สมชาย', 'สมศรี', 'วิชัย', 'นภา', 'อรุณ', 'ปิยะ', 'กมล', 'ธนพร', 'จิราพร', 'ณัฐวุฒิ', 'พิมพ์ชนก', 'ศุภชัย', 'อัญชลี', 'กิตติ', 'มาลี', 'ประเสริฐ', 'วรรณา', 'ชยพล', 'ปวีณา', 'ธีรพงษ์', 'Emily', 'Kenji', 'Linh', 'Daniel']
 const LAST = ['ใจดี', 'สุขสวัสดิ์', 'ทองคำ', 'ศรีสุข', 'วงศ์ไทย', 'แสงทอง', 'บุญมา', 'มั่นคง', 'รัตนพันธ์', 'พรหมมา', 'Tanaka', 'Nguyen', 'Smith']
 
+// บริษัท / หน่วยงานสมมติสำหรับข้อมูลตัวอย่าง
+const ORGS: Record<string, string[]> = {
+  employee: ['บริษัท ไทยเทรด จำกัด', 'บริษัท สยามรีเทล จำกัด', 'บริษัท บางกอกโลจิสติกส์ จำกัด', 'Tokyo Fine Foods Import', 'บริษัท ดิจิทัลไทย จำกัด'],
+  owner: ['ร้านใจดีฟู้ดส์', 'บริษัท ล้านนาคราฟท์ จำกัด', 'ห้างหุ้นส่วน ศรีสุขการค้า', 'วิสาหกิจชุมชนบ้านนา', 'บริษัท มั่นคงเฮิร์บ จำกัด'],
+  gov: ['กรมพัฒนาธุรกิจการค้า', 'กรมส่งเสริมการค้าระหว่างประเทศ', 'สำนักงานพาณิชย์จังหวัดเชียงใหม่', 'ธนาคารออมสิน', 'สสว.'],
+}
+const OCC_IDS = ['student', 'employee', 'employee', 'owner', 'owner', 'gov', 'freelance', 'other']
+
 const TYPE_WEIGHTS: [AttendeeType, number][] = [['visitor', 0.74], ['sme', 0.13], ['buyer', 0.05], ['speaker', 0.02], ['media', 0.06]]
 function pickType(): AttendeeType {
   let r = rand()
@@ -46,6 +54,7 @@ export const SEED_ATTENDEES: Attendee[] = Array.from({ length: 240 }, (_, i) => 
     : undefined
   const first = pick(FIRST)
   const last = pick(LAST)
+  const occupation = type === 'buyer' || type === 'sme' ? pick(['employee', 'owner']) : pick(OCC_IDS)
   return {
     id: makeAttendeeId(type, 8000 - i * 7),
     name: `${first} ${last}`,
@@ -53,6 +62,8 @@ export const SEED_ATTENDEES: Attendee[] = Array.from({ length: 240 }, (_, i) => 
     phone: `08${Math.floor(rand() * 10)}-${String(Math.floor(rand() * 1000)).padStart(3, '0')}-${String(Math.floor(rand() * 10000)).padStart(4, '0')}`,
     email: `user${8000 - i * 7}@mail.example`,
     age: 18 + Math.floor(rand() * 45),
+    occupation,
+    organization: ORGS[occupation] ? pick(ORGS[occupation]) : undefined,
     province: pick(PROVINCE_IDS),
     registeredAt,
     checkedInAt,

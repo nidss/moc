@@ -67,6 +67,8 @@ export type Attendee = {
   email: string
   age?: number
   occupation?: string
+  /** บริษัท / หน่วยงาน (กรอกเฉพาะอาชีพที่สังกัดองค์กร) */
+  organization?: string
   province: string
   registeredAt: string
   checkedInAt?: string

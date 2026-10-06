@@ -57,6 +57,7 @@ export default function RegisterSuccessPage() {
               </div>
               <div className="mt-4 text-center">
                 <div className="text-lg font-bold">{attendee.name}</div>
+                {attendee.organization && <div className="text-sm text-white/70">{attendee.organization}</div>}
                 <div className="font-mono text-sm tracking-wider text-accent">{attendee.id}</div>
               </div>
               <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-white/60">

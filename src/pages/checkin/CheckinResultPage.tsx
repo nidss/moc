@@ -51,6 +51,7 @@ export default function CheckinResultPage() {
           <div className="sm:col-span-2">
             <div className="text-xs text-muted">{tr('ชื่อ', 'Name')}</div>
             <div className="text-2xl font-bold">{attendee.name}</div>
+            {attendee.organization && <div className="mt-0.5 text-base text-muted">{attendee.organization}</div>}
           </div>
           <div>
             <div className="text-xs text-muted">Registration ID</div>

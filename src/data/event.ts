@@ -103,6 +103,13 @@ export const OCCUPATIONS: Record<string, LText> = {
   other: { th: 'อื่น ๆ', en: 'Other' },
 }
 
+/** อาชีพที่ต้องระบุบริษัท / หน่วยงาน พร้อมป้ายและตัวอย่างของแต่ละอาชีพ */
+export const ORG_OCCUPATIONS: Record<string, { label: LText; placeholder: LText }> = {
+  employee: { label: { th: 'ชื่อบริษัท', en: 'Company name' }, placeholder: { th: 'เช่น บริษัท ไทยเทรด จำกัด', en: 'e.g. Thai Trade Co., Ltd.' } },
+  owner: { label: { th: 'ชื่อกิจการ / บริษัท', en: 'Business / company name' }, placeholder: { th: 'เช่น ร้านใจดีฟู้ดส์ หรือ บริษัท ใจดี จำกัด', en: 'e.g. Jaidee Foods Co., Ltd.' } },
+  gov: { label: { th: 'หน่วยงาน', en: 'Agency / organisation' }, placeholder: { th: 'เช่น กรมพัฒนาธุรกิจการค้า', en: 'e.g. Department of Business Development' } },
+}
+
 export const ACTIVITY_INTERESTS: Record<string, LText> = {
   shopping: { th: 'ช้อปสินค้า SME', en: 'Shopping SME products' },
   workshop: { th: 'Workshop / Up Skill', en: 'Workshops / Up Skill' },

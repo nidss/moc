@@ -30,13 +30,14 @@ export default function AttendeesPage() {
     return all
       .filter((a) => !type || a.type === type)
       .filter((a) => !status || (status === 'in' ? !!a.checkedInAt : !a.checkedInAt))
-      .filter((a) => !n || [a.name, a.id, a.phone, a.email].some((v) => v.toLowerCase().includes(n)))
+      .filter((a) => !n || [a.name, a.id, a.phone, a.email, a.organization ?? ''].some((v) => v.toLowerCase().includes(n)))
   }, [all, q, type, status])
 
   const columns: Column<Attendee>[] = [
     { key: 'name', header: tr('ชื่อ', 'Name'), render: (a) => (
       <div>
         <div className="font-semibold">{a.name}</div>
+        {a.organization && <div className="text-xs text-fg/80">{a.organization}</div>}
         <div className="font-mono text-xs text-muted">{a.id}</div>
       </div>
     ) },
@@ -63,7 +64,7 @@ export default function AttendeesPage() {
       <div className="mb-4 grid gap-2 sm:grid-cols-[1fr_200px_200px]">
         <div className="relative">
           <Search size={18} className="absolute top-1/2 left-3.5 -translate-y-1/2 text-muted" />
-          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder={tr('ค้นหาชื่อ เบอร์โทร อีเมล หรือ ID', 'Search name, phone, email or ID')} className="pl-10" aria-label="Search" />
+          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder={tr('ค้นหาชื่อ บริษัท/หน่วยงาน เบอร์โทร อีเมล หรือ ID', 'Search name, company, phone, email or ID')} className="pl-10" aria-label="Search" />
         </div>
         <Select value={type} onChange={(e) => setType(e.target.value as AttendeeType | '')} aria-label="Type">
           <option value="">{tr('ทุกประเภท', 'All types')}</option>
@@ -89,6 +90,7 @@ export default function AttendeesPage() {
               [tr('อีเมล', 'Email'), view.email],
               [tr('อายุ', 'Age'), view.age ?? '-'],
               [tr('อาชีพ', 'Occupation'), view.occupation ? L(OCCUPATIONS[view.occupation]) : '-'],
+              [tr('บริษัท / หน่วยงาน', 'Company / organisation'), view.organization ?? '-'],
               [tr('จังหวัด', 'Province'), PROVINCES[view.province] ? L(PROVINCES[view.province]) : '-'],
               [tr('ลงทะเบียน', 'Registered'), fmtDate(view.registeredAt, { dateStyle: 'medium', timeStyle: 'short' })],
               ['Check-in', <CheckinBadge at={view.checkedInAt} />],

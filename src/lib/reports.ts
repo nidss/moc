@@ -11,10 +11,11 @@ const dt = (iso?: string) => (iso ? new Date(iso).toLocaleString('en-GB', { date
 export function exportAttendees(rows: Attendee[], lang: Lang, filename = 'attendee-report') {
   return exportExcel(
     filename,
-    ['Registration ID', 'Name', 'Type', 'Phone', 'Email', 'Age', 'Occupation', 'Province', 'Registered', 'Checked-in'],
+    ['Registration ID', 'Name', 'Type', 'Phone', 'Email', 'Age', 'Occupation', 'Company / Organisation', 'Province', 'Registered', 'Checked-in'],
     rows.map((a) => [
       a.id, a.name, ATTENDEE_TYPES[a.type][lang], a.phone, a.email, a.age ?? null,
       a.occupation ? OCCUPATIONS[a.occupation]?.[lang] ?? a.occupation : '',
+      a.organization ?? '',
       PROVINCES[a.province]?.[lang] ?? '', dt(a.registeredAt), dt(a.checkedInAt),
     ]),
     'Attendees',
