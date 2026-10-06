@@ -7,6 +7,7 @@ export type AttendeeType = 'visitor' | 'sme' | 'buyer' | 'speaker' | 'media'
 
 export type Product = {
   id: string
+  image: string
   name: LText
   price: number
   unit: LText
