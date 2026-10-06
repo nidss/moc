@@ -1,7 +1,7 @@
 import { Apple, Cpu, Flower2, Gem, Home, Leaf, Shirt, Store, type LucideIcon } from 'lucide-react'
 import type { CategoryId, Exhibitor, Buyer } from '../data/types'
-import logoColor from '../assets/brand/moc-expo-2026.png'
-import logoLight from '../assets/brand/moc-expo-2026-light.png'
+import logoColor from '../assets/brand/moc-expo-2026.webp'
+import logoLight from '../assets/brand/moc-expo-2026-light.webp'
 
 /**
  * โลโก้งาน MOC Expo 2026 (ไฟล์ทางการจากผู้จัด)
