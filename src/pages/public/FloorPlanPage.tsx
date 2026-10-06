@@ -20,21 +20,22 @@ export default function FloorPlanPage() {
   const sessions = stageKey ? SCHEDULE.filter((s) => s.stage === stageKey && s.day === 1) : []
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+    <div className="mx-auto max-w-[1600px] px-4 py-10 sm:px-6">
       <PageHeader eyebrow={tr('ผังงาน', 'Floor Plan')} title={tr('ผังพื้นที่จัดงาน', 'Event Floor Plan')}
         subtitle={<span className="inline-flex items-center gap-1.5"><MousePointerClick size={16} /> {tr('คลิกที่โซนเพื่อดูรายละเอียดและผู้ออกบูธ', 'Click a zone to see details and exhibitors')}</span>} />
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-        <div>
+      <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_300px]">
+        <div className="min-w-0">
           <FloorPlanMap selected={zone.id} onSelect={(id) => setParams({ zone: id }, { replace: true })} />
           <div className="mt-3 flex flex-wrap gap-2">
             {ZONES.map((z) => (
-              <button key={z.id} onClick={() => setParams({ zone: z.id }, { replace: true })}
+              <button key={z.id} aria-pressed={z.id === zone.id} onClick={() => setParams({ zone: z.id }, { replace: true })}
                 className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${z.id === zone.id ? 'border-brand bg-brand-soft text-brand' : 'border-line bg-surface text-muted'}`}>
                 <span className="size-2.5 rounded-full" style={{ background: z.color }} /> {L(z.label)}
               </button>
             ))}
           </div>
+          <p className="mt-3 text-xs leading-relaxed text-muted">{tr('ผังแนวคิดสำหรับการสาธิต · ตำแหน่งบูธและทางเดินเป็นภาพจำลอง ไม่ใช่ผังทางการของสถานที่', 'Concept layout for the demo · Booths and aisles are illustrative, not the official venue plan.')}</p>
         </div>
 
         <Card className="h-fit overflow-hidden">

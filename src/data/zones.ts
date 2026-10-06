@@ -25,7 +25,8 @@ const pav = (id: PavilionId, x: number, y: number, w: number, h: number): Zone =
   pavilion: id,
 })
 
-// ผังฮอลล์ QSNCC Hall 7–8 (พื้นที่ไม่น้อยกว่า 10,000 ตร.ม.) หน่วยเป็นพิกัด SVG viewBox 1000 x 600
+// พิกัดเชิงแนวคิดสำหรับผังเดโม Hall 7–8 บนระนาบ 1000 x 600
+// FloorPlanMap ฉายพิกัดนี้เป็นมุมมอง 2.5D — ไม่ใช่ผังทางการของ QSNCC
 export const ZONES: Zone[] = [
   pav('hub', 20, 20, 470, 250),
   { id: 'upskill', kind: 'stage', label: { th: 'Zone 2 · MOC UP SKILL', en: 'Zone 2 · MOC UP SKILL' }, desc: { th: 'เวทีเสริมทักษะ องค์ความรู้ และสาระบันเทิง', en: 'Stage for skills, knowledge & edutainment' }, x: 505, y: 20, w: 235, h: 250, color: '#1d4ed8' },
