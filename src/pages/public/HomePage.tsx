@@ -9,6 +9,7 @@ import { Card, SectionTitle } from '../../components/ui/Card'
 import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { Logo } from '../../components/Brand'
+import heroBg from '../../assets/brand/hero-bg.webp'
 
 const SPEAKERS = [
   { name: 'Dr. Pimchanok S.', role: { th: 'ผู้เชี่ยวชาญการตลาดดิจิทัล', en: 'Digital marketing expert' } },
@@ -54,8 +55,9 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="hero-bg relative overflow-hidden text-white">
-        <div className="hero-net pointer-events-none absolute inset-0" />
+      <section className="relative overflow-hidden bg-navy bg-cover bg-right-bottom text-white" style={{ backgroundImage: `url(${heroBg})` }}>
+        {/* ไล่สีกรมท่าทับภาพพื้นหลัง ให้ข้อความอ่านง่าย (มือถือทึบกว่าเพราะข้อความทับเมือง/ลูกโลก) */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#001848]/75 via-[#001848]/55 to-[#001848]/35 lg:bg-gradient-to-r lg:from-[#001848]/55 lg:via-[#001848]/10 lg:to-transparent" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.25fr_1fr] lg:items-center">
           <div>
             <Logo tone="light" className="h-24 sm:h-32" />
@@ -73,7 +75,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-2 flex items-end justify-between rounded-2xl bg-white/10 p-5 ring-1 ring-white/15 backdrop-blur">
+            <div className="col-span-2 flex items-end justify-between rounded-2xl bg-[#001848]/55 p-5 ring-1 ring-white/20 backdrop-blur-md">
               <div>
                 <div className="text-sm text-white/70">{tr('นับถอยหลังสู่วันงาน', 'Countdown to opening')}</div>
                 <div className="mt-1 flex items-baseline gap-2">
@@ -89,7 +91,7 @@ export default function HomePage() {
               [fmtNumber(EVENT.targets.tasteBooths), tr('บูธอาหาร MOC TASTE', 'MOC TASTE food booths')],
               [`฿${EVENT.targets.economicValue / 1_000_000}M`, tr('เป้ามูลค่าเศรษฐกิจ', 'Economic value target')],
             ].map(([n, l]) => (
-              <div key={l} className="rounded-2xl bg-white/10 p-4 ring-1 ring-white/15">
+              <div key={l} className="rounded-2xl bg-[#001848]/55 p-4 ring-1 ring-white/20 backdrop-blur-md">
                 <div className="gold-text-gradient text-2xl font-extrabold">{n}</div>
                 <div className="text-sm text-white/80">{l}</div>
               </div>
