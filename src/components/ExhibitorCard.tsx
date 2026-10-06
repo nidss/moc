@@ -5,14 +5,14 @@ import { CATEGORIES, PAVILIONS, PROVINCES } from '../data/event'
 import type { Exhibitor } from '../data/types'
 import { Card } from './ui/Card'
 import { Badge } from './ui/Badge'
-import { OrgAvatar, ProductArt } from './Brand'
+import { OrgAvatar } from './Brand'
 
 export function ExhibitorCard({ ex }: { ex: Exhibitor }) {
   const { tr, L } = useI18n()
   return (
     <Card className="group flex flex-col overflow-hidden transition-shadow hover:shadow-lg">
-      <Link to={`/exhibitors/${ex.id}`} className="relative block">
-        <ProductArt category={ex.category} color={ex.color} className="h-28" />
+      <Link to={`/exhibitors/${ex.id}`} className="relative block overflow-hidden">
+        <img src={ex.banner} alt={L(ex.name)} loading="lazy" decoding="async" width={1200} height={400} className="h-36 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
         <span className="absolute top-3 left-3 rounded-full px-2 py-0.5 text-[11px] font-semibold text-white" style={{ background: PAVILIONS[ex.pavilion].color }}>
           {PAVILIONS[ex.pavilion].name}
         </span>
