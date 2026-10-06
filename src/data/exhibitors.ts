@@ -187,6 +187,7 @@ export const EXHIBITORS: Exhibitor[] = SEEDS.map((s, i) => {
     },
     products: products.map(([pth, pen, price, uth, uen], j) => ({
       id: `${id}-p${j + 1}`,
+      image: `${import.meta.env.BASE_URL}images/products/${id}-p${j + 1}.webp`,
       name: { th: pth, en: pen },
       price,
       unit: { th: uth, en: uen },

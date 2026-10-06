@@ -8,7 +8,7 @@ import { EXHIBITOR_BY_ID } from '../../data/exhibitors'
 import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { LinkButton } from '../../components/ui/Button'
-import { OrgAvatar, ProductArt } from '../../components/Brand'
+import { OrgAvatar } from '../../components/Brand'
 
 export default function ExhibitorDetailPage() {
   const { id = '' } = useParams()
@@ -65,19 +65,23 @@ export default function ExhibitorDetailPage() {
               <h2 className="mb-3 text-lg font-bold">e-Catalog · {tr('สินค้า', 'Products')} ({ex.products.length})</h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 {ex.products.map((p) => (
-                  <Card key={p.id} className="flex overflow-hidden">
-                    <ProductArt category={ex.category} color={ex.color} className="w-28 shrink-0" />
-                    <div className="flex flex-1 flex-col p-4">
-                      <div className="font-semibold">{L(p.name)}</div>
-                      <div className="text-xs text-muted">{L(p.unit)}</div>
-                      <div className="mt-1 text-xl font-extrabold text-brand">{fmtMoney(p.price)}</div>
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        {p.channels.map((c) => <Badge key={c} tone="accent"><ShoppingCart size={11} /> {c}</Badge>)}
-                      </div>
+                  <Card key={p.id} className="flex flex-col overflow-hidden">
+                    <div className="aspect-square overflow-hidden bg-surface-2">
+                      <img src={p.image} alt={L(p.name)} loading="lazy" decoding="async" width={640} height={640} className="h-full w-full object-cover" />
                     </div>
-                    <div className="hidden flex-col items-center justify-center gap-1 border-l border-line p-3 sm:flex">
-                      <QRCodeSVG value={`https://moc-expo.example/p/${p.id}`} size={64} bgColor="transparent" fgColor="currentColor" />
-                      <span className="text-[10px] text-muted">{tr('สแกนซื้อ', 'Scan to buy')}</span>
+                    <div className="flex flex-1 gap-3 p-4">
+                      <div className="min-w-0 flex-1">
+                        <div className="font-semibold">{L(p.name)}</div>
+                        <div className="text-xs text-muted">{L(p.unit)}</div>
+                        <div className="mt-1 text-xl font-extrabold text-brand">{fmtMoney(p.price)}</div>
+                        <div className="mt-2 flex flex-wrap gap-1">
+                          {p.channels.map((c) => <Badge key={c} tone="accent"><ShoppingCart size={11} /> {c}</Badge>)}
+                        </div>
+                      </div>
+                      <div className="flex shrink-0 flex-col items-center justify-center gap-1 border-l border-line pl-3">
+                        <QRCodeSVG value={`https://moc-expo.example/p/${p.id}`} size={64} bgColor="transparent" fgColor="currentColor" />
+                        <span className="text-[10px] text-muted">{tr('สแกนซื้อ', 'Scan to buy')}</span>
+                      </div>
                     </div>
                   </Card>
                 ))}
