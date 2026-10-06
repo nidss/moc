@@ -36,7 +36,7 @@ export default function MatchingLayout() {
               <NavLink key={t.to} to={t.to} end={t.end}
                 className={({ isActive }) => `flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-semibold ${isActive ? 'border-brand text-brand' : 'border-transparent text-muted hover:text-fg'}`}>
                 <t.icon size={16} /> {t.label}
-                {!!t.count && <span className="rounded-full bg-accent px-1.5 text-[11px] text-[#1a1200]">{t.count}</span>}
+                {!!t.count && <span className="rounded-full bg-accent px-1.5 text-[11px] text-on-accent">{t.count}</span>}
               </NavLink>
             ))}
           </nav>

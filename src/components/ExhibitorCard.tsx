@@ -30,6 +30,7 @@ export function ExhibitorCard({ ex }: { ex: Exhibitor }) {
         </div>
         <div className="mt-3 flex flex-wrap gap-1.5">
           <Badge tone="brand">{L(CATEGORIES[ex.category])}</Badge>
+          {ex.agency && <Badge tone="accent">{ex.agency}</Badge>}
           {ex.tags.includes('export-ready') && <Badge tone="info">Export-ready</Badge>}
           {ex.tags.includes('healthy') && <Badge tone="success">{tr('สุขภาพ', 'Healthy')}</Badge>}
         </div>

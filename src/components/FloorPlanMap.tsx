@@ -19,17 +19,17 @@ export function FloorPlanMap({ selected, onSelect, compact = false }: { selected
               role={onSelect ? 'button' : undefined} aria-label={L(z.label)} tabIndex={onSelect ? 0 : undefined}
               onKeyDown={onSelect ? (e) => (e.key === 'Enter' || e.key === ' ') && onSelect(z.id) : undefined}>
               <rect x={z.x} y={z.y} width={z.w} height={z.h} rx="12" fill={z.color} fillOpacity={isSel ? 0.95 : 0.85}
-                stroke={isSel ? '#f5a300' : 'transparent'} strokeWidth="5" />
+                stroke={isSel ? '#d9a640' : 'transparent'} strokeWidth="5" />
               {z.w < 200 ? (
                 // โซนแคบ: แยกคำขึ้นบรรทัดใหม่เพื่อไม่ให้ข้อความล้นกรอบ
                 <text x={z.x + 12} y={z.y + 26} fill="#fff" fontSize={compact ? 17 : 15} fontWeight="700">
                   {L(z.label).split(/\s+/).map((w, i) => <tspan key={i} x={z.x + 12} dy={i ? 19 : 0}>{w}</tspan>)}
                 </text>
               ) : (
-                <text x={z.x + 14} y={z.y + 28} fill="#fff" fontSize={compact ? 20 : 17} fontWeight="700">{L(z.label)}</text>
+                <text x={z.x + 14} y={z.y + 28} fill="#fff" fontSize={compact ? 17 : 16} fontWeight="700" textLength={L(z.label).length * 9.6 > z.w - 28 ? z.w - 28 : undefined} lengthAdjust="spacingAndGlyphs">{L(z.label)}</text>
               )}
               {!compact && z.h > 100 && z.w >= 200 && (
-                <text x={z.x + 14} y={z.y + 50} fill="#ffffffcc" fontSize="13">{L(z.desc).slice(0, 34)}</text>
+                <text x={z.x + 14} y={z.y + 50} fill="#ffffffcc" fontSize="13">{L(z.desc).length > (z.w - 28) / 6.4 ? `${L(z.desc).slice(0, Math.floor((z.w - 28) / 6.4) - 1)}…` : L(z.desc)}</text>
               )}
               {booths.map((b, i) => (
                 <rect key={b.id} x={z.x + 14 + (i % cols) * 34} y={z.y + (compact ? 50 : 66) + Math.floor(i / cols) * 30} width="28" height="22" rx="4"

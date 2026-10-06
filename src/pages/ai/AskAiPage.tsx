@@ -15,22 +15,22 @@ function Avatar({ talking }: { talking: boolean }) {
     <svg viewBox="0 0 200 200" className="mx-auto w-40 sm:w-52" aria-hidden>
       <defs>
         <linearGradient id="av-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f5a300" />
+          <stop offset="0" stopColor="#d9a640" />
           <stop offset="1" stopColor="#ff7a45" />
         </linearGradient>
       </defs>
       <circle cx="100" cy="100" r="92" fill="url(#av-bg)" opacity="0.18" className={talking ? 'animate-ping' : ''} style={{ transformOrigin: 'center', animationDuration: '1.6s' }} />
       <circle cx="100" cy="100" r="78" fill="#ffffff" />
       <circle cx="100" cy="100" r="78" fill="url(#av-bg)" opacity="0.15" />
-      <rect x="52" y="62" width="96" height="70" rx="30" fill="#0b2a5b" />
+      <rect x="52" y="62" width="96" height="70" rx="30" fill="#002a6e" />
       <circle cx="80" cy="96" r="9" fill="#5ee0ff" />
       <circle cx="120" cy="96" r="9" fill="#5ee0ff" />
-      <rect x="86" y={talking ? 112 : 116} width="28" height={talking ? 10 : 4} rx="4" fill="#f5a300">
+      <rect x="86" y={talking ? 112 : 116} width="28" height={talking ? 10 : 4} rx="4" fill="#d9a640">
         {talking && <animate attributeName="height" values="4;10;4" dur="0.4s" repeatCount="indefinite" />}
       </rect>
-      <rect x="96" y="40" width="8" height="22" rx="4" fill="#0b2a5b" />
-      <circle cx="100" cy="38" r="8" fill="#f5a300" />
-      <rect x="60" y="140" width="80" height="26" rx="13" fill="#0b2a5b" />
+      <rect x="96" y="40" width="8" height="22" rx="4" fill="#002a6e" />
+      <circle cx="100" cy="38" r="8" fill="#d9a640" />
+      <rect x="60" y="140" width="80" height="26" rx="13" fill="#002a6e" />
       <text x="100" y="158" textAnchor="middle" fontSize="13" fontWeight="700" fill="#fff">MOC AI</text>
     </svg>
   )
@@ -68,6 +68,7 @@ export default function AskAiPage() {
     tr('Siam Retail Group สนใจสินค้าอะไร', 'What is Siam Retail Group interested in?'),
     tr('วันนี้มีกิจกรรมอะไรบ้าง', "What's on today?"),
     tr('Business Matching ทำอย่างไร', 'How does Business Matching work?'),
+    tr('MOC TASTE มีร้านอะไรบ้าง', 'What shops are in MOC TASTE?'),
   ]
 
   return (

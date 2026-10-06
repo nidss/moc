@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { Bus, CalendarDays, Car, ChevronDown, Clock, MapPin, Target, TrainFront } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
-import { EVENT, PAVILIONS } from '../../data/event'
+import { EVENT } from '../../data/event'
 import { Card, PageHeader, SectionTitle } from '../../components/ui/Card'
 import { LinkButton } from '../../components/ui/Button'
-import type { PavilionId } from '../../data/types'
 
 const FAQ = [
   { q: { th: 'เข้างานต้องเสียค่าใช้จ่ายหรือไม่?', en: 'Is there an admission fee?' }, a: { th: 'เข้าชมฟรีตลอด 3 วัน เพียงลงทะเบียนล่วงหน้าเพื่อรับ QR Code', en: 'Entry is free for all 3 days — just pre-register to receive your QR code.' } },
@@ -17,11 +16,11 @@ export default function EventPage() {
   const { tr, L } = useI18n()
   const [openFaq, setOpenFaq] = useState(0)
 
+  // วัตถุประสงค์ตามเอกสารโครงการ
   const objectives = [
-    { th: 'เพิ่มช่องทางการตลาดให้ SME ไทยทั้งออนไลน์และออฟไลน์', en: 'Expand online & offline market channels for Thai SMEs' },
-    { th: 'สร้างโอกาสจับคู่ธุรกิจกับ Buyer ไทยและต่างประเทศ', en: 'Create business matching with Thai and global buyers' },
-    { th: 'ยกระดับทักษะผู้ประกอบการด้วยองค์ความรู้และดิจิทัล', en: 'Upskill entrepreneurs with knowledge and digital tools' },
-    { th: 'วัดผลทางเศรษฐกิจ: ยอดขาย มูลค่าดีล และการคาดการณ์ 1 ปี', en: 'Measure economic impact: sales, deal value and 1-year forecast' },
+    { th: 'สร้างรายได้และขยายโอกาสทางการค้าให้แก่ผู้ประกอบการ SME', en: 'Generate income and expand trade opportunities for SMEs' },
+    { th: 'ยกระดับศักยภาพผู้ประกอบการ SME ให้มีองค์ความรู้และมุมมองในการดำเนินธุรกิจในมิติต่าง ๆ', en: 'Strengthen SME capabilities with knowledge and new business perspectives' },
+    { th: 'ผู้ประกอบการ SME สามารถเชื่อมโยงและขยายความร่วมมือทางธุรกิจกับพันธมิตรและคู่ค้ารายใหม่ทั้งในและต่างประเทศ ผ่านการเจรจาธุรกิจ อันนำไปสู่การเป็นส่วนหนึ่งของห่วงโซ่คุณค่าโลก (Global Value Chain)', en: 'Connect SMEs with new partners at home and abroad through business matching, joining the Global Value Chain' },
   ]
 
   return (
@@ -53,8 +52,8 @@ export default function EventPage() {
           <SectionTitle title={tr('เกี่ยวกับ MOC Expo', 'About MOC Expo')} />
           <p className="leading-relaxed text-muted">
             {tr(
-              'MOC Expo 2026 คือมหกรรมแสดงสินค้าและบริการของผู้ประกอบการ SME ไทย จัดโดยกระทรวงพาณิชย์ เพื่อเชื่อมโยงผู้ประกอบการกับผู้บริโภค ผู้ซื้อ และนักลงทุน ทั้งในประเทศและต่างประเทศ พร้อมระบบดิจิทัลที่ติดตามผลลัพธ์ทางเศรษฐกิจได้แบบเรียลไทม์',
-              'MOC Expo 2026 is the Ministry of Commerce showcase of Thai SME products and services, connecting entrepreneurs with consumers, buyers and investors at home and abroad — backed by a digital platform that tracks economic outcomes in real time.',
+              'MOC Expo 2026 โครงการเชื่อมโยงการค้าและเจรจาธุรกิจผู้ประกอบการไทย โดยกระทรวงพาณิชย์ ร่วมกับกรมพัฒนาธุรกิจการค้า และ สสว. รวมผู้ประกอบการกว่า 200 ราย จาก 9 หน่วยงานในสังกัดกระทรวงพาณิชย์ และพันธมิตร 5 หน่วยงาน ตั้งเป้าผู้เข้าร่วมงาน 8,000 ราย และสร้างมูลค่าทางเศรษฐกิจ 100 ล้านบาท',
+              'MOC Expo 2026 is the Ministry of Commerce trade linkage and business matching programme for Thai entrepreneurs, with DBD and OSMEP. It brings together 200+ SMEs from 9 MOC agencies and 5 partners, targeting 8,000 participants and THB 100 million in economic value.',
             )}
           </p>
         </div>
@@ -63,7 +62,7 @@ export default function EventPage() {
           <ul className="space-y-3">
             {objectives.map((o) => (
               <li key={o.en} className="flex gap-3">
-                <Target size={20} className="mt-0.5 shrink-0 text-accent" />
+                <Target size={20} className="mt-0.5 shrink-0 text-gold" />
                 <span>{L(o)}</span>
               </li>
             ))}
@@ -72,12 +71,19 @@ export default function EventPage() {
       </section>
 
       <section className="mt-12">
-        <SectionTitle title="Pavilions" />
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {(Object.keys(PAVILIONS) as PavilionId[]).map((id) => (
-            <Card key={id} className="border-t-4 p-4" style={{ borderTopColor: PAVILIONS[id].color }}>
-              <div className="font-bold">{PAVILIONS[id].name}</div>
-              <div className="mt-1 text-sm text-muted">{L(PAVILIONS[id].desc)}</div>
+        <SectionTitle title={tr('กิจกรรมโครงการ', 'Programme')} />
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            ['Zone 1 · MOC HUB', tr('Pavilion สินค้าและบริการให้คำปรึกษา จาก 9 หน่วยงาน ผู้ประกอบการ 200 ราย และ 14 หน่วยงานให้คำปรึกษา', 'Products & advisory pavilion: 200 SMEs from 9 agencies plus 14 advisory agencies')],
+            ['Zone 2 · MOC UP SKILL', tr('เวทีเสริมทักษะ องค์ความรู้ และสาระบันเทิงในการทำธุรกิจ', 'Stage for business skills, knowledge and edutainment')],
+            ['Zone 3 · MOC TASTE', tr('ช้อปชิมอาหารเด็ด 100 บูธ จากร้านดังและร้านรางวัล', '100 booths of famous and award-winning food')],
+            ['Business Matching Lounge', tr('เจรจาธุรกิจระหว่างผู้ประกอบการกับหน่วยงานพันธมิตร', 'Business negotiation with partner organisations')],
+            ['Workshop', tr('ทำผลิตภัณฑ์สมุนไพรไทย เพ้นท์/พับดอกไม้ ทำเครื่องดื่มสมุนไพร', 'Thai herbal products, flower painting/folding, herbal drinks')],
+            ['Private Pavilion', tr('Modern Trade เทคโนโลยี สถาบันการเงิน สื่อสาร และตรวจสุขภาพ', 'Modern trade, technology, finance, telecom and health checks')],
+          ].map(([t, d]) => (
+            <Card key={t} className="border-t-4 border-t-gold p-4">
+              <div className="font-bold">{t}</div>
+              <div className="mt-1 text-sm text-muted">{d}</div>
             </Card>
           ))}
         </div>

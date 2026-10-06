@@ -1,7 +1,7 @@
 import type { LText } from '../i18n/I18nProvider'
 
 export type CategoryId = 'food' | 'health' | 'fashion' | 'home' | 'agri' | 'craft' | 'tech' | 'service'
-export type PavilionId = 'local' | 'smart' | 'global' | 'franchise' | 'green'
+export type PavilionId = 'hub' | 'taste' | 'private'
 export type ProductType = 'consumer' | 'processed' | 'raw' | 'service'
 export type AttendeeType = 'visitor' | 'sme' | 'buyer' | 'speaker' | 'media'
 
@@ -24,6 +24,8 @@ export type Exhibitor = {
   productType: ProductType
   description: LText
   booth: string
+  /** หน่วยงานกระทรวงพาณิชย์ที่พาผู้ประกอบการมาออกบูธ (เฉพาะ MOC HUB) */
+  agency?: string
   tags: string[]
   contact: { name: string; phone: string; email: string; line: string }
   social: { facebook?: string; instagram?: string; tiktok?: string }
@@ -52,7 +54,7 @@ export type ScheduleItem = {
   start: string
   end: string
   title: LText
-  stage: 'main' | 'upskill' | 'matching' | 'green'
+  stage: 'main' | 'workshop' | 'matching' | 'taste'
   kind: 'ceremony' | 'talk' | 'workshop' | 'matching' | 'show'
   speaker?: string
 }

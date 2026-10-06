@@ -2,7 +2,8 @@ import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Search, SlidersHorizontal, X } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
-import { CATEGORIES, PAVILIONS, PRODUCT_TYPES, PROVINCES } from '../../data/event'
+import { CATEGORIES, PAVILIONS, PRODUCT_TYPES, PROVINCES, zoneLabel } from '../../data/event'
+import type { PavilionId } from '../../data/types'
 import { useExhibitors } from '../../store/selectors'
 import { PageHeader, EmptyState } from '../../components/ui/Card'
 import { Input, Select } from '../../components/ui/Form'
@@ -56,8 +57,8 @@ export default function ExhibitorsPage() {
             {Object.entries(CATEGORIES).map(([k, v]) => <option key={k} value={k}>{L(v)}</option>)}
           </Select>
           <Select value={params.get('pavilion') ?? ''} onChange={(e) => set('pavilion', e.target.value)} aria-label="Pavilion">
-            <option value="">{tr('ทุก Pavilion', 'All pavilions')}</option>
-            {Object.entries(PAVILIONS).map(([k, v]) => <option key={k} value={k}>{v.name}</option>)}
+            <option value="">{tr('ทุกโซน', 'All zones')}</option>
+            {(Object.keys(PAVILIONS) as PavilionId[]).map((k) => <option key={k} value={k}>{zoneLabel(k)}</option>)}
           </Select>
           <Select value={params.get('province') ?? ''} onChange={(e) => set('province', e.target.value)} aria-label="Province">
             <option value="">{tr('ทุกจังหวัด', 'All provinces')}</option>

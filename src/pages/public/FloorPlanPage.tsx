@@ -3,6 +3,7 @@ import { MapPin, MousePointerClick } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { ZONES } from '../../data/zones'
 import { EXHIBITORS } from '../../data/exhibitors'
+import { AGENCIES, PARTNERS } from '../../data/event'
 import { SCHEDULE } from '../../data/schedule'
 import { Card, PageHeader } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
@@ -12,10 +13,10 @@ import { OrgAvatar } from '../../components/Brand'
 export default function FloorPlanPage() {
   const { tr, L } = useI18n()
   const [params, setParams] = useSearchParams()
-  const selectedId = params.get('zone') ?? 'local'
+  const selectedId = params.get('zone') ?? 'hub'
   const zone = ZONES.find((z) => z.id === selectedId) ?? ZONES[0]
   const exhibitors = zone.pavilion ? EXHIBITORS.filter((e) => e.pavilion === zone.pavilion) : []
-  const stageKey = zone.kind === 'stage' ? 'main' : zone.kind === 'workshop' ? 'upskill' : zone.kind === 'matching' ? 'matching' : null
+  const stageKey = zone.kind === 'stage' ? 'main' : zone.kind === 'workshop' ? 'workshop' : zone.kind === 'matching' ? 'matching' : zone.id === 'taste' ? 'taste' : null
   const sessions = stageKey ? SCHEDULE.filter((s) => s.stage === stageKey && s.day === 1) : []
 
   return (
@@ -72,7 +73,16 @@ export default function FloorPlanPage() {
                 </div>
               </>
             )}
-            {exhibitors.length === 0 && sessions.length === 0 && (
+            {zone.id === 'consult' && (
+              <div className="space-y-3">
+                <div className="text-sm font-semibold">{tr('หน่วยงานให้คำปรึกษา (14)', 'Advisory agencies (14)')}</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {Object.values(AGENCIES).map((a) => <Badge key={a.short} tone="brand">{a.short}</Badge>)}
+                  {PARTNERS.map((p) => <Badge key={p.en} tone="accent">{L(p)}</Badge>)}
+                </div>
+              </div>
+            )}
+            {exhibitors.length === 0 && sessions.length === 0 && zone.id !== 'consult' && (
               <p className="text-sm text-muted">{tr('พื้นที่บริการสำหรับผู้เข้าชมงาน', 'Visitor service area')}</p>
             )}
           </div>

@@ -35,8 +35,8 @@ export function AdminLayout() {
 
   return (
     <div className="min-h-screen lg:pl-64">
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col bg-[#061a3d] p-4 lg:flex">
-        <Link to="/admin" className="mb-6 px-2"><Logo light /></Link>
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col bg-navy p-4 lg:flex">
+        <Link to="/admin" className="mb-6 px-2"><Logo tone="light" className="h-12" /></Link>
         <div className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-white/40">Organizer Console</div>
         {nav}
         <Link to="/" className="mt-auto flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm text-white/60 hover:text-white">
@@ -46,9 +46,9 @@ export function AdminLayout() {
 
       {open && (
         <div className="fixed inset-0 z-50 bg-black/50 lg:hidden" onClick={() => setOpen(false)}>
-          <aside className="h-full w-72 bg-[#061a3d] p-4" onClick={(e) => e.stopPropagation()}>
+          <aside className="h-full w-72 bg-navy p-4" onClick={(e) => e.stopPropagation()}>
             <div className="mb-6 flex items-center justify-between px-2">
-              <Logo light />
+              <Logo tone="light" className="h-12" />
               <button className="text-white/70" onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
             </div>
             {nav}

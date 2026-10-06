@@ -63,9 +63,9 @@ export function DemoNav() {
         </div>
       )}
       <button onClick={() => setOpen((o) => !o)}
-        className="ml-auto flex items-center gap-2 rounded-full bg-[#0b2a5b] py-2 pr-3 pl-2 text-sm font-semibold text-white shadow-xl ring-1 ring-white/10 hover:bg-[#0d3570]"
+        className="ml-auto flex items-center gap-2 rounded-full bg-navy py-2 pr-3 pl-2 text-sm font-semibold text-white shadow-xl ring-1 ring-white/10 hover:bg-navy-2"
         aria-expanded={open}>
-        <span className="flex size-7 items-center justify-center rounded-full bg-accent text-[#1a1200]">
+        <span className="flex size-7 items-center justify-center rounded-full bg-accent text-on-accent">
           {active ? <active.icon size={15} /> : <PlayCircle size={15} />}
         </span>
         <span className="hidden sm:inline">{active ? tr(active.th, active.en) : 'Demo'}</span>

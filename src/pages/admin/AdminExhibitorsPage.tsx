@@ -44,7 +44,8 @@ export default function AdminExhibitorsPage() {
       </div>
     ) },
     { key: 'id', header: 'SME ONE ID', render: (e) => <span className="font-mono text-xs">{e.smeOneId}</span>, hideOnMobile: true },
-    { key: 'pav', header: 'Pavilion', render: (e) => <span className="whitespace-nowrap">{PAVILIONS[e.pavilion].name} · {e.booth}</span>, hideOnMobile: true },
+    { key: 'pav', header: tr('โซน', 'Zone'), render: (e) => <span className="whitespace-nowrap">{PAVILIONS[e.pavilion].name} · {e.booth}</span>, hideOnMobile: true },
+    { key: 'agency', header: tr('หน่วยงาน', 'Agency'), render: (e) => e.agency ?? <span className="text-muted">–</span>, hideOnMobile: true },
     { key: 'prod', header: tr('สินค้า', 'Products'), render: (e) => e.products.length, hideOnMobile: true },
     { key: 'status', header: 'Status', render: (e) => e.status === 'approved' ? <Badge tone="success" dot>{tr('อนุมัติแล้ว', 'Approved')}</Badge> : <Badge tone="warning" dot>{tr('รออนุมัติ', 'Pending')}</Badge> },
     { key: 'act', header: '', className: 'text-right', render: (e) => (
@@ -63,7 +64,7 @@ export default function AdminExhibitorsPage() {
   return (
     <div>
       <PageHeader eyebrow={tr('ผู้ออกบูธ', 'Exhibitors')} title={tr('จัดการผู้ออกบูธ', 'Exhibitor Management')}
-        subtitle={tr(`210 ราย (ตัวอย่าง ${exhibitors.length} ราย) · รออนุมัติ ${pending} ราย`, `210 exhibitors (${exhibitors.length} sample) · ${pending} pending approval`)}
+        subtitle={tr(`MOC HUB 200 ราย + MOC TASTE 100 บูธ (ตัวอย่าง ${exhibitors.length} ราย) · รออนุมัติ ${pending} ราย`, `MOC HUB 200 + MOC TASTE 100 booths (${exhibitors.length} sample) · ${pending} pending approval`)}
         actions={<Button icon={<Plus size={18} />} onClick={() => setEditing('new')}>{tr('เพิ่มผู้ออกบูธ', 'Add exhibitor')}</Button>} />
 
       <div className="mb-4 grid gap-2 sm:grid-cols-[1fr_200px]">
@@ -92,7 +93,7 @@ export default function AdminExhibitorsPage() {
           <Field label="SME ONE ID" hint={tr('ดึงข้อมูลจาก SME ONE อัตโนมัติ', 'Auto-filled from SME ONE')}><Input defaultValue={ed?.smeOneId ?? ''} placeholder="SME1-XXXXXX" /></Field>
           <Field label="Booth"><Input defaultValue={ed?.booth ?? ''} placeholder="A-01" /></Field>
           <Field label="Pavilion">
-            <Select defaultValue={ed?.pavilion ?? 'local'}>{Object.entries(PAVILIONS).map(([k, v]) => <option key={k} value={k}>{v.name}</option>)}</Select>
+            <Select defaultValue={ed?.pavilion ?? 'hub'}>{Object.entries(PAVILIONS).map(([k, v]) => <option key={k} value={k}>{v.name}</option>)}</Select>
           </Field>
           <Field label={tr('หมวดหมู่', 'Category')}>
             <Select defaultValue={ed?.category ?? 'food'}>{Object.entries(CATEGORIES).map(([k, v]) => <option key={k} value={k}>{L(v)}</option>)}</Select>

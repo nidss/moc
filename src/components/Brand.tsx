@@ -1,21 +1,21 @@
 import { Apple, Cpu, Flower2, Gem, Home, Leaf, Shirt, Store, type LucideIcon } from 'lucide-react'
 import type { CategoryId, Exhibitor, Buyer } from '../data/types'
+import logoColor from '../assets/brand/moc-expo-2026.png'
+import logoLight from '../assets/brand/moc-expo-2026-light.png'
 
-export function Logo({ light = false, compact = false }: { light?: boolean; compact?: boolean }) {
+/**
+ * โลโก้งาน MOC Expo 2026 (ไฟล์ทางการจากผู้จัด)
+ * - tone="auto": สีปกติบนพื้นสว่าง และสลับเป็นตัวอักษรขาวอัตโนมัติเมื่อเป็น dark mode
+ * - tone="light": ใช้บนพื้นกรมท่าเข้ม (Hero, footer, sidebar)
+ */
+export function Logo({ tone = 'auto', className = 'h-10' }: { tone?: 'auto' | 'light'; className?: string }) {
+  const alt = 'MOC Expo 2026 — Connect · Collaborate · Grow Together'
+  if (tone === 'light') return <img src={logoLight} alt={alt} className={`w-auto select-none ${className}`} draggable={false} />
   return (
-    <span className="inline-flex items-center gap-2.5">
-      <svg viewBox="0 0 64 64" className="size-9 shrink-0" aria-hidden>
-        <rect width="64" height="64" rx="14" fill={light ? '#ffffff' : '#0b2a5b'} />
-        <path d="M14 44V20l9 14 9-14v24" fill="none" stroke="#f5a300" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="46" cy="32" r="8" fill="none" stroke={light ? '#0b2a5b' : '#ffffff'} strokeWidth="5" />
-      </svg>
-      {!compact && (
-        <span className="leading-tight">
-          <span className={`block text-[15px] font-extrabold tracking-tight ${light ? 'text-white' : 'text-fg'}`}>MOC Expo 2026</span>
-          <span className={`block text-[11px] font-medium ${light ? 'text-white/70' : 'text-muted'}`}>Ministry of Commerce</span>
-        </span>
-      )}
-    </span>
+    <picture>
+      <source srcSet={logoLight} media="(prefers-color-scheme: dark)" />
+      <img src={logoColor} alt={alt} className={`w-auto select-none ${className}`} draggable={false} />
+    </picture>
   )
 }
 

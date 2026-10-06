@@ -13,7 +13,7 @@ export const REGISTRATION_TREND = (() => {
   raw.forEach((r, i) => {
     const v = i === raw.length - 1 ? 8245 - acc : Math.round((r / sum) * 8245)
     acc += v
-    const d = new Date(Date.UTC(2026, 9, 21 + i))
+    const d = new Date(Date.UTC(2026, 10, 4 + i)) // 30 วันก่อนงาน + 3 วันงาน (4 พ.ย. – 6 ธ.ค.)
     days.push({ date: d.toISOString().slice(0, 10), count: v })
   })
   return days

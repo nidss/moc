@@ -14,10 +14,10 @@ export function StaffLayout() {
   ]
   return (
     <div className="min-h-screen bg-bg pb-24">
-      <header className="bg-[#061a3d] text-white">
+      <header className="bg-navy text-white">
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
           <Link to="/staff/scan" className="flex items-center gap-2">
-            <Logo light compact />
+            <Logo tone="light" className="h-8" />
             <div className="leading-tight">
               <div className="text-sm font-bold">MOC Check-in</div>
               <div className="text-[11px] text-white/70">{tr('เจ้าหน้าที่: ประตู A · เครื่อง 03', 'Staff: Gate A · Device 03')}</div>

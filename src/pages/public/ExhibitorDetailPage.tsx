@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
 import { QRCodeSVG } from 'qrcode.react'
 import { ArrowLeft, Briefcase, Globe, Mail, MapPin, MessageCircle, Phone, ShieldCheck, ShoppingCart, User } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
-import { CATEGORIES, PAVILIONS, PROVINCES } from '../../data/event'
+import { AGENCIES, CATEGORIES, PAVILIONS, PROVINCES, zoneLabel } from '../../data/event'
 import { EXHIBITOR_BY_ID } from '../../data/exhibitors'
 import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
@@ -39,7 +39,8 @@ export default function ExhibitorDetailPage() {
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{L(ex.name)}</h1>
             <div className="mt-2 flex flex-wrap gap-2">
               <Badge tone="brand">{L(CATEGORIES[ex.category])}</Badge>
-              <Badge tone="neutral">{pav.name}</Badge>
+              <Badge tone="neutral">{zoneLabel(ex.pavilion)}</Badge>
+              {ex.agency && <Badge tone="accent">{tr('หน่วยงาน', 'Agency')}: {L(AGENCIES[ex.agency].name)}</Badge>}
               <Badge tone="success"><ShieldCheck size={12} /> SME ONE ID {ex.smeOneId}</Badge>
             </div>
           </div>

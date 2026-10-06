@@ -1,6 +1,6 @@
 import type { LText } from '../i18n/I18nProvider'
 import type { PavilionId } from './types'
-import { PAVILIONS } from './event'
+import { PAVILIONS, zoneLabel } from './event'
 
 export type Zone = {
   id: string
@@ -15,27 +15,25 @@ export type Zone = {
   pavilion?: PavilionId
 }
 
-const pav = (id: PavilionId, code: string, x: number, y: number, w: number, h: number): Zone => ({
+const pav = (id: PavilionId, x: number, y: number, w: number, h: number): Zone => ({
   id,
   kind: 'pavilion',
-  label: { th: `${code} · ${PAVILIONS[id].name}`, en: `${code} · ${PAVILIONS[id].name}` },
+  label: { th: zoneLabel(id), en: zoneLabel(id) },
   desc: PAVILIONS[id].desc,
   x, y, w, h,
   color: PAVILIONS[id].color,
   pavilion: id,
 })
 
-// ผังฮอลล์ (หน่วยเป็นพิกัด SVG viewBox 1000 x 600)
+// ผังฮอลล์ QSNCC Hall 7–8 (พื้นที่ไม่น้อยกว่า 10,000 ตร.ม.) หน่วยเป็นพิกัด SVG viewBox 1000 x 600
 export const ZONES: Zone[] = [
-  pav('local', 'A', 20, 20, 290, 230),
-  pav('smart', 'B', 325, 20, 240, 230),
-  pav('global', 'C', 580, 20, 240, 230),
-  pav('franchise', 'D', 20, 265, 290, 235),
-  pav('green', 'E', 325, 265, 240, 130),
-  { id: 'main-stage', kind: 'stage', label: { th: 'Main Stage', en: 'Main Stage' }, desc: { th: 'เวทีหลัก พิธีเปิด และ Talk', en: 'Opening ceremony & talks' }, x: 835, y: 20, w: 145, h: 230, color: '#be123c' },
-  { id: 'food', kind: 'food', label: { th: 'Food Zone', en: 'Food Zone' }, desc: { th: 'ศูนย์อาหารและสินค้าทดลองชิม', en: 'Food court & tasting' }, x: 580, y: 265, w: 240, h: 130, color: '#ea580c' },
-  { id: 'matching', kind: 'matching', label: { th: 'Business Matching Lounge', en: 'Business Matching Lounge' }, desc: { th: 'โต๊ะเจรจาธุรกิจ 40 โต๊ะ', en: '40 negotiation tables' }, x: 835, y: 265, w: 145, h: 235, color: '#0b3a82' },
-  { id: 'workshop', kind: 'workshop', label: { th: 'Workshop · MOC Up Skill', en: 'Workshop · MOC Up Skill' }, desc: { th: 'ห้องอบรมเชิงปฏิบัติการ', en: 'Hands-on workshop room' }, x: 325, y: 410, w: 240, h: 90, color: '#0e7490' },
-  { id: 'rest', kind: 'rest', label: { th: 'Rest Area', en: 'Rest Area' }, desc: { th: 'จุดพักผ่อน ชาร์จแบต และห้องให้นมบุตร', en: 'Seating, charging & nursing room' }, x: 580, y: 410, w: 240, h: 90, color: '#64748b' },
-  { id: 'registration', kind: 'registration', label: { th: 'Registration / ทางเข้า', en: 'Registration / Entrance' }, desc: { th: 'จุดลงทะเบียนและสแกน QR เข้างาน', en: 'Registration & QR check-in gates' }, x: 20, y: 515, w: 960, h: 65, color: '#a16207' },
+  pav('hub', 20, 20, 470, 250),
+  { id: 'upskill', kind: 'stage', label: { th: 'Zone 2 · MOC UP SKILL', en: 'Zone 2 · MOC UP SKILL' }, desc: { th: 'เวทีเสริมทักษะ องค์ความรู้ และสาระบันเทิง', en: 'Stage for skills, knowledge & edutainment' }, x: 505, y: 20, w: 235, h: 250, color: '#1d4ed8' },
+  pav('taste', 755, 20, 225, 250),
+  { id: 'consult', kind: 'pavilion', label: { th: 'Pavilion ให้คำปรึกษา', en: 'Advisory Pavilion' }, desc: { th: '14 หน่วยงาน: กระทรวงพาณิชย์ 9 + พันธมิตร 5', en: '14 agencies: 9 MOC + 5 partners' }, x: 20, y: 285, w: 230, h: 215, color: '#002a6e' },
+  pav('private', 265, 285, 225, 215),
+  { id: 'matching', kind: 'matching', label: { th: 'Business Matching Lounge', en: 'Business Matching Lounge' }, desc: { th: 'โต๊ะเจรจาธุรกิจกับหน่วยงานพันธมิตร', en: 'Negotiation tables with partners' }, x: 505, y: 285, w: 235, h: 215, color: '#5b21b6' },
+  { id: 'workshop', kind: 'workshop', label: { th: 'Workshop', en: 'Workshop' }, desc: { th: 'สมุนไพรไทย พับดอกไม้ เครื่องดื่มสมุนไพร', en: 'Herbal products, flowers, herbal drinks' }, x: 755, y: 285, w: 225, h: 215, color: '#15803d' },
+  { id: 'registration', kind: 'registration', label: { th: 'Registration / ทางเข้า', en: 'Registration / Entrance' }, desc: { th: 'จุดลงทะเบียนและสแกน QR เข้างาน', en: 'Registration & QR check-in gates' }, x: 20, y: 515, w: 700, h: 65, color: '#8a6a1f' },
+  { id: 'rest', kind: 'rest', label: { th: 'Rest Area', en: 'Rest Area' }, desc: { th: 'จุดพักผ่อน ชาร์จแบต และห้องให้นมบุตร', en: 'Seating, charging & nursing room' }, x: 735, y: 515, w: 245, h: 65, color: '#64748b' },
 ]

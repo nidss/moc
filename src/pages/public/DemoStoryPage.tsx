@@ -7,7 +7,7 @@ import { useDemoStore } from '../../store/demoStore'
 type Step = { to: string; icon: typeof Home; th: string; en: string; dth: string; den: string }
 
 const VISITOR: Step[] = [
-  { to: '/', icon: Home, th: 'Landing', en: 'Landing', dth: 'ภาพรวมงาน ไฮไลต์ Pavilion', den: 'Event overview & pavilions' },
+  { to: '/', icon: Home, th: 'Landing', en: 'Landing', dth: 'ภาพรวมงาน 3 โซนหลัก', den: 'Event overview & 3 zones' },
   { to: '/register', icon: ClipboardList, th: 'ลงทะเบียน', en: 'Register', dth: 'ฟอร์ม 2 ขั้นตอน', den: '2-step form' },
   { to: '/register/success/latest', icon: QrCode, th: 'QR Code', en: 'QR Ticket', dth: 'บัตรเข้างานแบบ Wallet', den: 'Wallet-style ticket' },
   { to: '/staff/scan', icon: ScanLine, th: 'เช็คอิน', en: 'Check-in', dth: 'เจ้าหน้าที่สแกน QR', den: 'Staff scans the QR' },

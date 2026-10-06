@@ -49,9 +49,21 @@ export function answer(question: string, lang: Lang): AiAnswer {
     }
   }
 
+  if (has(q, ['taste', 'ร้านอาหาร', 'ชิม', 'ของกิน', 'อาหารอร่อย', 'eat'])) {
+    const list = EXHIBITORS.filter((e) => e.pavilion === 'taste')
+    return {
+      text: t(
+        `โซน MOC TASTE มีร้านอาหารและเครื่องดื่มชื่อดัง 100 บูธ (ในเดโม ${list.length} ร้าน) ทั้งร้านรางวัล ร้านเชฟ และร้านอินฟลูเอนเซอร์ แนะนำ:`,
+        `MOC TASTE has 100 famous food & drink booths (${list.length} in this demo) — award winners, chef and influencer shops. Try:`,
+      ),
+      exhibitors: list.slice(0, 4),
+      link: { to: '/exhibitors?pavilion=taste', label: t('ดูร้านทั้งหมดใน MOC TASTE', 'See all MOC TASTE shops') },
+    }
+  }
+
   if (has(q, ['กิจกรรม', 'workshop', 'สัมมนา', 'schedule', 'activity', 'วันนี้', 'today', 'เวที', 'stage'])) {
     return {
-      text: t('กิจกรรมไฮไลต์วันแรก (20 พ.ย.):', 'Day 1 highlights (20 Nov):'),
+      text: t('กิจกรรมไฮไลต์วันแรก (4 ธ.ค.):', 'Day 1 highlights (4 Dec):'),
       sessions: SCHEDULE.filter((s) => s.day === 1).slice(0, 5),
       link: { to: '/schedule', label: t('ดูกำหนดการทั้งหมด', 'Full schedule') },
     }
@@ -70,8 +82,8 @@ export function answer(question: string, lang: Lang): AiAnswer {
   if (has(q, ['ที่ไหน', 'where', 'เดินทาง', 'mrt', 'จอดรถ', 'parking', 'สถานที่', 'venue'])) {
     return {
       text: t(
-        'งานจัดที่ศูนย์การประชุมแห่งชาติสิริกิติ์ (QSNCC) เดินทางสะดวกด้วย MRT สถานีศูนย์การประชุมฯ ทางออก 3 มีที่จอดรถ 3,000 คัน',
-        'The event is at QSNCC. Take the MRT to QSNCC station, exit 3. Indoor parking for 3,000 cars.',
+        'งานจัดวันที่ 4–6 ธันวาคม 2569 ที่ศูนย์การประชุมแห่งชาติสิริกิติ์ (QSNCC) Hall 7–8 เดินทางสะดวกด้วย MRT สถานีศูนย์การประชุมฯ มีที่จอดรถในอาคาร',
+        'The event runs 4–6 December 2026 at QSNCC Hall 7–8. Take the MRT to QSNCC station; indoor parking is available.',
       ),
       link: { to: '/floorplan', label: t('ดูผังงาน', 'View floor plan') },
     }

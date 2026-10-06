@@ -8,7 +8,7 @@ export function LangToggle({ light = false }: { light?: boolean }) {
       <Languages size={14} className={`mx-1.5 ${light ? 'text-white/70' : 'text-muted'}`} aria-hidden />
       {(['th', 'en'] as const).map((l) => (
         <button key={l} onClick={() => setLang(l)} aria-pressed={lang === l}
-          className={`rounded-full px-2.5 py-1 uppercase transition-colors ${lang === l ? (light ? 'bg-white text-[#0b2a5b]' : 'bg-brand text-white dark:text-[#0a1120]') : light ? 'text-white/80 hover:text-white' : 'text-muted hover:text-fg'}`}>
+          className={`rounded-full px-2.5 py-1 uppercase transition-colors ${lang === l ? (light ? 'bg-white text-navy' : 'bg-brand text-white dark:text-[#0a1120]') : light ? 'text-white/80 hover:text-white' : 'text-muted hover:text-fg'}`}>
           {l}
         </button>
       ))}

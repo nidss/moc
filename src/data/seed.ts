@@ -37,12 +37,12 @@ export function makeAttendeeId(type: AttendeeType, n: number) {
 
 export const SEED_ATTENDEES: Attendee[] = Array.from({ length: 240 }, (_, i) => {
   const type = pickType()
-  const regDay = 1 + Math.floor(rand() * 45) // ลงทะเบียนตั้งแต่ 6 ต.ค. ถึง 19 พ.ย.
+  const regDay = 1 + Math.floor(rand() * 58) // ลงทะเบียนตั้งแต่ 6 ต.ค. ถึง 3 ธ.ค.
   const registeredAt = new Date(Date.UTC(2026, 9, 5 + regDay, 1 + Math.floor(rand() * 14), Math.floor(rand() * 60))).toISOString()
   const checked = rand() < 0.7
-  const ciDay = 20 + Math.floor(rand() * 3)
+  const ciDay = 4 + Math.floor(rand() * 3) // วันงาน 4–6 ธ.ค.
   const checkedInAt = checked
-    ? new Date(Date.UTC(2026, 10, ciDay, 3 + Math.floor(rand() * 9), Math.floor(rand() * 60))).toISOString()
+    ? new Date(Date.UTC(2026, 11, ciDay, 3 + Math.floor(rand() * 9), Math.floor(rand() * 60))).toISOString()
     : undefined
   const first = pick(FIRST)
   const last = pick(LAST)
@@ -84,7 +84,7 @@ export const SEED_MEETINGS: Meeting[] = Array.from({ length: 48 }, (_, i) => {
           dealValue,
           forecast: outcome === 'deal' ? dealValue * (3 + Math.floor(rand() * 3)) : outcome === 'followup' ? Math.round(rand() * 80) * 10_000 : 0,
           note: '',
-          savedAt: new Date(Date.UTC(2026, 10, 20 + (i % 3), 8)).toISOString(),
+          savedAt: new Date(Date.UTC(2026, 11, 4 + (i % 3), 8)).toISOString(),
         }
       : undefined,
   }

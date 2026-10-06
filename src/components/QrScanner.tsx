@@ -55,7 +55,7 @@ export function QrScanner({ onResult }: { onResult: (text: string) => void }) {
   }
 
   return (
-    <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-[#061a3d] sm:aspect-[4/3]">
+    <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-navy sm:aspect-[4/3]">
       <div id="qr-reader" className="absolute inset-0 [&_video]:h-full! [&_video]:w-full! [&_video]:object-cover" />
       {state !== 'running' && (
         <div className="scan-frame absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center text-white">
@@ -73,7 +73,7 @@ export function QrScanner({ onResult }: { onResult: (text: string) => void }) {
               <Camera size={40} className="text-accent" />
               <div className="relative text-lg font-bold">{tr('สแกน QR ผู้เข้าชม', 'Scan Visitor QR')}</div>
               <button onClick={start} disabled={state === 'starting'}
-                className="relative rounded-full bg-accent px-5 py-2.5 text-sm font-bold text-[#1a1200] disabled:opacity-60">
+                className="relative rounded-full bg-accent px-5 py-2.5 text-sm font-bold text-on-accent disabled:opacity-60">
                 {state === 'starting' ? tr('กำลังเปิดกล้อง...', 'Starting camera...') : tr('เปิดกล้อง', 'Start camera')}
               </button>
             </>

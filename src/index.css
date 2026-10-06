@@ -2,17 +2,20 @@
 
 /* โทเคนสีหลักของระบบ — สลับค่าอัตโนมัติเมื่อเป็น dark mode */
 :root {
-  --bg: #f4f6fb;
+  /* ชุดสีอ้างอิงจากโลโก้ MOC Expo 2026: น้ำเงินกรมท่า + ทอง */
+  --bg: #f3f6fb;
   --surface: #ffffff;
-  --surface-2: #eef2f8;
-  --fg: #0f1b33;
-  --muted: #5b6b85;
-  --line: #e1e7f0;
-  --brand: #0b3a82;
-  --brand-strong: #082b61;
-  --brand-soft: #e7eefb;
-  --accent: #f5a300;
-  --accent-soft: #fff4dc;
+  --surface-2: #edf1f8;
+  --fg: #0a1a3c;
+  --muted: #56658a;
+  --line: #dfe5f0;
+  --brand: #0a3480;
+  --brand-strong: #06265f;
+  --brand-soft: #e6edf9;
+  --accent: #c8902a;
+  --accent-soft: #fbf1dd;
+  --on-accent: #0a1f4d;
+  --gold-text: #9a6a12;
   --success: #15803d;
   --success-soft: #e3f6ea;
   --warning: #b45309;
@@ -31,17 +34,19 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0a1120;
-    --surface: #111a2c;
-    --surface-2: #18243b;
-    --fg: #e6ecf7;
-    --muted: #93a2bc;
-    --line: #23314d;
-    --brand: #6b9cf5;
-    --brand-strong: #8fb4f8;
-    --brand-soft: #172a4d;
-    --accent: #f7b733;
-    --accent-soft: #3a2c0c;
+    --bg: #050f26;
+    --surface: #0c1a38;
+    --surface-2: #132449;
+    --fg: #e7edf9;
+    --muted: #94a3c2;
+    --line: #1f3260;
+    --brand: #7aa5f2;
+    --brand-strong: #9dbcf6;
+    --brand-soft: #142a57;
+    --accent: #ddae4f;
+    --accent-soft: #34280f;
+    --on-accent: #0a1f4d;
+    --gold-text: #e6be6a;
     --success: #4ade80;
     --success-soft: #11321f;
     --warning: #fbbf24;
@@ -60,6 +65,14 @@
 
 @theme inline {
   --font-sans: "Inter", "IBM Plex Sans Thai", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Prompt", "Inter", "IBM Plex Sans Thai", ui-sans-serif, sans-serif;
+  /* พื้นกรมท่าเข้มคงที่ทั้งสองธีม (Hero, footer, sidebar) */
+  --color-navy: #001a52;
+  --color-navy-2: #002a6e;
+  --color-gold: #c8902a;
+  --color-gold-light: #e8bd5c;
+  --color-on-accent: var(--on-accent);
+  --color-gold-text: var(--gold-text);
   --color-bg: var(--bg);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
@@ -94,9 +107,33 @@ body {
 /* พื้นหลัง hero ใช้สีกรมท่าเข้มเสมอทั้งสองธีม */
 .hero-bg {
   background:
-    radial-gradient(1200px 500px at 85% -10%, rgba(245, 163, 0, 0.35), transparent 60%),
-    radial-gradient(900px 500px at -10% 110%, rgba(56, 132, 255, 0.35), transparent 60%),
-    linear-gradient(135deg, #061a3d 0%, #0b3a82 55%, #0d4aa6 100%);
+    radial-gradient(900px 420px at 88% -12%, rgba(232, 189, 92, 0.32), transparent 62%),
+    radial-gradient(800px 480px at -8% 112%, rgba(40, 110, 220, 0.38), transparent 60%),
+    linear-gradient(135deg, #001848 0%, #002a6e 52%, #003c8c 100%);
+}
+
+/* ลายเส้นเครือข่ายจาง ๆ แบบในอินโฟกราฟิกของงาน */
+.hero-net {
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(110deg, transparent 35%, #000 75%);
+}
+
+.gold-gradient {
+  background: linear-gradient(135deg, #e8bd5c 0%, #c8902a 55%, #a87418 100%);
+}
+
+.gold-text-gradient {
+  background: linear-gradient(135deg, #f0cc74 0%, #d39b33 50%, #b5801f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h1, h2, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
 }
 
 .scan-frame::before,
@@ -106,7 +143,7 @@ body {
   left: 8%;
   right: 8%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #f5a300, transparent);
+  background: linear-gradient(90deg, transparent, #e8bd5c, transparent);
   animation: scanline 2.2s ease-in-out infinite;
 }
 .scan-frame::after { animation-delay: 1.1s; opacity: 0.5; }

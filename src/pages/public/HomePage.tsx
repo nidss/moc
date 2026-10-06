@@ -1,53 +1,69 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Bot, Briefcase, CalendarDays, Clock, GraduationCap, MapPin, QrCode, ShoppingBag, Store, Users } from 'lucide-react'
+import { ArrowRight, Bot, Briefcase, CalendarDays, Clock, Flower2, GraduationCap, Handshake, MapPin, Mic2, QrCode, Store, Users, UtensilsCrossed } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
-import { EVENT, PAVILIONS, STAGES } from '../../data/event'
+import { AGENCIES, EVENT, PARTNERS, STAGES } from '../../data/event'
 import { EXHIBITORS } from '../../data/exhibitors'
 import { SCHEDULE } from '../../data/schedule'
 import { LinkButton } from '../../components/ui/Button'
 import { Card, SectionTitle } from '../../components/ui/Card'
 import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { FloorPlanMap } from '../../components/FloorPlanMap'
-import type { PavilionId } from '../../data/types'
+import { Logo } from '../../components/Brand'
 
 const SPEAKERS = [
-  { name: 'Dr. Pimchanok S.', role: { th: 'ผู้เชี่ยวชาญการตลาดดิจิทัล', en: 'Digital marketing expert' }, color: '#0b3a82' },
-  { name: 'Kenji Tanaka', role: { th: 'ผู้นำเข้าอาหาร ประเทศญี่ปุ่น', en: 'Food importer, Japan' }, color: '#7c3aed' },
-  { name: 'Mint & Friends', role: { th: 'ครีเอเตอร์สายรีวิวสินค้า', en: 'Product review creators' }, color: '#c2410c' },
-  { name: 'Arthit W.', role: { th: 'ผู้ก่อตั้งแฟรนไชส์ 300 สาขา', en: 'Founder, 300-branch franchise' }, color: '#15803d' },
+  { name: 'Dr. Pimchanok S.', role: { th: 'ผู้เชี่ยวชาญการตลาดดิจิทัล', en: 'Digital marketing expert' } },
+  { name: 'Kenji Tanaka', role: { th: 'ผู้นำเข้าอาหาร ประเทศญี่ปุ่น', en: 'Food importer, Japan' } },
+  { name: 'Mint & Friends', role: { th: 'อินฟลูเอนเซอร์สายรีวิวสินค้า', en: 'Product review influencers' } },
+  { name: 'Arthit W.', role: { th: 'ผู้ก่อตั้งแบรนด์ 300 สาขา', en: 'Founder, 300-branch brand' } },
 ]
 
-const PARTNERS = ['Thai SME Bank', 'ShopNow', 'Siam Retail', 'LogiTH Express', 'PayThai', 'Creative TH']
-
 export default function HomePage() {
-  const { tr, L } = useI18n()
+  const { tr, L, fmtNumber } = useI18n()
   const daysLeft = Math.max(0, Math.ceil((new Date(EVENT.days[0]).getTime() - Date.now()) / 86_400_000))
 
-  const highlights = [
-    { icon: ShoppingBag, th: 'ช้อปสินค้า SME กว่า 210 ราย', en: 'Shop 210+ SME brands', dth: 'สินค้าคุณภาพจากทุกภูมิภาค พร้อม e-Catalog ออนไลน์', den: 'Quality goods from every region with an online e-Catalog' },
-    { icon: Briefcase, th: 'Business Matching', en: 'Business Matching', dth: 'นัดพบ Buyer ไทยและต่างประเทศกว่า 300 ราย', den: 'Meet 300+ Thai and international buyers' },
-    { icon: GraduationCap, th: 'MOC Up Skill', en: 'MOC Up Skill', dth: 'Workshop และสัมมนาเพิ่มทักษะ SME กว่า 40 หัวข้อ', den: '40+ workshops and talks to level up SMEs' },
-    { icon: Bot, th: 'Ask MOC AI', en: 'Ask MOC AI', dth: 'ผู้ช่วย AI แนะนำร้านค้า สินค้า และกิจกรรม', den: 'AI assistant recommending shops, products and activities' },
+  const zones = [
+    {
+      no: '1', icon: Store, name: 'MOC HUB', to: '/exhibitors?pavilion=hub',
+      th: 'Pavilion สินค้าและบริการให้คำปรึกษา', en: 'Products & advisory pavilion',
+      dth: 'จัดแสดงและจำหน่ายสินค้าจาก 9 หน่วยงานกระทรวงพาณิชย์ ผู้ประกอบการ 200 ราย พร้อมบริการให้คำปรึกษาจาก 14 หน่วยงาน',
+      den: 'Products from 200 SMEs under 9 MOC agencies, plus advisory services from 14 agencies',
+    },
+    {
+      no: '2', icon: GraduationCap, name: 'MOC UP SKILL', to: '/schedule',
+      th: 'เสริมทักษะ องค์ความรู้ และสาระบันเทิง', en: 'Skills, knowledge & edutainment',
+      dth: 'เวทีถ่ายทอดความรู้จากผู้เชี่ยวชาญและอินฟลูเอนเซอร์ ตั้งแต่คอนเทนต์ การตลาด สร้างแบรนด์ ถึงการดึงดูดนักลงทุน',
+      den: 'Talks from experts and influencers: content, marketing, branding, trends and attracting investors',
+    },
+    {
+      no: '3', icon: UtensilsCrossed, name: 'MOC TASTE', to: '/exhibitors?pavilion=taste',
+      th: 'ช้อปชิมอาหารเด็ด', en: 'Shop & taste signature food',
+      dth: 'ร้านอาหารและเครื่องดื่มชื่อดัง 100 บูธ ทั้งร้านรางวัล ร้านดารา ร้านอินฟลูเอนเซอร์ และร้านเชฟชื่อดัง',
+      den: '100 famous food & drink booths: award winners, celebrity, influencer and chef shops',
+    },
   ]
+
+  const more = [
+    { icon: Handshake, th: 'Business Matching Lounge', en: 'Business Matching Lounge', dth: 'เจรจาธุรกิจกับหน่วยงานพันธมิตร', den: 'Negotiate with partner organisations', to: '/matching' },
+    { icon: Flower2, th: 'Workshop', en: 'Workshops', dth: 'สมุนไพรไทย พับดอกไม้ เครื่องดื่มสมุนไพร', den: 'Herbal products, flowers, herbal drinks', to: '/schedule' },
+    { icon: Briefcase, th: 'Private Pavilion', en: 'Private Pavilion', dth: 'Modern Trade เทคโนโลยี การเงิน สื่อสาร สุขภาพ', den: 'Modern trade, tech, finance, telecom, health', to: '/exhibitors?pavilion=private' },
+    { icon: Bot, th: 'Ask MOC AI', en: 'Ask MOC AI', dth: 'ผู้ช่วย AI แนะนำร้าน สินค้า และกิจกรรม', den: 'AI assistant for shops, products & activities', to: '/ai' },
+  ]
+
+  const featured = ['thai-organic-farm', 'lanna-coffee', 'khao-soi-chef', 'indigo-weave'].map((id) => EXHIBITORS.find((e) => e.id === id)!)
 
   return (
     <div>
       {/* Hero */}
       <section className="hero-bg relative overflow-hidden text-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+        <div className="hero-net pointer-events-none absolute inset-0" />
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.25fr_1fr] lg:items-center">
           <div>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold ring-1 ring-white/20">
-              <span className="size-2 animate-pulse rounded-full bg-accent" />
-              {tr('เปิดลงทะเบียนแล้ว · เข้าชมฟรี', 'Registration open · Free admission')}
-            </div>
-            <h1 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-6xl">
-              MOC Expo <span className="text-accent">2026</span>
-            </h1>
-            <p className="mt-4 max-w-xl text-lg text-white/85 sm:text-xl">{L(EVENT.tagline)}</p>
-            <div className="mt-6 flex flex-col gap-2 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-5">
-              <span className="flex items-center gap-2"><CalendarDays size={18} className="text-accent" /> {L(EVENT.dateLabel)}</span>
-              <span className="flex items-center gap-2"><Clock size={18} className="text-accent" /> {EVENT.hours}</span>
-              <span className="flex items-center gap-2"><MapPin size={18} className="text-accent" /> {L(EVENT.venue)}</span>
+            <Logo tone="light" className="h-24 sm:h-32" />
+            <h1 className="mt-6 max-w-xl text-2xl font-semibold leading-snug sm:text-3xl">{L(EVENT.tagline)}</h1>
+            <div className="mt-5 flex flex-col gap-2 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-5">
+              <span className="flex items-center gap-2"><CalendarDays size={18} className="text-gold-light" /> {L(EVENT.dateLabel)}</span>
+              <span className="flex items-center gap-2"><Clock size={18} className="text-gold-light" /> {EVENT.hours}</span>
+              <span className="flex items-center gap-2"><MapPin size={18} className="text-gold-light" /> {L(EVENT.venue)}</span>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <LinkButton to="/register" variant="accent" size="lg" icon={<QrCode size={20} />}>{tr('ลงทะเบียนเข้างาน', 'Register Now')}</LinkButton>
@@ -57,61 +73,64 @@ export default function HomePage() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-2 rounded-2xl bg-white/10 p-5 ring-1 ring-white/15 backdrop-blur">
-              <div className="text-sm text-white/70">{tr('นับถอยหลังสู่วันงาน', 'Countdown to opening')}</div>
-              <div className="mt-1 flex items-baseline gap-2">
-                <span className="text-5xl font-extrabold tabular-nums">{daysLeft}</span>
-                <span className="text-lg text-white/80">{tr('วัน', 'days')}</span>
+            <div className="col-span-2 flex items-end justify-between rounded-2xl bg-white/10 p-5 ring-1 ring-white/15 backdrop-blur">
+              <div>
+                <div className="text-sm text-white/70">{tr('นับถอยหลังสู่วันงาน', 'Countdown to opening')}</div>
+                <div className="mt-1 flex items-baseline gap-2">
+                  <span className="gold-text-gradient text-5xl font-extrabold tabular-nums">{daysLeft}</span>
+                  <span className="text-lg text-white/80">{tr('วัน', 'days')}</span>
+                </div>
               </div>
+              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/20">{tr('เข้าชมฟรี', 'Free entry')}</span>
             </div>
             {[
-              ['210+', tr('ผู้ประกอบการ SME', 'SME exhibitors')],
-              ['300+', tr('Buyer ไทยและต่างชาติ', 'Thai & global buyers')],
-              ['5', 'Pavilions'],
-              ['40+', tr('กิจกรรม & Workshop', 'Activities & workshops')],
+              [fmtNumber(EVENT.targets.participants), tr('ผู้เข้าร่วมงาน', 'Participants')],
+              [fmtNumber(EVENT.targets.hubExhibitors), tr('ผู้ประกอบการออกบูธ', 'SME exhibitors')],
+              [fmtNumber(EVENT.targets.tasteBooths), tr('บูธอาหาร MOC TASTE', 'MOC TASTE food booths')],
+              [`฿${EVENT.targets.economicValue / 1_000_000}M`, tr('เป้ามูลค่าเศรษฐกิจ', 'Economic value target')],
             ].map(([n, l]) => (
               <div key={l} className="rounded-2xl bg-white/10 p-4 ring-1 ring-white/15">
-                <div className="text-2xl font-extrabold text-accent">{n}</div>
+                <div className="gold-text-gradient text-2xl font-extrabold">{n}</div>
                 <div className="text-sm text-white/80">{l}</div>
               </div>
             ))}
           </div>
         </div>
+        <div className="gold-gradient relative h-1" />
       </section>
 
       <div className="mx-auto max-w-7xl space-y-16 px-4 pt-14 sm:px-6">
-        {/* Highlights */}
+        {/* 3 zones */}
         <section>
-          <SectionTitle title={tr('ไฮไลต์ของงาน', 'Event Highlights')} />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {highlights.map((h) => (
-              <Card key={h.en} className="p-5">
-                <div className="flex size-11 items-center justify-center rounded-xl bg-brand-soft text-brand"><h.icon size={22} /></div>
-                <div className="mt-4 font-bold">{tr(h.th, h.en)}</div>
-                <p className="mt-1 text-sm text-muted">{tr(h.dth, h.den)}</p>
-              </Card>
+          <SectionTitle title={tr('3 โซนหลักของงาน', 'Three Main Zones')} subtitle={tr(`พื้นที่จัดงานไม่น้อยกว่า ${fmtNumber(EVENT.area)} ตารางเมตร`, `At least ${fmtNumber(EVENT.area)} sqm of exhibition space`)}
+            action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('ดูผังงาน', 'View floor plan')} →</Link>} />
+          <div className="grid gap-4 lg:grid-cols-3">
+            {zones.map((z) => (
+              <Link key={z.no} to={z.to} className="group relative overflow-hidden rounded-2xl bg-navy p-6 text-white ring-1 ring-white/10 transition-transform hover:-translate-y-0.5">
+                <div className="hero-net pointer-events-none absolute inset-0 opacity-60" />
+                <div className="relative flex items-center justify-between">
+                  <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold ring-1 ring-white/20">{tr('โซนที่', 'Zone')} {z.no}</span>
+                  <span className="gold-gradient flex size-11 items-center justify-center rounded-xl text-navy"><z.icon size={22} /></span>
+                </div>
+                <div className="relative mt-6 text-2xl font-bold tracking-tight">{z.name}</div>
+                <div className="relative text-sm font-semibold text-gold-light">{tr(z.th, z.en)}</div>
+                <p className="relative mt-3 text-sm leading-relaxed text-white/75">{tr(z.dth, z.den)}</p>
+                <div className="relative mt-4 text-xs font-semibold text-white/60 group-hover:text-white">{tr('ดูเพิ่มเติม', 'Learn more')} →</div>
+              </Link>
             ))}
           </div>
-        </section>
-
-        {/* Pavilions */}
-        <section>
-          <SectionTitle title="Pavilions" subtitle={tr('5 โซนหลักที่จัดกลุ่มผู้ประกอบการตามศักยภาพ', 'Five zones grouping SMEs by capability')}
-            action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('ดูผังงาน', 'View floor plan')} →</Link>} />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {(Object.keys(PAVILIONS) as PavilionId[]).map((id) => {
-              const p = PAVILIONS[id]
-              const count = EXHIBITORS.filter((e) => e.pavilion === id).length
-              return (
-                <Link key={id} to={`/exhibitors?pavilion=${id}`} className="group rounded-2xl p-5 text-white transition-transform hover:-translate-y-0.5"
-                  style={{ background: `linear-gradient(150deg, ${p.color}, ${p.color}d0)` }}>
-                  <Store size={22} className="opacity-80" />
-                  <div className="mt-6 font-bold">{p.name}</div>
-                  <div className="mt-1 text-sm text-white/80">{L(p.desc)}</div>
-                  <div className="mt-3 text-xs font-semibold text-white/70">{count} {tr('รายในเดโม', 'in demo')} →</div>
-                </Link>
-              )
-            })}
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {more.map((h) => (
+              <Link key={h.en} to={h.to}>
+                <Card className="flex h-full items-start gap-3 p-4 transition-shadow hover:shadow-md">
+                  <div className="rounded-xl bg-brand-soft p-2.5 text-brand"><h.icon size={20} /></div>
+                  <div>
+                    <div className="font-semibold">{tr(h.th, h.en)}</div>
+                    <p className="text-sm text-muted">{tr(h.dth, h.den)}</p>
+                  </div>
+                </Card>
+              </Link>
+            ))}
           </div>
         </section>
 
@@ -120,7 +139,7 @@ export default function HomePage() {
           <SectionTitle title={tr('ผู้ออกบูธแนะนำ', 'Featured Exhibitors')}
             action={<Link to="/exhibitors" className="text-sm font-semibold text-brand hover:underline">{tr('ดูทั้งหมด', 'View all')} →</Link>} />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[0, 1, 5, 7].map((i) => <ExhibitorCard key={EXHIBITORS[i].id} ex={EXHIBITORS[i]} />)}
+            {featured.map((e) => <ExhibitorCard key={e.id} ex={e} />)}
           </div>
         </section>
 
@@ -142,12 +161,12 @@ export default function HomePage() {
             </Card>
           </div>
           <div>
-            <SectionTitle title={tr('วิทยากร', 'Speakers')} />
+            <SectionTitle title={tr('วิทยากร & อินฟลูเอนเซอร์', 'Speakers & Influencers')} />
             <div className="grid grid-cols-2 gap-3">
               {SPEAKERS.map((s) => (
                 <Card key={s.name} className="p-4 text-center">
-                  <div className="mx-auto flex size-16 items-center justify-center rounded-full text-lg font-bold text-white" style={{ background: s.color }}>
-                    <Users size={26} />
+                  <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-navy text-gold-light ring-2 ring-gold/60">
+                    <Mic2 size={24} />
                   </div>
                   <div className="mt-3 text-sm font-bold">{s.name}</div>
                   <div className="text-xs text-muted">{L(s.role)}</div>
@@ -159,27 +178,37 @@ export default function HomePage() {
 
         {/* Floor plan teaser */}
         <section>
-          <SectionTitle title={tr('ผังงาน', 'Floor Plan')} subtitle={tr('คลิกที่โซนเพื่อดูผู้ออกบูธในพื้นที่', 'Tap a zone to see exhibitors there')}
+          <SectionTitle title={tr('ผังงาน', 'Floor Plan')} subtitle={L(EVENT.venue)}
             action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('เปิดผังแบบเต็ม', 'Open full map')} →</Link>} />
           <Link to="/floorplan" className="block"><FloorPlanMap compact /></Link>
         </section>
 
-        {/* CTA */}
-        <section className="hero-bg flex flex-col items-start gap-5 rounded-3xl p-8 text-white sm:flex-row sm:items-center sm:justify-between sm:p-10">
-          <div>
-            <h2 className="text-2xl font-bold sm:text-3xl">{tr('ลงทะเบียนวันนี้ รับ QR เข้างานทันที', 'Register today and get your QR ticket instantly')}</h2>
-            <p className="mt-2 text-white/80">{tr('ใช้เวลาไม่ถึง 1 นาที · เข้าชมฟรีตลอด 3 วัน', 'Takes under a minute · Free entry all 3 days')}</p>
+        {/* Quote + CTA */}
+        <section className="hero-bg relative overflow-hidden rounded-3xl p-8 text-white sm:p-10">
+          <div className="hero-net pointer-events-none absolute inset-0" />
+          <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <div className="text-xs font-bold tracking-[0.2em] text-gold-light">{EVENT.slogan}</div>
+              <h2 className="mt-3 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">“{L(EVENT.quote)}”</h2>
+            </div>
+            <LinkButton to="/register" variant="accent" size="lg" icon={<QrCode size={20} />}>{tr('ลงทะเบียน', 'Register Now')}</LinkButton>
           </div>
-          <LinkButton to="/register" variant="accent" size="lg" icon={<QrCode size={20} />}>{tr('ลงทะเบียน', 'Register Now')}</LinkButton>
         </section>
 
-        {/* Partners */}
+        {/* Organisers */}
         <section>
-          <div className="mb-4 text-center text-xs font-semibold uppercase tracking-wider text-muted">{tr('ผู้สนับสนุนและพันธมิตร (ตัวอย่าง)', 'Sponsors & Partners (sample)')}</div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            {PARTNERS.map((p) => (
-              <div key={p} className="flex h-16 items-center justify-center rounded-xl border border-line bg-surface text-sm font-bold text-muted">{p}</div>
+          <SectionTitle title={tr('หน่วยงานร่วมจัด', 'Organising Agencies')} subtitle={tr('หน่วยงานในสังกัดกระทรวงพาณิชย์ 9 หน่วยงาน และหน่วยงานพันธมิตร 5 หน่วยงาน', '9 Ministry of Commerce agencies and 5 partner organisations')} />
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {Object.values(AGENCIES).map((a) => (
+              <div key={a.short} className="flex items-center gap-3 rounded-xl border border-line bg-surface p-3">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-[11px] font-extrabold text-brand">{a.short}</span>
+                <span className="text-xs leading-tight text-muted">{L(a.name)}</span>
+              </div>
             ))}
+          </div>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="mr-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted"><Users size={14} /> {tr('พันธมิตร', 'Partners')}</span>
+            {PARTNERS.map((p) => <span key={p.en} className="rounded-full border border-line bg-surface px-3 py-1.5 text-sm font-medium">{L(p)}</span>)}
           </div>
         </section>
       </div>

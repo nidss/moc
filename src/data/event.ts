@@ -3,17 +3,25 @@ import type { AttendeeType, CategoryId, PavilionId, ProductType } from './types'
 
 export const EVENT = {
   name: 'MOC Expo 2026',
+  slogan: 'CONNECT • COLLABORATE • GROW TOGETHER',
   tagline: {
-    th: 'มหกรรมสินค้าและบริการ SME ไทย สู่ตลาดโลก',
-    en: 'Thai SME Products & Services — From Local to Global',
+    th: 'โครงการเชื่อมโยงการค้าและเจรจาธุรกิจผู้ประกอบการไทย',
+    en: 'Trade Linkage & Business Matching for Thai Entrepreneurs',
   } as LText,
-  days: ['2026-11-20', '2026-11-21', '2026-11-22'],
-  dateLabel: { th: '20 – 22 พฤศจิกายน 2569', en: '20 – 22 November 2026' } as LText,
+  quote: {
+    th: 'เชื่อมโยงโอกาสทางการค้า เสริมศักยภาพธุรกิจไทย ก้าวไกลสู่เวทีโลก',
+    en: 'Connecting trade opportunities, empowering Thai business, reaching the global stage',
+  } as LText,
+  days: ['2026-12-04', '2026-12-05', '2026-12-06'],
+  dateLabel: { th: '4 – 6 ธันวาคม 2569', en: '4 – 6 December 2026' } as LText,
   hours: '10:00 – 20:00',
   venue: {
-    th: 'ศูนย์การประชุมแห่งชาติสิริกิติ์ (QSNCC) กรุงเทพฯ',
-    en: 'Queen Sirikit National Convention Center (QSNCC), Bangkok',
+    th: 'ศูนย์การประชุมแห่งชาติสิริกิติ์ (QSNCC) Hall 7–8',
+    en: 'Queen Sirikit National Convention Center (QSNCC), Hall 7–8',
   } as LText,
+  area: 10_000,
+  /** เป้าหมายโครงการตามเอกสารงาน */
+  targets: { participants: 8_000, hubExhibitors: 200, tasteBooths: 100, economicValue: 100_000_000, budget: 25_000_000 },
 }
 
 export const CATEGORIES: Record<CategoryId, LText> = {
@@ -27,13 +35,34 @@ export const CATEGORIES: Record<CategoryId, LText> = {
   service: { th: 'บริการและแฟรนไชส์', en: 'Services & Franchise' },
 }
 
-export const PAVILIONS: Record<PavilionId, { name: string; desc: LText; color: string }> = {
-  local: { name: 'MOC Local', desc: { th: 'สินค้าชุมชนและของดีประจำจังหวัด', en: 'Community products & provincial signatures' }, color: '#0b3a82' },
-  smart: { name: 'MOC Smart Biz', desc: { th: 'SME ยุคดิจิทัลและนวัตกรรม', en: 'Digital-ready SMEs & innovation' }, color: '#0e7490' },
-  global: { name: 'MOC Global', desc: { th: 'สินค้าพร้อมส่งออกสู่ตลาดโลก', en: 'Export-ready products' }, color: '#7c3aed' },
-  franchise: { name: 'MOC Franchise', desc: { th: 'ธุรกิจแฟรนไชส์และบริการ', en: 'Franchise & service businesses' }, color: '#c2410c' },
-  green: { name: 'MOC Green (BCG)', desc: { th: 'สินค้าเศรษฐกิจหมุนเวียนและรักษ์โลก', en: 'BCG & sustainable products' }, color: '#15803d' },
+/** โซนจัดแสดงสินค้า (เรียกในโค้ดว่า pavilion) */
+export const PAVILIONS: Record<PavilionId, { name: string; zone: string; desc: LText; color: string }> = {
+  hub: { name: 'MOC HUB', zone: 'Zone 1', desc: { th: 'Pavilion สินค้าและบริการให้คำปรึกษา จาก 9 หน่วยงานกระทรวงพาณิชย์', en: 'Products & advisory services from 9 MOC agencies' }, color: '#0a3480' },
+  taste: { name: 'MOC TASTE', zone: 'Zone 3', desc: { th: 'ช้อปชิมอาหารเด็ด ร้านดัง ร้านรางวัล และร้านเชฟ', en: 'Award-winning, celebrity & chef food booths' }, color: '#a8721a' },
+  private: { name: 'Private Pavilion', zone: 'Pavilion', desc: { th: 'พื้นที่ภาคเอกชน: Modern Trade เทคโนโลยี การเงิน สื่อสาร สุขภาพ', en: 'Private sector: modern trade, tech, finance, telecom, health' }, color: '#0e7490' },
 }
+
+/** หน่วยงานในสังกัดกระทรวงพาณิชย์ที่ร่วมจัด MOC HUB */
+export const AGENCIES: Record<string, { short: string; name: LText }> = {
+  DBD: { short: 'DBD', name: { th: 'กรมพัฒนาธุรกิจการค้า', en: 'Department of Business Development' } },
+  DIP: { short: 'DIP', name: { th: 'กรมทรัพย์สินทางปัญญา', en: 'Department of Intellectual Property' } },
+  DIT: { short: 'DIT', name: { th: 'กรมการค้าภายใน', en: 'Department of Internal Trade' } },
+  DTN: { short: 'DTN', name: { th: 'กรมเจรจาการค้าระหว่างประเทศ', en: 'Department of Trade Negotiations' } },
+  DFT: { short: 'DFT', name: { th: 'กรมการค้าต่างประเทศ', en: 'Department of Foreign Trade' } },
+  DITP: { short: 'DITP', name: { th: 'กรมส่งเสริมการค้าระหว่างประเทศ', en: 'Department of International Trade Promotion' } },
+  SACIT: { short: 'SACIT', name: { th: 'สถาบันส่งเสริมศิลปหัตถกรรมไทย', en: 'SACIT' } },
+  GIT: { short: 'GIT', name: { th: 'สถาบันวิจัยและพัฒนาอัญมณีและเครื่องประดับแห่งชาติ', en: 'Gem and Jewelry Institute of Thailand' } },
+  OPS: { short: 'OPS', name: { th: 'สำนักงานปลัดกระทรวงพาณิชย์', en: 'Office of the Permanent Secretary, MOC' } },
+}
+
+/** หน่วยงานพันธมิตร 5 หน่วยงาน */
+export const PARTNERS: LText[] = [
+  { th: 'บสย.', en: 'TCG' },
+  { th: 'ธนาคารกรุงไทย', en: 'Krungthai Bank' },
+  { th: 'ธนาคารออมสิน', en: 'Government Savings Bank' },
+  { th: 'SME D Bank', en: 'SME D Bank' },
+  { th: 'สสว.', en: 'OSMEP' },
+]
 
 export const PRODUCT_TYPES: Record<ProductType, LText> = {
   consumer: { th: 'สินค้าอุปโภคบริโภค', en: 'Consumer goods' },
@@ -83,20 +112,22 @@ export const ACTIVITY_INTERESTS: Record<string, LText> = {
 }
 
 export const STAGES: Record<string, LText> = {
-  main: { th: 'Main Stage', en: 'Main Stage' },
-  upskill: { th: 'MOC Up Skill', en: 'MOC Up Skill' },
-  matching: { th: 'Matching Lounge', en: 'Matching Lounge' },
-  green: { th: 'Green Stage', en: 'Green Stage' },
+  main: { th: 'เวที MOC UP SKILL', en: 'MOC UP SKILL Stage' },
+  workshop: { th: 'ลาน Workshop', en: 'Workshop Corner' },
+  matching: { th: 'Business Matching Lounge', en: 'Business Matching Lounge' },
+  taste: { th: 'MOC TASTE', en: 'MOC TASTE' },
 }
 
 /** ตัวเลขฐานของงาน (สมมติ) — Dashboard จะบวกสิ่งที่ผู้ชม Demo ทำสดเพิ่มเข้าไป */
 export const BASELINE = {
   registered: 8245,
   checkedIn: 5820,
-  exhibitors: 210,
+  exhibitors: 300,
+  hubExhibitors: 200,
+  tasteBooths: 100,
   matchingCompleted: 428,
-  dealValue: 42_500_000,
-  forecastValue: 108_000_000,
+  dealValue: 24_500_000,
+  forecastValue: 48_000_000,
   satisfaction: 4.52,
   surveyResponses: 1864,
   nps: 62,
@@ -113,3 +144,7 @@ export const SURVEY_TOPICS: { id: string; th: string; en: string }[] = [
   { id: 'venue', th: 'สถานที่', en: 'Venue' },
   { id: 'matching', th: 'Business Matching', en: 'Business Matching' },
 ]
+
+/** ชื่อโซนสำหรับแสดงผล เช่น "Zone 1 · MOC HUB" หรือ "Private Pavilion" */
+export const zoneLabel = (id: PavilionId) =>
+  PAVILIONS[id].zone.startsWith('Zone') ? `${PAVILIONS[id].zone} · ${PAVILIONS[id].name}` : PAVILIONS[id].name
