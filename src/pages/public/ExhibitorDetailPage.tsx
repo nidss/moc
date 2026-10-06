@@ -25,8 +25,10 @@ export default function ExhibitorDetailPage() {
 
   return (
     <div>
-      <div className="h-36 sm:h-44" style={{ background: `linear-gradient(120deg, ${ex.color}, ${ex.color}aa 60%, ${pav.color}88)` }}>
-        <div className="mx-auto max-w-6xl px-4 pt-5 sm:px-6">
+      <div className="relative h-48 sm:h-64">
+        <img src={ex.banner} alt={L(ex.name)} width={1200} height={400} className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 to-transparent" />
+        <div className="relative mx-auto max-w-6xl px-4 pt-5 sm:px-6">
           <Link to="/exhibitors" className="inline-flex items-center gap-1 rounded-full bg-black/20 px-3 py-1 text-xs font-semibold text-white hover:bg-black/30">
             <ArrowLeft size={14} /> {tr('กลับไปหน้ารายชื่อ', 'Back to directory')}
           </Link>
@@ -34,7 +36,7 @@ export default function ExhibitorDetailPage() {
       </div>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-          <div className="-mt-12 w-fit rounded-3xl bg-surface p-1.5 shadow-lg ring-1 ring-line"><OrgAvatar org={ex} size="lg" /></div>
+          <div className="relative -mt-12 w-fit rounded-3xl bg-surface p-1.5 shadow-lg ring-1 ring-line"><OrgAvatar org={ex} size="lg" /></div>
           <div className="flex-1 sm:pt-4">
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">{L(ex.name)}</h1>
             <div className="mt-2 flex flex-wrap gap-2">

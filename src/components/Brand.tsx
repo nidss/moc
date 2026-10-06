@@ -40,9 +40,10 @@ function initials(name: string) {
     .toUpperCase()
 }
 
-export function OrgAvatar({ org, size = 'md' }: { org: Pick<Exhibitor, 'color'> & { brand?: string; name: Exhibitor['name'] | Buyer['name'] }; size?: 'sm' | 'md' | 'lg' }) {
+export function OrgAvatar({ org, size = 'md' }: { org: Pick<Exhibitor, 'color'> & { brand?: string; logo?: string; name: Exhibitor['name'] | Buyer['name'] }; size?: 'sm' | 'md' | 'lg' }) {
   const label = typeof org.name === 'string' ? org.name : org.name.en
   const cls = size === 'lg' ? 'size-20 text-2xl rounded-2xl' : size === 'sm' ? 'size-9 text-xs rounded-lg' : 'size-12 text-sm rounded-xl'
+  if (org.logo) return <img src={org.logo} alt={`${label} logo`} loading="lazy" decoding="async" width={80} height={80} className={`shrink-0 bg-white object-contain ring-1 ring-black/5 ${cls}`} />
   return (
     <span className={`inline-flex shrink-0 items-center justify-center font-bold text-white ${cls}`}
       style={{ background: `linear-gradient(135deg, ${org.color}, ${org.color}cc)` }}>

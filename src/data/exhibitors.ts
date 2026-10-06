@@ -162,6 +162,8 @@ export const EXHIBITORS: Exhibitor[] = SEEDS.map((s, i) => {
     id,
     name: { th, en },
     brand: en,
+    banner: `${import.meta.env.BASE_URL}images/exhibitors/${id}/banner.webp`,
+    logo: `${import.meta.env.BASE_URL}images/exhibitors/${id}/logo.webp`,
     smeOneId: `SME1-${(650100 + i * 37).toString()}`,
     category,
     pavilion,

@@ -17,6 +17,8 @@ export type Exhibitor = {
   id: string
   name: LText
   brand: string
+  banner: string
+  logo: string
   smeOneId: string
   category: CategoryId
   pavilion: PavilionId
