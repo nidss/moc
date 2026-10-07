@@ -1,12 +1,15 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import { SEED_MY_MEETINGS, makeAttendeeId } from '../data/seed'
+import { SEED_ATTENDEES, SEED_MY_MEETINGS, makeAttendeeId } from '../data/seed'
+import { EXHIBITORS } from '../data/exhibitors'
 import { BASELINE } from '../data/event'
-import type { Attendee, Meeting, SurveyResponse } from '../data/types'
+import type { Attendee, BoothLead, Meeting, SurveyResponse } from '../data/types'
 
 export type RegistrationInput = Omit<Attendee, 'id' | 'registeredAt' | 'checkedInAt' | 'type'> & { type?: Attendee['type'] }
 
 type DemoState = {
+  boothLeads: BoothLead[]
+  saveBoothLead: (input: Omit<BoothLead, 'createdAt' | 'updatedAt'>) => boolean
   /** ผู้ลงทะเบียนใหม่ที่เกิดขึ้นระหว่าง Demo */
   registrations: Attendee[]
   /** เวลาที่เช็คอิน (รวมทั้งผู้ลงทะเบียนตัวอย่างและผู้ลงทะเบียนใหม่) */
@@ -28,6 +31,7 @@ type DemoState = {
 }
 
 const initial = () => ({
+  boothLeads: [] as BoothLead[],
   registrations: [] as Attendee[],
   checkins: {} as Record<string, string>,
   myMeetings: SEED_MY_MEETINGS.map((m) => ({ ...m })),
@@ -40,6 +44,17 @@ export const useDemoStore = create<DemoState>()(
   persist(
     (set, get) => ({
       ...initial(),
+
+      saveBoothLead: (input) => {
+        const s = get()
+        if (!EXHIBITORS.some((e) => e.id === input.exhibitorId && (s.exhibitorStatus[e.id] ?? e.status) === 'approved') ||
+            ![...s.registrations, ...SEED_ATTENDEES].some((a) => a.id === input.attendeeId)) return false
+        const existing = s.boothLeads.find((l) => l.exhibitorId === input.exhibitorId && l.attendeeId === input.attendeeId)
+        const now = new Date().toISOString()
+        const lead: BoothLead = { ...input, createdAt: existing?.createdAt ?? now, updatedAt: now }
+        set({ boothLeads: existing ? s.boothLeads.map((l) => l === existing ? lead : l) : [...s.boothLeads, lead] })
+        return true
+      },
 
       register: (input) => {
         const type = input.type ?? 'visitor'

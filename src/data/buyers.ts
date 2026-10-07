@@ -1,11 +1,9 @@
 import type { Buyer } from './types'
 
-// รายชื่อ Buyer และโลโก้ที่ออกแบบเป็นแบรนด์สมมติสำหรับ Demo
-const logo = (id: string) => `${import.meta.env.BASE_URL}images/buyers/${id}.webp`
+// รายชื่อ Buyer เป็นบริษัทสมมติสำหรับ Demo
 export const BUYERS: Buyer[] = [
   {
     id: 'siam-retail', name: 'Siam Retail Group', color: '#b91c1c',
-    logo: logo('siam-retail'),
     type: { th: 'ค้าปลีก / Modern Trade', en: 'Retail / Modern Trade' },
     country: { th: 'ไทย', en: 'Thailand' },
     description: { th: 'กลุ่มห้างสรรพสินค้าและซูเปอร์มาร์เก็ต 180 สาขาทั่วประเทศ กำลังขยายเชลฟ์สินค้า SME และสินค้าสุขภาพ', en: 'Department store and supermarket group with 180 branches, expanding SME and healthy-product shelves.' },
@@ -15,7 +13,6 @@ export const BUYERS: Buyer[] = [
   },
   {
     id: 'tokyo-foods', name: 'Tokyo Fine Foods Import', color: '#7c3aed',
-    logo: logo('tokyo-foods'),
     type: { th: 'ผู้นำเข้า / Distributor', en: 'Importer / Distributor' },
     country: { th: 'ญี่ปุ่น', en: 'Japan' },
     description: { th: 'ผู้นำเข้าอาหารเอเชียระดับพรีเมียมสู่ซูเปอร์มาร์เก็ตในญี่ปุ่น', en: 'Importer of premium Asian food into Japanese supermarkets.' },
@@ -25,7 +22,6 @@ export const BUYERS: Buyer[] = [
   },
   {
     id: 'lanna-hotels', name: 'Lanna Hospitality Group', color: '#0e7490',
-    logo: logo('lanna-hotels'),
     type: { th: 'โรงแรม / HoReCa', en: 'Hotel / HoReCa' },
     country: { th: 'ไทย', en: 'Thailand' },
     description: { th: 'เครือโรงแรมและรีสอร์ท 24 แห่ง จัดซื้อของใช้สปาและของตกแต่งจากชุมชน', en: '24 hotels and resorts sourcing spa amenities and decor from communities.' },
@@ -35,7 +31,6 @@ export const BUYERS: Buyer[] = [
   },
   {
     id: 'shopnow', name: 'ShopNow Marketplace', color: '#c2410c',
-    logo: logo('shopnow'),
     type: { th: 'อีคอมเมิร์ซ', en: 'E-commerce' },
     country: { th: 'ไทย', en: 'Thailand' },
     description: { th: 'แพลตฟอร์มมาร์เก็ตเพลส กำลังเปิดโครงการ “SME Thai Mall” พร้อมส่วนลดค่าธรรมเนียม', en: 'Marketplace platform launching an “SME Thai Mall” program with reduced fees.' },
@@ -45,7 +40,6 @@ export const BUYERS: Buyer[] = [
   },
   {
     id: 'eu-green', name: 'EU Green Sourcing BV', color: '#15803d',
-    logo: logo('eu-green'),
     type: { th: 'ผู้นำเข้า (ยุโรป)', en: 'Importer (Europe)' },
     country: { th: 'เนเธอร์แลนด์', en: 'Netherlands' },
     description: { th: 'จัดหาสินค้ารักษ์โลกและสินค้า BCG สำหรับร้านค้าในยุโรป', en: 'Sources sustainable and BCG products for European retailers.' },
@@ -55,7 +49,6 @@ export const BUYERS: Buyer[] = [
   },
   {
     id: 'asean-trade', name: 'ASEAN Cross-Border Trading', color: '#a16207',
-    logo: logo('asean-trade'),
     type: { th: 'ค้าชายแดน / Trader', en: 'Cross-border Trader' },
     country: { th: 'สปป.ลาว / เวียดนาม', en: 'Lao PDR / Vietnam' },
     description: { th: 'ผู้กระจายสินค้าไทยสู่ตลาด CLMV ผ่านด่านชายแดน', en: 'Distributes Thai goods into CLMV markets through border trade.' },
@@ -65,7 +58,6 @@ export const BUYERS: Buyer[] = [
   },
   {
     id: 'franchise-hub', name: 'Franchise Investor Hub', color: '#be123c',
-    logo: logo('franchise-hub'),
     type: { th: 'นักลงทุนแฟรนไชส์', en: 'Franchise Investor' },
     country: { th: 'ไทย / มาเลเซีย', en: 'Thailand / Malaysia' },
     description: { th: 'กลุ่มนักลงทุนที่มองหาแฟรนไชส์ไทยเพื่อขยายสาขาในมาเลเซีย', en: 'Investor group seeking Thai franchises to expand into Malaysia.' },
@@ -75,7 +67,6 @@ export const BUYERS: Buyer[] = [
   },
   {
     id: 'gov-procure', name: 'Public Sector Procurement Network', color: '#1d4ed8',
-    logo: logo('gov-procure'),
     type: { th: 'จัดซื้อภาครัฐ', en: 'Public Procurement' },
     country: { th: 'ไทย', en: 'Thailand' },
     description: { th: 'เครือข่ายหน่วยงานจัดซื้อที่สนับสนุนสินค้า SME ไทย (Thai SME-GP)', en: 'Procurement network supporting Thai SME goods (Thai SME-GP).' },
