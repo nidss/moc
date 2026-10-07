@@ -1,0 +1,37 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "id": "siam-retail",
+      "prompt": "Use case: logo-brand. Create ONE original polished logo symbol for the fictional demo company \"Siam Retail Group\". Concept: a distinctive interlocking ribbon S forming a storefront canopy, confident premium Thai modern retail. Primary brand color #b91c1c, optional darker shade of same hue. Bold vector-like flat geometry, expertly balanced negative space, simple distinctive silhouette readable at 48px. Square image, pure white background, centered standalone symbol occupying about 70% of canvas. No text, no letters, no wordmark, no gradients, no shadows, no mockup, no watermark. This will be used as the buyer avatar on a business matching website."
+    },
+    {
+      "id": "tokyo-foods",
+      "prompt": "Use case: logo-brand. Create ONE original polished logo symbol for the fictional demo company \"Tokyo Fine Foods Import\". Concept: a refined rice bowl and rising sun joined into a single geometric mark, Japanese premium food importer. Primary brand color #7c3aed, optional darker shade of same hue. Bold vector-like flat geometry, expertly balanced negative space, simple distinctive silhouette readable at 48px. Square image, pure white background, centered standalone symbol occupying about 70% of canvas. No text, no letters, no wordmark, no gradients, no shadows, no mockup, no watermark. This will be used as the buyer avatar on a business matching website."
+    },
+    {
+      "id": "lanna-hotels",
+      "prompt": "Use case: logo-brand. Create ONE original polished logo symbol for the fictional demo company \"Lanna Hospitality Group\". Concept: a graceful northern Thai roofline combined with a lotus, elegant hospitality and resort identity. Primary brand color #0e7490, optional darker shade of same hue. Bold vector-like flat geometry, expertly balanced negative space, simple distinctive silhouette readable at 48px. Square image, pure white background, centered standalone symbol occupying about 70% of canvas. No text, no letters, no wordmark, no gradients, no shadows, no mockup, no watermark. This will be used as the buyer avatar on a business matching website."
+    },
+    {
+      "id": "shopnow",
+      "prompt": "Use case: logo-brand. Create ONE original polished logo symbol for the fictional demo company \"ShopNow Marketplace\". Concept: a friendly shopping bag with a forward motion arrow cleverly integrated, contemporary online marketplace. Primary brand color #c2410c, optional darker shade of same hue. Bold vector-like flat geometry, expertly balanced negative space, simple distinctive silhouette readable at 48px. Square image, pure white background, centered standalone symbol occupying about 70% of canvas. No text, no letters, no wordmark, no gradients, no shadows, no mockup, no watermark. This will be used as the buyer avatar on a business matching website."
+    },
+    {
+      "id": "eu-green",
+      "prompt": "Use case: logo-brand. Create ONE original polished logo symbol for the fictional demo company \"EU Green Sourcing BV\". Concept: two interlocking leaves forming a circular sourcing loop, precise sustainable European trade identity. Primary brand color #15803d, optional darker shade of same hue. Bold vector-like flat geometry, expertly balanced negative space, simple distinctive silhouette readable at 48px. Square image, pure white background, centered standalone symbol occupying about 70% of canvas. No text, no letters, no wordmark, no gradients, no shadows, no mockup, no watermark. This will be used as the buyer avatar on a business matching website."
+    },
+    {
+      "id": "asean-trade",
+      "prompt": "Use case: logo-brand. Create ONE original polished logo symbol for the fictional demo company \"ASEAN Cross-Border Trading\". Concept: two interlocking bridge arches and directional paths, international cross-border trade; no official ASEAN emblem. Primary brand color #a16207, optional darker shade of same hue. Bold vector-like flat geometry, expertly balanced negative space, simple distinctive silhouette readable at 48px. Square image, pure white background, centered standalone symbol occupying about 70% of canvas. No text, no letters, no wordmark, no gradients, no shadows, no mockup, no watermark. This will be used as the buyer avatar on a business matching website."
+    },
+    {
+      "id": "franchise-hub",
+      "prompt": "Use case: logo-brand. Create ONE original polished logo symbol for the fictional demo company \"Franchise Investor Hub\". Concept: a central storefront linked to three satellite geometric nodes, growth and franchise network. Primary brand color #be123c, optional darker shade of same hue. Bold vector-like flat geometry, expertly balanced negative space, simple distinctive silhouette readable at 48px. Square image, pure white background, centered standalone symbol occupying about 70% of canvas. No text, no letters, no wordmark, no gradients, no shadows, no mockup, no watermark. This will be used as the buyer avatar on a business matching website."
+    },
+    {
+      "id": "gov-procure",
+      "prompt": "Use case: logo-brand. Create ONE original polished logo symbol for the fictional demo company \"Public Sector Procurement Network\". Concept: an abstract open civic colonnade combined with connected squares, reliable procurement network; no government seal or national emblem. Primary brand color #1d4ed8, optional darker shade of same hue. Bold vector-like flat geometry, expertly balanced negative space, simple distinctive silhouette readable at 48px. Square image, pure white background, centered standalone symbol occupying about 70% of canvas. No text, no letters, no wordmark, no gradients, no shadows, no mockup, no watermark. This will be used as the buyer avatar on a business matching website."
+    }
+  ]
+}
