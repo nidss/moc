@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Bot, Briefcase, CalendarDays, Clock, Flower2, GraduationCap, Handshake, MapPin, Mic2, QrCode, Store, Users, UtensilsCrossed } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { AGENCIES, EVENT, PARTNERS, STAGES } from '../../data/event'
+import { AGENCY_LOGOS, PARTNER_LOGOS } from '../../data/agencyLogos'
 import { EXHIBITORS } from '../../data/exhibitors'
 import { SCHEDULE } from '../../data/schedule'
 import { LinkButton } from '../../components/ui/Button'
@@ -200,17 +201,28 @@ export default function HomePage() {
         {/* Organisers */}
         <section>
           <SectionTitle title={tr('หน่วยงานร่วมจัด', 'Organising Agencies')} subtitle={tr('หน่วยงานในสังกัดกระทรวงพาณิชย์ 9 หน่วยงาน และหน่วยงานพันธมิตร 5 หน่วยงาน', '9 Ministry of Commerce agencies and 5 partner organisations')} />
-          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {Object.values(AGENCIES).map((a) => (
-              <div key={a.short} className="flex items-center gap-3 rounded-xl border border-line bg-surface p-3">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-brand-soft text-[11px] font-extrabold text-brand">{a.short}</span>
-                <span className="text-xs leading-tight text-muted">{L(a.name)}</span>
+              <div key={a.short} className="flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-4 text-center">
+                <div className="flex h-20 w-full items-center justify-center rounded-lg bg-white p-2">
+                  <img src={AGENCY_LOGOS[a.short]} alt={L(a.name)} width={160} height={64} loading="lazy" decoding="async" className="h-full w-full object-contain" />
+                </div>
+                <span className="text-xs leading-relaxed text-muted">{L(a.name)}</span>
               </div>
             ))}
           </div>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
+          <div className="mt-6">
             <span className="mr-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted"><Users size={14} /> {tr('พันธมิตร', 'Partners')}</span>
-            {PARTNERS.map((p) => <span key={p.en} className="rounded-full border border-line bg-surface px-3 py-1.5 text-sm font-medium">{L(p)}</span>)}
+            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+              {PARTNERS.map((p) => (
+                <div key={p.en} className="flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-4 text-center">
+                  <div className="flex h-20 w-full items-center justify-center rounded-lg bg-white p-2">
+                    <img src={PARTNER_LOGOS[p.en]} alt={L(p)} width={160} height={64} loading="lazy" decoding="async" className="h-full w-full object-contain" />
+                  </div>
+                  <span className="text-xs leading-relaxed text-muted">{L(p)}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </div>

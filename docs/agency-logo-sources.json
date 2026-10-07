@@ -1,0 +1,72 @@
+[
+  {
+    "id": "DBD",
+    "file": "dbd.png",
+    "source": "https://www.moc.go.th/cms/s1/u1/biz info/flie/DBD.png"
+  },
+  {
+    "id": "DIP",
+    "file": "dip.png",
+    "source": "https://www.moc.go.th/cms/s1/u1/biz info/flie/DIP_22.png"
+  },
+  {
+    "id": "DIT",
+    "file": "dit.png",
+    "source": "https://www.dit.go.th/media/r5zkpjz1/dit-logo.png"
+  },
+  {
+    "id": "DTN",
+    "file": "dtn.png",
+    "source": "https://www.moc.go.th/cms/s1/u1/biz info/flie/DTN.png"
+  },
+  {
+    "id": "DFT",
+    "file": "dft.png",
+    "source": "https://www.moc.go.th/cms/s1/u1/biz info/flie/Logo_OPS_banner_web_moc1 - Copy 1.png"
+  },
+  {
+    "id": "DITP",
+    "file": "ditp.png",
+    "source": "https://www.moc.go.th/cms/s1/u431/2025_05_13_10_54_16_กระทรวงพาณิช.png"
+  },
+  {
+    "id": "SACIT",
+    "file": "sacit.svg",
+    "source": "https://member.sacit.or.th/image/layout/logo-header-new.svg"
+  },
+  {
+    "id": "GIT",
+    "file": "git.png",
+    "source": "https://git.or.th/front/template/default/assets/img/static/git-logo.png"
+  },
+  {
+    "id": "OPS",
+    "file": "ops.png",
+    "source": "https://www.moc.go.th/cms/s1/u1/biz info/flie/Logo_OPS_banner_web_moc1.png"
+  },
+  {
+    "id": "TCG",
+    "file": "tcg.png",
+    "source": "https://www.tcg.or.th/images/tcg-logo-th.png"
+  },
+  {
+    "id": "KTB",
+    "file": "ktb.png",
+    "source": "https://oapi-pf-prd-web-content-assets.s3.ap-southeast-1.amazonaws.com/development-document/direct-debit/direct-debit/Circular_Logo.png"
+  },
+  {
+    "id": "GSB",
+    "file": "gsb.jpg",
+    "source": "https://www.gsb.or.th/media/2025/10/GSB-logo-grey-80.jpg"
+  },
+  {
+    "id": "SME",
+    "file": "sme.png",
+    "source": "https://www.smebank.co.th/wp-content/themes/smewebsite/images/logo.png"
+  },
+  {
+    "id": "OSMEP",
+    "file": "osmep.svg",
+    "source": "https://www.sme.go.th/assets/images/logo/logo_osmep_blue.svg"
+  }
+]
