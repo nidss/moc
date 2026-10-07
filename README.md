@@ -55,3 +55,12 @@ Workflow `.github/workflows/deploy.yml` จะ build และ deploy อัต�
 3. Merge โค้ดเข้า `main` แล้วเปิด `https://<owner>.github.io/moc/`
 
 ถ้าชื่อ repo ไม่ใช่ `moc` ให้ตั้ง environment variable `VITE_BASE=/<ชื่อ-repo>/` ตอน build
+
+## Booth owner / Visitor leads
+
+Open `/booth` (GitHub Pages: `/#/booth`) or choose **เจ้าของบูธ / Booth owner** in the floating Demo menu.
+Select an approved booth, scan the visitor's existing registration QR ticket, review their details, then confirm the record.
+Camera scanning, demo simulation, and manual lookup are supported. Mark the visitor as visited, interested, or follow up and add notes.
+The lead list and Excel export contain only the selected booth's visitors. Scanning the same ticket again updates the existing record; the same attendee can visit different booths.
+Booth scans do not change event check-in status or attendance KPIs. Leads persist in this browser and are cleared by Reset demo data.
+This is a demo booth selector, without owner authentication or cross-device synchronization. A production implementation needs authenticated booth ownership and server-side lead storage/access control.

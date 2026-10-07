@@ -110,3 +110,11 @@ export type SurveyResponse = {
   comment: string
   at: string
 }
+export type BoothLead = {
+  exhibitorId: string
+  attendeeId: string
+  interest: 'visited' | 'interested' | 'followup'
+  note: string
+  createdAt: string
+  updatedAt: string
+}

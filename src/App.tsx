@@ -5,6 +5,7 @@ import { StaffLayout } from './layouts/StaffLayout'
 import { AdminLayout } from './layouts/AdminLayout'
 import { DemoNav } from './layouts/DemoNav'
 import HomePage from './pages/public/HomePage'
+const BoothPage = lazy(() => import('./pages/booth/BoothPage'))
 const EventPage = lazy(() => import('./pages/public/EventPage'))
 const SchedulePage = lazy(() => import('./pages/public/SchedulePage'))
 const ExhibitorsPage = lazy(() => import('./pages/public/ExhibitorsPage'))
@@ -35,6 +36,7 @@ export default function App() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="booth" element={<BoothPage />} />
           <Route path="event" element={<EventPage />} />
           <Route path="schedule" element={<SchedulePage />} />
           <Route path="exhibitors" element={<ExhibitorsPage />} />

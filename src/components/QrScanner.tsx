@@ -43,7 +43,7 @@ export function QrScanner({ onResult }: { onResult: (text: string) => void }) {
         (text) => {
           if (done.current) return
           done.current = true
-          void stop().then(() => onResultRef.current(text.trim()))
+          void stop().then(() => { setState('idle'); onResultRef.current(text.trim()) })
         },
         () => {},
       )
