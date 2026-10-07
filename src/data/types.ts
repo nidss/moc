@@ -41,6 +41,7 @@ export type Exhibitor = {
 export type Buyer = {
   id: string
   name: string
+  logo: string
   type: LText
   country: LText
   description: LText
