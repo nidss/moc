@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
-import { QRCodeSVG } from 'qrcode.react'
 import { ArrowLeft, Briefcase, Globe, Mail, MapPin, MessageCircle, Phone, ShieldCheck, ShoppingCart, User } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { AGENCIES, CATEGORIES, PAVILIONS, PROVINCES, zoneLabel } from '../../data/event'
@@ -69,19 +68,10 @@ export default function ExhibitorDetailPage() {
                     <div className="aspect-square overflow-hidden bg-surface-2">
                       <img src={p.image} alt={L(p.name)} loading="lazy" decoding="async" width={640} height={640} className="h-full w-full object-cover" />
                     </div>
-                    <div className="flex flex-1 gap-3 p-4">
-                      <div className="min-w-0 flex-1">
-                        <div className="font-semibold">{L(p.name)}</div>
-                        <div className="text-xs text-muted">{L(p.unit)}</div>
-                        <div className="mt-1 text-xl font-extrabold text-brand">{fmtMoney(p.price)}</div>
-                        <div className="mt-2 flex flex-wrap gap-1">
-                          {p.channels.map((c) => <Badge key={c} tone="accent"><ShoppingCart size={11} /> {c}</Badge>)}
-                        </div>
-                      </div>
-                      <div className="flex shrink-0 flex-col items-center justify-center gap-1 border-l border-line pl-3">
-                        <QRCodeSVG value={`https://moc-expo.example/p/${p.id}`} size={64} bgColor="transparent" fgColor="currentColor" />
-                        <span className="text-[10px] text-muted">{tr('สแกนซื้อ', 'Scan to buy')}</span>
-                      </div>
+                    <div className="flex flex-1 flex-col p-4">
+                      <div className="font-semibold">{L(p.name)}</div>
+                      <div className="text-xs text-muted">{L(p.unit)}</div>
+                      <div className="mt-1 text-xl font-extrabold text-brand">{fmtMoney(p.price)}</div>
                     </div>
                   </Card>
                 ))}
