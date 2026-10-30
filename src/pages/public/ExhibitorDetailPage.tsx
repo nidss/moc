@@ -3,17 +3,18 @@ import { Link, Navigate, useLocation, useParams } from 'react-router-dom'
 import { ArrowLeft, Briefcase, Globe, Mail, MapPin, MessageCircle, Phone, ShieldCheck, ShoppingCart, User } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { AGENCIES, CATEGORIES, PAVILIONS, PROVINCES, zoneLabel } from '../../data/event'
-import { EXHIBITOR_BY_ID } from '../../data/exhibitors'
+import { useExhibitor } from '../../store/selectors'
+import { catalogProducts } from '../../lib/catalog'
 import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { LinkButton } from '../../components/ui/Button'
-import { OrgAvatar } from '../../components/Brand'
+import { OrgAvatar, ProductArt } from '../../components/Brand'
 
 export default function ExhibitorDetailPage() {
   const { id = '' } = useParams()
   const { hash } = useLocation()
   const { tr, L, fmtMoney } = useI18n()
-  const ex = EXHIBITOR_BY_ID[id]
+  const ex = useExhibitor(id)
 
   useEffect(() => {
     if (hash === '#products') document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })
@@ -21,11 +22,14 @@ export default function ExhibitorDetailPage() {
 
   if (!ex) return <Navigate to="/exhibitors" replace />
   const pav = PAVILIONS[ex.pavilion]
+  const products = catalogProducts(ex)
 
   return (
     <div>
       <div className="relative h-48 sm:h-64">
-        <img src={ex.banner} alt={L(ex.name)} width={1200} height={400} className="absolute inset-0 h-full w-full object-cover" />
+        {ex.banner
+          ? <img src={ex.banner} alt={L(ex.name)} width={1200} height={400} className="absolute inset-0 h-full w-full object-cover" />
+          : <ProductArt category={ex.category} color={ex.color} className="absolute inset-0 h-full w-full" />}
         <div className="absolute inset-0 bg-gradient-to-b from-black/25 to-transparent" />
         <div className="relative mx-auto max-w-6xl px-4 pt-5 sm:px-6">
           <Link to="/exhibitors" className="inline-flex items-center gap-1 rounded-full bg-black/20 px-3 py-1 text-xs font-semibold text-white hover:bg-black/30">
@@ -42,11 +46,11 @@ export default function ExhibitorDetailPage() {
               <Badge tone="brand">{L(CATEGORIES[ex.category])}</Badge>
               <Badge tone="neutral">{zoneLabel(ex.pavilion)}</Badge>
               {ex.agency && <Badge tone="accent">{tr('หน่วยงาน', 'Agency')}: {L(AGENCIES[ex.agency].name)}</Badge>}
-              <Badge tone="success"><ShieldCheck size={12} /> SME ONE ID {ex.smeOneId}</Badge>
+              {ex.smeOneId && <Badge tone="success"><ShieldCheck size={12} /> SME ONE ID {ex.smeOneId}</Badge>}
             </div>
           </div>
           <div className="flex gap-2 sm:pt-5">
-            <LinkButton to="/matching" icon={<Briefcase size={16} />}>Business Matching</LinkButton>
+            {ex.matching && <LinkButton to="/portal/matching" icon={<Briefcase size={16} />}>Business Matching</LinkButton>}
           </div>
         </div>
 
@@ -54,16 +58,16 @@ export default function ExhibitorDetailPage() {
           <div className="space-y-6">
             <Card className="p-5 sm:p-6">
               <h2 className="font-bold">{tr('เกี่ยวกับแบรนด์', 'About the brand')}</h2>
-              <p className="mt-2 leading-relaxed text-muted">{L(ex.description)}</p>
+              <p className="mt-2 leading-relaxed text-muted">{L(ex.description) || tr('ผู้ประกอบการยังไม่ได้เพิ่มคำอธิบายแบรนด์', 'No brand description yet')}</p>
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {ex.tags.map((t) => <Badge key={t}>#{t}</Badge>)}
               </div>
             </Card>
 
             <section id="products" className="scroll-mt-24">
-              <h2 className="mb-3 text-lg font-bold">e-Catalog · {tr('สินค้า', 'Products')} ({ex.products.length})</h2>
+              <h2 className="mb-3 text-lg font-bold">e-Catalog · {tr('สินค้า', 'Products')} ({products.length})</h2>
               <div className="grid gap-4 sm:grid-cols-2">
-                {ex.products.map((p) => (
+                {products.map((p) => (
                   <Card key={p.id} className="flex flex-col overflow-hidden">
                     <div className="aspect-square overflow-hidden bg-surface-2">
                       <img src={p.image} alt={L(p.name)} loading="lazy" decoding="async" width={640} height={640} className="h-full w-full object-cover" />

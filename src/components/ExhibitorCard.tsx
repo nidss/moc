@@ -5,14 +5,16 @@ import { CATEGORIES, PAVILIONS, PROVINCES } from '../data/event'
 import type { Exhibitor } from '../data/types'
 import { Card } from './ui/Card'
 import { Badge } from './ui/Badge'
-import { OrgAvatar } from './Brand'
+import { OrgAvatar, ProductArt } from './Brand'
 
 export function ExhibitorCard({ ex }: { ex: Exhibitor }) {
   const { tr, L } = useI18n()
   return (
     <Card className="group flex flex-col overflow-hidden transition-shadow hover:shadow-lg">
       <Link to={`/exhibitors/${ex.id}`} className="relative block overflow-hidden">
-        <img src={ex.banner} alt={L(ex.name)} loading="lazy" decoding="async" width={1200} height={400} className="h-36 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+        {ex.banner
+          ? <img src={ex.banner} alt={L(ex.name)} loading="lazy" decoding="async" width={1200} height={400} className="h-36 w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+          : <ProductArt category={ex.category} color={ex.color} className="h-36 w-full" />}
         <span className="absolute top-3 left-3 rounded-full px-2 py-0.5 text-[11px] font-semibold text-white" style={{ background: PAVILIONS[ex.pavilion].color }}>
           {PAVILIONS[ex.pavilion].name}
         </span>
@@ -37,7 +39,7 @@ export function ExhibitorCard({ ex }: { ex: Exhibitor }) {
         <div className="mt-auto grid grid-cols-3 gap-1.5 pt-4 text-xs font-semibold">
           <Link to={`/exhibitors/${ex.id}`} className="rounded-lg bg-surface-2 px-2 py-2 text-center hover:bg-brand-soft hover:text-brand">{tr('โปรไฟล์', 'Profile')}</Link>
           <Link to={`/exhibitors/${ex.id}#products`} className="rounded-lg bg-surface-2 px-2 py-2 text-center hover:bg-brand-soft hover:text-brand">{tr('สินค้า', 'Products')}</Link>
-          <Link to="/matching" className="flex items-center justify-center gap-1 rounded-lg bg-brand-soft px-2 py-2 text-center text-brand hover:bg-brand hover:text-white">
+          <Link to="/portal/matching" className="flex items-center justify-center gap-1 rounded-lg bg-brand-soft px-2 py-2 text-center text-brand hover:bg-brand hover:text-white">
             <Briefcase size={12} /> Match
           </Link>
         </div>

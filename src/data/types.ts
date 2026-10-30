@@ -4,6 +4,7 @@ export type CategoryId = 'food' | 'health' | 'fashion' | 'home' | 'agri' | 'craf
 export type PavilionId = 'hub' | 'taste' | 'private'
 export type ProductType = 'consumer' | 'processed' | 'raw' | 'service'
 export type AttendeeType = 'visitor' | 'sme' | 'buyer' | 'speaker' | 'media'
+export type ShopType = 'general' | 'celebrity' | 'influencer' | 'chef' | 'award'
 
 export type Product = {
   id: string
@@ -12,6 +13,8 @@ export type Product = {
   price: number
   unit: LText
   channels: string[]
+  /** ซ่อนจาก e-Catalog โดยเจ้าของร้าน */
+  hidden?: boolean
 }
 
 export type Exhibitor = {
@@ -36,6 +39,13 @@ export type Exhibitor = {
   products: Product[]
   status: 'approved' | 'pending'
   color: string
+  /** เข้าร่วม Business Matching (เลือกตอนลงทะเบียน เปลี่ยนได้ใน SME Portal) */
+  matching: boolean
+  owner?: string
+  shopType?: ShopType
+  /** ชื่อไฟล์เอกสารประกอบบริษัท (เห็นเฉพาะผู้จัดงาน) */
+  documents?: string[]
+  registeredAt?: string
 }
 
 export type Buyer = {

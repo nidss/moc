@@ -152,7 +152,7 @@ const AGENCY_OF: Record<string, string> = { 'thai-organic-farm': 'DBD', 'lanna-c
 
 const PALETTE = ['#0a3480', '#0e7490', '#7c3aed', '#c2410c', '#15803d', '#be123c', '#a16207', '#1d4ed8']
 
-const STORE_CHANNELS = ['Shopee', 'Lazada', 'Website', 'LINE Shop', 'TikTok Shop']
+export const STORE_CHANNELS = ['Shopee', 'Lazada', 'Website', 'LINE Shop', 'TikTok Shop']
 
 export const EXHIBITORS: Exhibitor[] = SEEDS.map((s, i) => {
   const [id, th, en, category, pavilion, province, productType, descTh, descEn, tags, products] = s
@@ -195,6 +195,8 @@ export const EXHIBITORS: Exhibitor[] = SEEDS.map((s, i) => {
     })),
     status: i % 9 === 8 ? 'pending' : 'approved',
     color: PALETTE[i % PALETTE.length],
+    matching: i % 6 !== 5,
+    shopType: pavilion === 'taste' ? 'award' : 'general',
   }
 })
 

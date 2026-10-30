@@ -1,15 +1,14 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { BarChart3, Briefcase, ChevronDown, Map, PlayCircle, QrCode, RotateCcw, User, Sparkles, Store } from 'lucide-react'
+import { BarChart3, ChevronDown, Map, PlayCircle, QrCode, RotateCcw, User, Sparkles, Store } from 'lucide-react'
 import { useI18n } from '../i18n/I18nProvider'
 import { useDemoStore } from '../store/demoStore'
 import { LangToggle } from './LangToggle'
 
 const ROLES = [
   { to: '/', match: ['/', '/event', '/schedule', '/exhibitors', '/floorplan', '/register', '/survey'], icon: User, th: 'ผู้เข้าชม', en: 'Visitor' },
-  { to: '/booth', match: ['/booth'], icon: Store, th: 'เจ้าของบูธ', en: 'Booth owner' },
   { to: '/staff/scan', match: ['/staff'], icon: QrCode, th: 'เจ้าหน้าที่', en: 'Staff' },
-  { to: '/matching', match: ['/matching'], icon: Briefcase, th: 'SME / Buyer', en: 'SME / Buyer' },
+  { to: '/portal', match: ['/portal', '/register/exhibitor', '/matching', '/booth'], icon: Store, th: 'ร้านค้า (SME)', en: 'Exhibitor (SME)' },
   { to: '/admin', match: ['/admin'], icon: BarChart3, th: 'ผู้จัดงาน', en: 'Organizer' },
 ]
 
@@ -21,7 +20,9 @@ export function DemoNav() {
   const reset = useDemoStore((s) => s.reset)
   const [open, setOpen] = useState(false)
 
-  const active = ROLES.find((r) => r.match.some((m) => (m === '/' ? pathname === '/' : pathname.startsWith(m))))
+  // เลือกบทบาทจาก path ที่ตรงยาวที่สุด (/register/exhibitor เป็นของร้านค้า ไม่ใช่ผู้เข้าชม)
+  const hit = (m: string) => (m === '/' ? pathname === '/' : pathname.startsWith(m)) ? m.length : -1
+  const active = ROLES.map((r) => ({ r, len: Math.max(...r.match.map(hit)) })).filter((x) => x.len >= 0).sort((a, b) => b.len - a.len)[0]?.r
 
   return (
     <div className={`fixed right-3 z-40 print:hidden sm:right-5 ${pathname.startsWith('/staff') ? 'bottom-20' : 'bottom-3 sm:bottom-5'}`}>

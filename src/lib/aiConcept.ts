@@ -33,7 +33,7 @@ export function answer(question: string, lang: Lang): AiAnswer {
       ),
       buyer,
       exhibitors: recs,
-      link: { to: `/matching/request/${buyer.id}`, label: t('ขอนัดประชุมกับ Buyer นี้', 'Request a meeting with this buyer') },
+      link: { to: `/portal/matching/request/${buyer.id}`, label: t('ขอนัดประชุมกับ Buyer นี้', 'Request a meeting with this buyer') },
     }
   }
 
@@ -75,7 +75,7 @@ export function answer(question: string, lang: Lang): AiAnswer {
         'Business Matching ทำได้ 3 ขั้นตอน:\n1) ค้นหา Buyer ที่สนใจหมวดสินค้าของคุณ\n2) เลือกวันและเวลา (ช่วงละ 30 นาที)\n3) พบกันที่ Matching Lounge แล้วบันทึกผลดีลในระบบ\n\nตอนนี้มี Buyer เปิดรับนัด 8 ราย จาก 6 ประเทศ',
         'Business Matching in 3 steps:\n1) Find buyers interested in your category\n2) Pick a date and 30-minute slot\n3) Meet at the Matching Lounge and log the deal outcome\n\n8 buyers from 6 countries are accepting meetings now.',
       ),
-      link: { to: '/matching', label: t('ไปที่ Business Matching', 'Go to Business Matching') },
+      link: { to: '/portal/matching', label: t('ไปที่ Business Matching', 'Go to Business Matching') },
     }
   }
 

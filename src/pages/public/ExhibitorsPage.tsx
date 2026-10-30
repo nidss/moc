@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Search, SlidersHorizontal, X } from 'lucide-react'
+import { LogIn, Search, SlidersHorizontal, Store, X } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { CATEGORIES, PAVILIONS, PRODUCT_TYPES, PROVINCES, zoneLabel } from '../../data/event'
 import type { PavilionId } from '../../data/types'
@@ -8,6 +8,7 @@ import { useExhibitors } from '../../store/selectors'
 import { PageHeader, EmptyState } from '../../components/ui/Card'
 import { Input, Select } from '../../components/ui/Form'
 import { ExhibitorCard } from '../../components/ExhibitorCard'
+import { LinkButton } from '../../components/ui/Button'
 
 const KEYS = ['category', 'pavilion', 'province', 'type'] as const
 
@@ -44,7 +45,11 @@ export default function ExhibitorsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
       <PageHeader eyebrow={tr('ผู้ออกบูธ', 'Exhibitors')} title={tr('ค้นหาผู้ประกอบการ SME', 'Find SME Exhibitors')}
-        subtitle={tr('ค้นหาตามชื่อร้าน สินค้า หมวดหมู่ หรือจังหวัด แล้วดู e-Catalog ได้ทันที', 'Search by shop, product, category or province and open their e-Catalog.')} />
+        subtitle={tr('ค้นหาตามชื่อร้าน สินค้า หมวดหมู่ หรือจังหวัด แล้วดู e-Catalog ได้ทันที', 'Search by shop, product, category or province and open their e-Catalog.')}
+        actions={<>
+          <LinkButton to="/portal/login" variant="secondary" icon={<LogIn size={16} />}>{tr('เข้าสู่ระบบร้านค้า', 'Shop login')}</LinkButton>
+          <LinkButton to="/register/exhibitor" variant="accent" icon={<Store size={16} />}>{tr('ลงทะเบียนผู้ประกอบการ', 'Register as exhibitor')}</LinkButton>
+        </>} />
 
       <div className="rounded-2xl border border-line bg-surface p-3 sm:p-4">
         <div className="relative">

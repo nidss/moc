@@ -3,7 +3,7 @@ import { CheckCircle2, ClipboardEdit, MapPin, Plus } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { BUYER_BY_ID, OBJECTIVES } from '../../data/buyers'
 import { EVENT } from '../../data/event'
-import { EXHIBITOR_BY_ID } from '../../data/exhibitors'
+import { usePortalMe } from '../../store/selectors'
 import { useDemoStore } from '../../store/demoStore'
 import { Card, EmptyState } from '../../components/ui/Card'
 import { Button, LinkButton } from '../../components/ui/Button'
@@ -13,7 +13,8 @@ export default function MyMeetingsPage() {
   const { tr, L, fmtDate, fmtMoney } = useI18n()
   const [params] = useSearchParams()
   const newId = params.get('new')
-  const meetings = useDemoStore((s) => s.myMeetings)
+  const me = usePortalMe()
+  const meetings = useDemoStore((s) => s.myMeetings).filter((m) => m.exhibitorId === me.id)
   const updateMeeting = useDemoStore((s) => s.updateMeeting)
 
   const sorted = [...meetings].sort((a, b) => a.day - b.day || a.time.localeCompare(b.time))
@@ -29,7 +30,7 @@ export default function MyMeetingsPage() {
       )}
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-bold">{tr('ตารางนัดหมาย', 'Meeting timeline')}</h2>
-        <LinkButton to="/matching" variant="secondary" size="sm" icon={<Plus size={16} />}>{tr('นัดเพิ่ม', 'New meeting')}</LinkButton>
+        <LinkButton to="/portal/matching" variant="secondary" size="sm" icon={<Plus size={16} />}>{tr('นัดเพิ่ม', 'New meeting')}</LinkButton>
       </div>
 
       {sorted.length === 0 && <EmptyState title={tr('ยังไม่มีนัดหมาย', 'No meetings yet')} />}
@@ -40,7 +41,6 @@ export default function MyMeetingsPage() {
           <ol className="relative space-y-3 border-l-2 border-line pl-6">
             {sorted.filter((m) => m.day === d).map((m) => {
               const buyer = BUYER_BY_ID[m.buyerId]
-              const me = EXHIBITOR_BY_ID[m.exhibitorId]
               return (
                 <li key={m.id} className="relative">
                   <span className={`absolute top-5 -left-[31px] size-3.5 rounded-full ring-4 ring-bg ${m.status === 'completed' ? 'bg-success' : m.status === 'pending' ? 'bg-warning' : 'bg-brand'}`} />
@@ -74,10 +74,10 @@ export default function MyMeetingsPage() {
                         </Button>
                       )}
                       {m.status === 'confirmed' && (
-                        <LinkButton to={`/matching/meetings/${m.id}/result`} size="sm" icon={<ClipboardEdit size={16} />}>{tr('บันทึกผลการประชุม', 'Record result')}</LinkButton>
+                        <LinkButton to={`/portal/matching/meetings/${m.id}/result`} size="sm" icon={<ClipboardEdit size={16} />}>{tr('บันทึกผลการประชุม', 'Record result')}</LinkButton>
                       )}
                       {m.status === 'completed' && (
-                        <Link to={`/matching/meetings/${m.id}/result`} className="text-sm font-semibold text-brand hover:underline">{tr('แก้ไขผล', 'Edit result')}</Link>
+                        <Link to={`/portal/matching/meetings/${m.id}/result`} className="text-sm font-semibold text-brand hover:underline">{tr('แก้ไขผล', 'Edit result')}</Link>
                       )}
                     </div>
                   </Card>

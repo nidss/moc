@@ -4,7 +4,7 @@ import { ArrowLeft, CalendarCheck, Clock } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { BUYER_BY_ID, OBJECTIVES, TIME_SLOTS } from '../../data/buyers'
 import { EVENT } from '../../data/event'
-import { DEMO_SME_ID } from '../../data/exhibitors'
+import { usePortalMe } from '../../store/selectors'
 import { useDemoStore } from '../../store/demoStore'
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
@@ -16,7 +16,8 @@ export default function RequestMeetingPage() {
   const { buyerId = '' } = useParams()
   const { tr, L, fmtDate } = useI18n()
   const navigate = useNavigate()
-  const myMeetings = useDemoStore((s) => s.myMeetings)
+  const me = usePortalMe()
+  const myMeetings = useDemoStore((s) => s.myMeetings).filter((m) => m.exhibitorId === me.id)
   const requestMeeting = useDemoStore((s) => s.requestMeeting)
   const buyer = BUYER_BY_ID[buyerId]
   const [day, setDay] = useState<1 | 2 | 3>(1)
@@ -24,7 +25,7 @@ export default function RequestMeetingPage() {
   const [objective, setObjective] = useState<Meeting['objective']>('distribution')
   const [note, setNote] = useState('')
 
-  if (!buyer) return <Navigate to="/matching" replace />
+  if (!buyer) return <Navigate to="/portal/matching" replace />
 
   const isTaken = (d: number, t: string) =>
     buyer.slotsTaken.includes(`${d}-${t}`) ||
@@ -32,13 +33,13 @@ export default function RequestMeetingPage() {
 
   const confirm = () => {
     if (!time) return
-    const m = requestMeeting({ exhibitorId: DEMO_SME_ID, buyerId: buyer.id, day, time, objective, note })
-    navigate(`/matching/meetings?new=${m.id}`)
+    const m = requestMeeting({ exhibitorId: me.id, buyerId: buyer.id, day, time, objective, note })
+    navigate(`/portal/matching/meetings?new=${m.id}`)
   }
 
   return (
     <div className="mx-auto max-w-3xl">
-      <Link to="/matching" className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-muted hover:text-brand">
+      <Link to="/portal/matching" className="mb-4 inline-flex items-center gap-1 text-sm font-semibold text-muted hover:text-brand">
         <ArrowLeft size={16} /> {tr('กลับไปค้นหา Buyer', 'Back to buyers')}
       </Link>
       <Card className="mb-5 flex items-center gap-4 p-5">

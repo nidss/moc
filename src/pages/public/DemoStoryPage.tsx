@@ -12,7 +12,7 @@ const VISITOR: Step[] = [
   { to: '/register/success/latest', icon: QrCode, th: 'QR Code', en: 'QR Ticket', dth: 'บัตรเข้างานแบบ Wallet', den: 'Wallet-style ticket' },
   { to: '/staff/scan', icon: ScanLine, th: 'เช็คอิน', en: 'Check-in', dth: 'เจ้าหน้าที่สแกน QR', den: 'Staff scans the QR' },
   { to: '/exhibitors', icon: Search, th: 'ค้นหาผู้ออกบูธ', en: 'Explore Exhibitors', dth: 'Directory + e-Catalog', den: 'Directory + e-Catalog' },
-  { to: '/matching', icon: Briefcase, th: 'Business Matching', en: 'Business Matching', dth: 'SME นัดพบ Buyer', den: 'SME meets buyers' },
+  { to: '/portal/matching', icon: Briefcase, th: 'Business Matching', en: 'Business Matching', dth: 'SME นัดพบ Buyer ผ่าน SME Portal', den: 'SMEs meet buyers via the SME Portal' },
   { to: '/survey', icon: MessageSquareHeart, th: 'แบบสอบถาม', en: 'Survey', dth: 'ความพึงพอใจ + NPS', den: 'Satisfaction + NPS' },
 ]
 

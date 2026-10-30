@@ -45,7 +45,7 @@ export default function HomePage() {
   ]
 
   const more = [
-    { icon: Handshake, th: 'Business Matching Lounge', en: 'Business Matching Lounge', dth: 'เจรจาธุรกิจกับหน่วยงานพันธมิตร', den: 'Negotiate with partner organisations', to: '/matching' },
+    { icon: Handshake, th: 'Business Matching Lounge', en: 'Business Matching Lounge', dth: 'เจรจาธุรกิจกับหน่วยงานพันธมิตร', den: 'Negotiate with partner organisations', to: '/portal/matching' },
     { icon: Flower2, th: 'Workshop', en: 'Workshops', dth: 'สมุนไพรไทย พับดอกไม้ เครื่องดื่มสมุนไพร', den: 'Herbal products, flowers, herbal drinks', to: '/schedule' },
     { icon: Briefcase, th: 'Private Pavilion', en: 'Private Pavilion', dth: 'Modern Trade เทคโนโลยี การเงิน สื่อสาร สุขภาพ', den: 'Modern trade, tech, finance, telecom, health', to: '/exhibitors?pavilion=private' },
     { icon: Bot, th: 'Ask MOC AI', en: 'Ask MOC AI', dth: 'ผู้ช่วย AI แนะนำร้าน สินค้า และกิจกรรม', den: 'AI assistant for shops, products & activities', to: '/ai' },
