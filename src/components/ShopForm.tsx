@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { FileText, ImagePlus, Trash2 } from 'lucide-react'
+import { FilePlus, FileText, ImagePlus, Trash2 } from 'lucide-react'
 import { useI18n } from '../i18n/I18nProvider'
 import { AGENCIES, CATEGORIES, PROVINCES, SHOP_TYPES } from '../data/event'
 import { Field, Input, Select } from './ui/Form'
@@ -201,11 +201,12 @@ export function DocumentsPanel({ value, onChange }: { value: string[]; onChange:
     <UploadPanel title={tr('เอกสารประกอบร้านค้า / บริษัท', 'Shop / company documents')}
       desc={tr('ไม่บังคับ · หนังสือรับรองหรือเอกสารประกอบบริษัท · เฉพาะผู้จัดงานที่มีสิทธิ์เท่านั้นที่เปิดดูได้ ไม่แสดงบนหน้าเว็บสาธารณะ', 'Optional · company certificate or supporting documents · visible to authorised organisers only, never shown publicly')}>
       <div className="flex items-center gap-3 rounded-xl border border-line bg-surface p-2">
+        <span className="flex size-16 shrink-0 items-center justify-center rounded-xl border border-dashed border-line text-muted"><FilePlus size={20} /></span>
+        <span className="min-w-0 flex-1 text-sm text-muted">{value.length ? tr(`แนบแล้ว ${value.length} ไฟล์`, `${value.length} file(s) attached`) : tr('ยังไม่ได้แนบเอกสาร', 'No documents yet')}</span>
         <label className={fileBtn}>
-          {tr('เลือกไฟล์', 'Choose files')}
+          {value.length ? tr('เพิ่มไฟล์', 'Add files') : tr('เลือกไฟล์', 'Choose files')}
           <input type="file" multiple accept="image/png,image/jpeg,image/webp,application/pdf,.pdf" className="sr-only" onChange={(e) => { add(e.target.files); e.target.value = '' }} />
         </label>
-        <span className="text-sm text-muted">{value.length ? tr(`แนบแล้ว ${value.length} ไฟล์`, `${value.length} file(s) attached`) : tr('ยังไม่ได้เลือกไฟล์', 'No files chosen')}</span>
       </div>
       {value.length > 0 && (
         <div className="grid gap-2 sm:grid-cols-2">
