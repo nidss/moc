@@ -46,7 +46,7 @@ export default function ShopInfoPage() {
           <p className="mb-4 text-sm text-muted">{tr('แก้ไขได้ตลอดก่อนวันงาน', 'Editable until the event')}</p>
           <ShopInfoFields f={f} set={set} errors={errors} />
         </Card>
-        <div id="shop-logo" className="scroll-mt-24"><LogoPanel value={f.logo} onChange={(v) => set('logo', v)} /></div>
+        <div id="shop-logo" className="scroll-mt-24"><LogoPanel value={f.logo} name={f.logoName} onChange={(v, n) => { set('logo', v); set('logoName', n) }} /></div>
         <Card id="shop-marketing" className="scroll-mt-24 p-5 sm:p-6">
           <h2 className="mb-4 text-lg font-bold">{tr('ข้อมูลทางด้านการตลาด/อื่นๆ', 'Marketing & other information')}</h2>
           <MarketingFields f={f} set={set} errors={errors} />

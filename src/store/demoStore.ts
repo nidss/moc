@@ -6,7 +6,7 @@ import { BASELINE } from '../data/event'
 import type { Attendee, BoothLead, Exhibitor, Meeting, Product, SurveyResponse } from '../data/types'
 
 export type RegistrationInput = Omit<Attendee, 'id' | 'registeredAt' | 'checkedInAt' | 'type'> & { type?: Attendee['type'] }
-export type ExhibitorInput = Pick<Exhibitor, 'name' | 'owner' | 'shopType' | 'category' | 'province' | 'agency' | 'logo' | 'contact' | 'social' | 'stores' | 'matching' | 'documents'>
+export type ExhibitorInput = Pick<Exhibitor, 'name' | 'owner' | 'shopType' | 'category' | 'province' | 'agency' | 'logo' | 'logoName' | 'contact' | 'social' | 'stores' | 'matching' | 'documents'>
 export type ShopPatch = Partial<Omit<Exhibitor, 'id'>>
 
 /** รวมผู้ประกอบการตัวอย่าง + ที่ลงทะเบียนระหว่างเดโม พร้อมข้อมูลที่ร้านแก้ไขเองและสถานะจากผู้จัดงาน */

@@ -100,7 +100,7 @@ export default function ExhibitorRegisterPage() {
           <>
             <h2 className="text-lg font-bold">1. {tr('ข้อมูลของร้านค้าบริษัท', 'Shop / company information')}</h2>
             <ShopInfoFields f={f} set={set} errors={errors} />
-            <LogoPanel value={f.logo} onChange={(v) => set('logo', v)} />
+            <LogoPanel value={f.logo} name={f.logoName} onChange={(v, n) => { set('logo', v); set('logoName', n) }} />
             <DocumentsPanel value={f.documents} onChange={(v) => set('documents', v)} />
             <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
               <button type="button" onClick={() => { setF(SAMPLE_SHOP); setErrors({}) }} className="text-sm font-medium text-muted underline-offset-4 hover:text-brand hover:underline">

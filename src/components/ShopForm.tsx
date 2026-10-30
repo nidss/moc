@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { FilePlus, FileText, ImagePlus, Trash2 } from 'lucide-react'
+import { FilePlus, FileText, Image as ImageIcon, ImagePlus, Trash2 } from 'lucide-react'
 import { useI18n } from '../i18n/I18nProvider'
 import { AGENCIES, CATEGORIES, PROVINCES, SHOP_TYPES } from '../data/event'
 import { Field, Input, Select } from './ui/Form'
@@ -20,6 +20,7 @@ export type ShopForm = {
   agency: string
   province: string
   logo: string
+  logoName: string
   documents: string[]
   website: string
   line: string
@@ -31,19 +32,21 @@ export type ShopErrors = Partial<Record<keyof ShopForm | 'consent', string>>
 
 export const EMPTY_SHOP: ShopForm = {
   nameTh: '', nameEn: '', owner: '', contactName: '', phone: '', email: '', category: 'food', shopType: 'general', agency: '',
-  province: '', logo: '', documents: [], website: '', line: '', facebook: '', matching: null,
+  province: '', logo: '', logoName: '', documents: [], website: '', line: '', facebook: '', matching: null,
 }
 
 export const SAMPLE_SHOP: ShopForm = {
   nameTh: 'บริษัท ล้านนาคอฟฟี่โรสเตอร์ จำกัด', nameEn: 'Lanna Coffee Roaster Co., Ltd.', owner: 'สมชาย ใจดี', contactName: 'สมหญิง รักงาน',
   phone: '081-234-5678', email: 'contact@lannaroaster.example', category: 'food', shopType: 'general', agency: 'DBD', province: 'cmi',
-  logo: '', documents: [], website: 'https://lannaroaster.example', line: '@lannaroaster', facebook: 'https://facebook.com/lannaroaster', matching: true,
+  logo: '', logoName: '', documents: [], website: 'https://lannaroaster.example', line: '@lannaroaster', facebook: 'https://facebook.com/lannaroaster', matching: true,
 }
 
 export function shopFromExhibitor(ex: Exhibitor): ShopForm {
   return {
     nameTh: ex.name.th, nameEn: ex.name.en, owner: ex.owner ?? '', contactName: ex.contact.name, phone: ex.contact.phone, email: ex.contact.email,
     category: ex.category, shopType: ex.shopType ?? 'general', agency: ex.agency ?? '', province: ex.province, logo: ex.logo,
+    // โลโก้ตัวอย่างไม่มีชื่อไฟล์ที่อัปโหลด จึงใช้ชื่อไฟล์จาก URL แทน
+    logoName: ex.logoName ?? (ex.logo && !ex.logo.startsWith('data:') ? ex.logo.split('/').pop() ?? '' : ''),
     documents: ex.documents ?? [], website: ex.stores.website ?? '', line: ex.contact.line, facebook: ex.social.facebook ?? '', matching: ex.matching,
   }
 }
@@ -57,6 +60,7 @@ export function shopToInput(f: ShopForm, base?: Exhibitor): ExhibitorInput {
     province: f.province,
     agency: f.agency || undefined,
     logo: f.logo,
+    logoName: f.logo ? f.logoName : '',
     contact: { name: f.contactName.trim(), phone: f.phone.trim(), email: f.email.trim(), line: f.line.trim() },
     social: { ...base?.social, facebook: f.facebook.trim() || undefined },
     stores: { ...base?.stores, website: f.website.trim() || undefined },
@@ -157,7 +161,7 @@ function UploadPanel({ title, desc, children }: { title: ReactNode; desc: ReactN
 
 const fileBtn = 'inline-flex h-9 shrink-0 cursor-pointer items-center rounded-lg bg-brand-soft px-3 text-sm font-semibold text-brand hover:brightness-95'
 
-export function LogoPanel({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+export function LogoPanel({ value, name, onChange }: { value: string; name: string; onChange: (v: string, name: string) => void }) {
   const { tr } = useI18n()
   const [error, setError] = useState('')
   const pick = async (file?: File) => {
@@ -165,7 +169,7 @@ export function LogoPanel({ value, onChange }: { value: string; onChange: (v: st
     setError('')
     if (file.size > 5 * 1024 * 1024) return setError(tr('ไฟล์ใหญ่เกิน 5 MB', 'File is larger than 5 MB'))
     try {
-      onChange(await readImage(file, 320))
+      onChange(await readImage(file, 320), file.name)
     } catch {
       setError(tr('ไม่สามารถอ่านไฟล์รูปนี้ได้', 'Could not read this image'))
     }
@@ -178,12 +182,20 @@ export function LogoPanel({ value, onChange }: { value: string; onChange: (v: st
           ? <img src={value} alt="" className="size-16 rounded-xl border border-line bg-white object-contain p-1" />
           : <span className="flex size-16 items-center justify-center rounded-xl border border-dashed border-line text-muted"><ImagePlus size={20} /></span>}
         <span className="min-w-0 flex-1 text-sm text-muted">{value ? tr('แนบโลโก้แล้ว', 'Logo attached') : tr('ยังไม่ได้แนบรูป', 'No image yet')}</span>
-        {value && <button type="button" onClick={() => onChange('')} className="px-2 text-sm font-semibold text-danger">{tr('ลบ', 'Remove')}</button>}
         <label className={fileBtn}>
           {value ? tr('เปลี่ยนรูป', 'Change') : tr('เลือกไฟล์', 'Choose file')}
           <input type="file" accept="image/png,image/jpeg,image/webp" className="sr-only" onChange={(e) => { void pick(e.target.files?.[0]); e.target.value = '' }} />
         </label>
       </div>
+      {value && (
+        <div className="grid gap-2 sm:grid-cols-2">
+          <div className="flex items-center gap-3 rounded-xl border border-line bg-surface p-3">
+            <ImageIcon size={18} className="shrink-0 text-brand" />
+            <span className="min-w-0 flex-1 truncate text-sm font-semibold">{name || tr('โลโก้ร้าน', 'Shop logo')}</span>
+            <button type="button" onClick={() => onChange('', '')} className="text-danger" aria-label={tr(`ลบ ${name || 'โลโก้'}`, `Remove ${name || 'logo'}`)}><Trash2 size={16} /></button>
+          </div>
+        </div>
+      )}
       <span className={`block text-sm ${error ? 'text-danger' : 'text-muted'}`}>{error || tr('ไฟล์เดียว · JPG, PNG หรือ WebP · ไม่เกิน 5 MB · แนะนำภาพสี่เหลี่ยมจัตุรัส', 'Single file · JPG, PNG or WebP · up to 5 MB · square images work best')}</span>
     </UploadPanel>
   )
