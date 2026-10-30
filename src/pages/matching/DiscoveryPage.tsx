@@ -1,9 +1,11 @@
 import { useMemo, useState } from 'react'
-import { Globe2, Search, Sparkles, Wallet } from 'lucide-react'
+import { Check, Globe2, Search, Sparkles, Wallet } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { BUYERS } from '../../data/buyers'
 import { CATEGORIES } from '../../data/event'
-import { EXHIBITOR_BY_ID, DEMO_SME_ID } from '../../data/exhibitors'
+import { usePortalMe } from '../../store/selectors'
+import { useDemoStore } from '../../store/demoStore'
+import { buyerScore } from '../../lib/catalog'
 import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { LinkButton } from '../../components/ui/Button'
@@ -13,17 +15,15 @@ import type { CategoryId } from '../../data/types'
 
 export default function DiscoveryPage() {
   const { tr, L } = useI18n()
-  const me = EXHIBITOR_BY_ID[DEMO_SME_ID]
+  const me = usePortalMe()
+  const myMeetings = useDemoStore((s) => s.myMeetings)
+  const booked = new Set(myMeetings.filter((m) => m.exhibitorId === me.id && m.status !== 'cancelled').map((m) => m.buyerId))
   const [q, setQ] = useState('')
   const [cat, setCat] = useState<CategoryId | ''>('')
 
   const buyers = useMemo(() => {
     const needle = q.trim().toLowerCase()
-    return BUYERS.map((b) => {
-      // คะแนนความเหมาะสมแบบง่าย: หมวดตรงกัน + ความสนใจสินค้าส่งออก
-      const score = (b.interests.includes(me.category) ? 70 : 35) + (b.interests.length <= 3 ? 15 : 8) + (me.tags.includes('export-ready') && b.country.en !== 'Thailand' ? 12 : 0)
-      return { b, score: Math.min(98, score) }
-    })
+    return BUYERS.map((b) => ({ b, score: buyerScore(me, b) }))
       .filter(({ b }) => !cat || b.interests.includes(cat))
       .filter(({ b }) => !needle || [b.name, b.type.th, b.type.en, b.lookingFor.th, b.lookingFor.en, b.country.th, b.country.en].some((s) => s.toLowerCase().includes(needle)))
       .sort((a, b) => b.score - a.score)
@@ -78,7 +78,9 @@ export default function DiscoveryPage() {
             </div>
             <div className="mt-auto flex items-center justify-between gap-3 pt-4">
               <span className="text-xs text-muted">{tr(`ว่าง ${30 - b.slotsTaken.length} ช่วงเวลา`, `${30 - b.slotsTaken.length} slots open`)}</span>
-              <LinkButton to={`/matching/request/${b.id}`}>{tr('ขอนัดประชุม', 'Request Meeting')}</LinkButton>
+              {booked.has(b.id)
+                ? <LinkButton to="/portal/matching/meetings" variant="secondary" icon={<Check size={16} />}>{tr('ขอนัดแล้ว · ดูนัดหมาย', 'Requested · view')}</LinkButton>
+                : <LinkButton to={`/portal/matching/request/${b.id}`}>{tr('ขอนัดประชุม', 'Request Meeting')}</LinkButton>}
             </div>
           </Card>
         ))}

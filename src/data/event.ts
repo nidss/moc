@@ -1,5 +1,5 @@
 import type { LText } from '../i18n/I18nProvider'
-import type { AttendeeType, CategoryId, PavilionId, ProductType } from './types'
+import type { AttendeeType, CategoryId, PavilionId, ProductType, ShopType } from './types'
 
 export const EVENT = {
   name: 'MOC Expo 2026',
@@ -33,6 +33,14 @@ export const CATEGORIES: Record<CategoryId, LText> = {
   craft: { th: 'หัตถกรรม / OTOP', en: 'Handicraft / OTOP' },
   tech: { th: 'ดิจิทัลและนวัตกรรม', en: 'Digital & Innovation' },
   service: { th: 'บริการและแฟรนไชส์', en: 'Services & Franchise' },
+}
+
+export const SHOP_TYPES: Record<ShopType, LText> = {
+  general: { th: 'ร้านค้าทั่วไป', en: 'General shop' },
+  celebrity: { th: 'ร้านดารา', en: 'Celebrity shop' },
+  influencer: { th: 'ร้านอินฟลูเอนเซอร์', en: 'Influencer shop' },
+  chef: { th: 'ร้านเชฟ', en: 'Chef shop' },
+  award: { th: 'ร้านรางวัล', en: 'Award-winning shop' },
 }
 
 /** โซนจัดแสดงสินค้า (เรียกในโค้ดว่า pavilion) */

@@ -3,7 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { Save, TrendingUp } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { BUYER_BY_ID } from '../../data/buyers'
-import { EXHIBITOR_BY_ID } from '../../data/exhibitors'
+import { usePortalMe } from '../../store/selectors'
 import { useDemoStore } from '../../store/demoStore'
 import { Card } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
@@ -17,16 +17,16 @@ export default function MeetingResultPage() {
   const { id = '' } = useParams()
   const { tr, L, fmtNumber, fmtMoney } = useI18n()
   const navigate = useNavigate()
-  const meeting = useDemoStore((s) => s.myMeetings.find((m) => m.id === id))
+  const me = usePortalMe()
+  const meeting = useDemoStore((s) => s.myMeetings.find((m) => m.id === id && m.exhibitorId === me.id))
   const saveResult = useDemoStore((s) => s.saveResult)
   const [outcome, setOutcome] = useState<MeetingOutcome>(meeting?.result?.outcome ?? 'deal')
   const [deal, setDeal] = useState(meeting?.result ? String(meeting.result.dealValue) : '500000')
   const [forecast, setForecast] = useState(meeting?.result ? String(meeting.result.forecast) : '2000000')
   const [note, setNote] = useState(meeting?.result?.note ?? '')
 
-  if (!meeting) return <Navigate to="/matching/meetings" replace />
+  if (!meeting) return <Navigate to="/portal/matching/meetings" replace />
   const buyer = BUYER_BY_ID[meeting.buyerId]
-  const me = EXHIBITOR_BY_ID[meeting.exhibitorId]
   const hasValue = outcome === 'deal' || outcome === 'followup'
 
   const save = () => {
@@ -37,7 +37,7 @@ export default function MeetingResultPage() {
       note,
       savedAt: new Date().toISOString(),
     })
-    navigate('/matching/meetings')
+    navigate('/portal/matching/meetings')
   }
 
   return (

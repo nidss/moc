@@ -13,7 +13,7 @@ export const PUBLIC_NAV = [
   { to: '/schedule', th: 'กำหนดการ', en: 'Schedule' },
   { to: '/exhibitors', th: 'ผู้ออกบูธ', en: 'Exhibitors' },
   { to: '/floorplan', th: 'ผังงาน', en: 'Floor Plan' },
-  { to: '/matching', th: 'Business Matching', en: 'Business Matching' },
+  { to: '/portal', th: 'ร้านค้าของฉัน', en: 'My Shop' },
   { to: '/ai', th: 'Ask MOC AI', en: 'Ask MOC AI' },
 ]
 

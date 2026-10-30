@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
-import { useDemoStore } from './demoStore'
+import { mergeExhibitors, useDemoStore } from './demoStore'
 import { SEED_ATTENDEES, SEED_MEETINGS } from '../data/seed'
 import { BASELINE } from '../data/event'
-import { EXHIBITORS } from '../data/exhibitors'
+import { DEMO_SME_ID, EXHIBITOR_BY_ID } from '../data/exhibitors'
 import type { Attendee, AttendeeType, Exhibitor, Meeting } from '../data/types'
 
 const SEED_CHECKED = new Set(SEED_ATTENDEES.filter((a) => a.checkedInAt).map((a) => a.id))
@@ -27,7 +27,24 @@ export function useAttendee(id: string | undefined) {
 
 export function useExhibitors(): Exhibitor[] {
   const overrides = useDemoStore((s) => s.exhibitorStatus)
-  return useMemo(() => EXHIBITORS.map((e) => (overrides[e.id] ? { ...e, status: overrides[e.id] } : e)), [overrides])
+  const created = useDemoStore((s) => s.newExhibitors)
+  const edits = useDemoStore((s) => s.shopEdits)
+  return useMemo(() => mergeExhibitors(created, edits, overrides), [created, edits, overrides])
+}
+
+export function useExhibitorMap(): Record<string, Exhibitor> {
+  const all = useExhibitors()
+  return useMemo(() => Object.fromEntries(all.map((e) => [e.id, e])), [all])
+}
+
+export function useExhibitor(id: string | undefined): Exhibitor | undefined {
+  return useExhibitorMap()[id ?? '']
+}
+
+/** ร้านที่เข้าสู่ระบบ SME Portal (PortalLayout บังคับ login ก่อน จึงใช้ร้านเดโมเป็นค่าสำรองเท่านั้น) */
+export function usePortalMe(): Exhibitor {
+  const id = useDemoStore((s) => s.portalId)
+  return useExhibitor(id) ?? EXHIBITOR_BY_ID[DEMO_SME_ID]
 }
 
 /** การนัดหมายทั้งหมด (ตัวอย่างในระบบ + ที่สร้างระหว่าง Demo) */

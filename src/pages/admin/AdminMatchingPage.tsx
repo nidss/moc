@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import { Briefcase, Download, HandCoins, LineChart, Percent } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { BUYER_BY_ID } from '../../data/buyers'
-import { EXHIBITOR_BY_ID } from '../../data/exhibitors'
+import { useExhibitorMap } from '../../store/selectors'
 import { useAllMeetings, useKpis } from '../../store/selectors'
 import { PageHeader } from '../../components/ui/Card'
 import { Button } from '../../components/ui/Button'
@@ -15,6 +15,7 @@ import type { Meeting, MeetingStatus } from '../../data/types'
 
 export default function AdminMatchingPage() {
   const { tr, L, lang, fmtNumber, fmtMoney } = useI18n()
+  const exhibitors = useExhibitorMap()
   const meetings = useAllMeetings()
   const k = useKpis()
   const [status, setStatus] = useState<MeetingStatus | ''>('')
@@ -32,7 +33,7 @@ export default function AdminMatchingPage() {
         <div className="text-sm whitespace-nowrap">Day {m.day} · {m.time} · {m.table}</div>
       </div>
     ) },
-    { key: 'sme', header: 'SME', render: (m) => <span className="font-semibold">{L(EXHIBITOR_BY_ID[m.exhibitorId].name)}</span> },
+    { key: 'sme', header: 'SME', render: (m) => <span className="font-semibold">{exhibitors[m.exhibitorId] ? L(exhibitors[m.exhibitorId].name) : m.exhibitorId}</span> },
     { key: 'buyer', header: 'Buyer', render: (m) => BUYER_BY_ID[m.buyerId].name, hideOnMobile: true },
     { key: 'status', header: 'Status', render: (m) => <MeetingStatusBadge status={m.status} /> },
     { key: 'outcome', header: tr('ผล', 'Outcome'), render: (m) => (m.result ? <OutcomeBadge outcome={m.result.outcome} /> : <span className="text-muted">–</span>), hideOnMobile: true },
