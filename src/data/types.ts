@@ -43,6 +43,8 @@ export type Exhibitor = {
   matching: boolean
   owner?: string
   shopType?: ShopType
+  /** ชื่อไฟล์โลโก้ที่ร้านอัปโหลด */
+  logoName?: string
   /** ชื่อไฟล์เอกสารประกอบบริษัท (เห็นเฉพาะผู้จัดงาน) */
   documents?: string[]
   registeredAt?: string
