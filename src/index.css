@@ -173,10 +173,6 @@ h1, h2, .font-display {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-12px); }
 }
-@keyframes ken-burns {
-  from { transform: scale(1); }
-  to { transform: scale(1.09) translate3d(-1.2%, -0.8%, 0); }
-}
 @keyframes glow-pulse {
   0%, 100% { opacity: 0.45; transform: scale(0.92); }
   50% { opacity: 0.85; transform: scale(1.05); }
@@ -198,7 +194,6 @@ h1, h2, .font-display {
 .motion-rise { animation: rise-in 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0ms) backwards; }
 .motion-pop { animation: pop-in 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) var(--delay, 0ms) backwards; }
 .motion-float { animation: float-y 6s ease-in-out infinite; }
-.motion-kenburns { animation: ken-burns 26s ease-in-out infinite alternate; transform-origin: 85% 70%; will-change: transform; }
 .motion-glow { animation: glow-pulse 5s ease-in-out infinite; }
 .motion-tick { animation: tick-in 0.35s cubic-bezier(0.2, 0.7, 0.2, 1); }
 
@@ -243,7 +238,7 @@ h1, h2, .font-display {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .motion-rise, .motion-pop, .motion-float, .motion-kenburns, .motion-glow, .motion-tick,
+  .motion-rise, .motion-pop, .motion-float, .motion-glow, .motion-tick,
   .gold-bar-flow, .reveal.is-in, .reveal-group.is-in > * { animation: none !important; }
   .motion-shine::after { display: none; }
   .reveal:not(.is-in), .reveal-group:not(.is-in) > * { opacity: 1; }
