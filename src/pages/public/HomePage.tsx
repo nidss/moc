@@ -59,8 +59,8 @@ export default function HomePage() {
     <div>
       {/* Hero: ภาพพื้นหลังลูกโลก/เมือง + โลโก้และข้อมูลงาน (ซ้าย) + คีย์วิชวลริบบิ้นอินฟินิตี้ (ขวา) */}
       <section className="relative overflow-hidden bg-navy text-white">
-        {/* ภาพพื้นหลังซูมช้า ๆ (Ken Burns) */}
-        <div className="motion-kenburns pointer-events-none absolute inset-0 bg-cover bg-right-bottom" style={{ backgroundImage: `url(${heroBg})` }} />
+        {/* ภาพพื้นหลังลูกโลก/เมือง (อยู่นิ่ง ไม่มีแอนิเมชัน) */}
+        <div className="pointer-events-none absolute inset-0 bg-cover bg-right-bottom" style={{ backgroundImage: `url(${heroBg})` }} />
         {/* ไล่สีกรมท่าทับภาพพื้นหลัง ให้ข้อความอ่านง่าย (มือถือทึบกว่าเพราะข้อความทับเมือง/ลูกโลก) */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#001848]/75 via-[#001848]/55 to-[#001848]/35 lg:bg-gradient-to-r lg:from-[#001848]/55 lg:via-[#001848]/10 lg:to-transparent" />
         <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
