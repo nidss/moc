@@ -17,7 +17,7 @@ import { HomeExtras, NewsSection, TravelSection } from './HomeExtras'
 import HomeGold from './HomeGold'
 import HomeMidnight from './HomeMidnight'
 import { useSkin } from '../../lib/skin'
-import { useVersion } from '../../lib/version'
+import { useVersion, type SiteVersion } from '../../lib/version'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
 import registerBanner from '../../assets/brand/register-banner.webp'
@@ -34,9 +34,10 @@ const SPEAKERS = [
  * - V1: ธีมทองคำและมิดไนท์มีโครงหน้าของตัวเอง ธีมคลาสสิกใช้โครงเดิมด้านล่าง
  * - V2: ใช้โครงเดียวกับ V1 คลาสสิก แต่เหลือเฉพาะ section สำคัญ (เนื้อหาที่เหลืออยู่ในเมนูย่อยบน header)
  */
-export default function HomePage() {
+export default function HomePage({ forceVersion }: { forceVersion?: SiteVersion }) {
   const skin = useSkin()
-  const version = useVersion()
+  const stored = useVersion()
+  const version = forceVersion ?? stored
   if (version === 'v2') return <ClassicHome compact />
   if (skin === 'gold') return <HomeGold />
   if (skin === 'midnight') return <HomeMidnight />
@@ -164,7 +165,7 @@ function ClassicHome({ compact = false }: { compact?: boolean }) {
         {compact && (
           <div className="mx-auto -mt-2 max-w-7xl px-4 pb-10 sm:px-6 sm:pb-12">
             <Reveal>
-              <Link to="/register" className="block overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl">
+              <Link to="/register" className="block shadow-lg transition duration-300 hover:-translate-y-0.5 hover:shadow-xl">
                 <img src={registerBanner} width={2000} height={274} loading="lazy" decoding="async" className="block w-full"
                   alt={tr('ลงทะเบียนเข้างาน รับสิทธิ์ลุ้นรางวัลใหญ่: iPad, Samsung Fold 8, iPhone Duo และ Voucher (เงื่อนไขตามที่ผู้จัดงานกำหนด)', 'Register to win big prizes: iPad, Samsung Fold 8, iPhone Duo and vouchers (terms apply)')} />
               </Link>
