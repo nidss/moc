@@ -82,17 +82,10 @@ export default function HomeGold() {
               <GoldCountdown />
             </div>
           </div>
-          {/* กรอบซุ้มโค้งเส้นทอง */}
-          <div className="motion-pop relative mx-auto w-full max-w-md [--delay:200ms] lg:max-w-none">
-            <div className="rounded-t-full border border-[var(--gold-light)]/70 p-3">
-              <div className="relative flex aspect-[4/5] items-center overflow-hidden rounded-t-full bg-[#0b0905]/55 backdrop-blur-[2px]">
-                <div className="absolute inset-0 bg-[radial-gradient(closest-side,var(--hero-glow-a),transparent)]" />
-                <img src={keyVisual} width={1400} height={823} alt={tr('คีย์วิชวลงาน', 'Event key visual')} className="motion-float relative w-full scale-110 select-none" draggable={false} />
-              </div>
-            </div>
-            <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap border border-[var(--gold-light)]/60 bg-[#0b0905] px-5 py-2 text-center text-sm">
-              <span className="font-display font-semibold text-gold-light">{L(EVENT.dateLabel)}</span> · {EVENT.hours}
-            </div>
+          {/* คีย์วิชวลลอยบนแผนที่ (ไม่มีกรอบ) พร้อมแสงทองด้านหลัง */}
+          <div className="motion-pop relative mx-auto w-full max-w-xl [--delay:200ms] lg:max-w-none">
+            <div className="motion-glow pointer-events-none absolute inset-[12%] rounded-full bg-[radial-gradient(closest-side,var(--hero-glow-a),transparent)] blur-2xl" />
+            <img src={keyVisual} width={1400} height={823} alt={tr('คีย์วิชวลงาน', 'Event key visual')} className="motion-float relative w-full select-none drop-shadow-[0_24px_48px_rgba(0,0,0,0.5)]" draggable={false} />
           </div>
         </div>
       </section>
