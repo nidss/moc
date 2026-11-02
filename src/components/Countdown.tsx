@@ -51,7 +51,10 @@ export function Countdown({ startsAt, endsAt }: { startsAt: string; endsAt: stri
       className="grid grid-cols-4 gap-2 sm:gap-3">
       {parts.map(([n, label]) => (
         <div key={label} className="min-w-0 rounded-xl bg-white/[0.08] px-2 py-3 text-center ring-1 ring-white/15 sm:min-w-24 sm:px-4">
-          <div className="gold-text-gradient text-3xl font-extrabold leading-none tabular-nums sm:text-5xl" aria-hidden="true">{n}</div>
+          {/* key เปลี่ยนตามค่า ทำให้ตัวเลขที่เปลี่ยนเล่นแอนิเมชันหล่นเข้าทุกครั้ง */}
+          <div className="overflow-hidden" aria-hidden="true">
+            <div key={n} className="motion-tick gold-text-gradient text-3xl font-extrabold leading-none tabular-nums sm:text-5xl">{n}</div>
+          </div>
           <div className="mt-1.5 text-xs text-white/75 sm:text-sm" aria-hidden="true">{label}</div>
         </div>
       ))}
