@@ -11,6 +11,7 @@ import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { Logo } from '../../components/Brand'
 import { Countdown } from '../../components/Countdown'
+import { Reveal } from '../../components/Reveal'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
@@ -57,32 +58,38 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero: ภาพพื้นหลังลูกโลก/เมือง + โลโก้และข้อมูลงาน (ซ้าย) + คีย์วิชวลริบบิ้นอินฟินิตี้ (ขวา) */}
-      <section className="relative overflow-hidden bg-navy bg-cover bg-right-bottom text-white" style={{ backgroundImage: `url(${heroBg})` }}>
+      <section className="relative overflow-hidden bg-navy text-white">
+        {/* ภาพพื้นหลังซูมช้า ๆ (Ken Burns) */}
+        <div className="motion-kenburns pointer-events-none absolute inset-0 bg-cover bg-right-bottom" style={{ backgroundImage: `url(${heroBg})` }} />
         {/* ไล่สีกรมท่าทับภาพพื้นหลัง ให้ข้อความอ่านง่าย (มือถือทึบกว่าเพราะข้อความทับเมือง/ลูกโลก) */}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#001848]/75 via-[#001848]/55 to-[#001848]/35 lg:bg-gradient-to-r lg:from-[#001848]/55 lg:via-[#001848]/10 lg:to-transparent" />
         <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
           <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-6">
             <div>
-              <Logo tone="light" className="h-36 sm:h-44" />
-              <h1 className="mt-6 max-w-xl text-2xl font-semibold leading-snug sm:text-3xl">{L(EVENT.tagline)}</h1>
-              <div className="mt-5 flex flex-col gap-2 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-5">
+              <div className="motion-rise"><Logo tone="light" className="h-36 sm:h-44" /></div>
+              <h1 className="motion-rise mt-6 max-w-xl [--delay:120ms] text-2xl font-semibold leading-snug sm:text-3xl">{L(EVENT.tagline)}</h1>
+              <div className="motion-rise mt-5 flex flex-col gap-2 text-sm text-white/85 [--delay:220ms] sm:flex-row sm:flex-wrap sm:gap-5">
                 <span className="flex items-center gap-2"><CalendarDays size={18} className="text-gold-light" /> {L(EVENT.dateLabel)}</span>
                 <span className="flex items-center gap-2"><Clock size={18} className="text-gold-light" /> {EVENT.hours}</span>
                 <span className="flex items-center gap-2"><MapPin size={18} className="text-gold-light" /> {L(EVENT.venue)}</span>
               </div>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <LinkButton to="/register" variant="accent" size="lg" icon={<QrCode size={20} />}>{tr('ลงทะเบียนเข้างาน', 'Register Now')}</LinkButton>
+              <div className="motion-rise mt-8 flex flex-wrap gap-3 [--delay:320ms]">
+                <LinkButton to="/register" variant="accent" size="lg" className="motion-shine" icon={<QrCode size={20} />}>{tr('ลงทะเบียนเข้างาน', 'Register Now')}</LinkButton>
                 <LinkButton to="/exhibitors" size="lg" className="bg-white/10 text-white! ring-1 ring-white/30 hover:bg-white/20">
                   {tr('ดูผู้ออกบูธ', 'Explore Exhibitors')} <ArrowRight size={18} />
                 </LinkButton>
               </div>
             </div>
-            <img src={keyVisual} width={1400} height={823} decoding="async"
-              alt={tr('คีย์วิชวลงาน: สินค้าไทย การขายออนไลน์ การค้าระหว่างประเทศ และเวทีความรู้ด้าน AI', 'Event key visual: Thai products, live commerce, global trade and AI talks')}
-              className="mx-auto w-full max-w-2xl select-none drop-shadow-[0_24px_48px_rgba(0,0,0,0.35)] lg:max-w-none" draggable={false} />
+            {/* คีย์วิชวล: เด้งเข้า แล้วลอยขึ้นลงช้า ๆ พร้อมแสงทองด้านหลัง */}
+            <div className="motion-pop relative mx-auto w-full max-w-2xl [--delay:250ms] lg:max-w-none">
+              <div className="motion-glow pointer-events-none absolute inset-[12%] rounded-full bg-[radial-gradient(closest-side,rgba(232,189,92,0.45),rgba(40,110,220,0.25),transparent)] blur-2xl" />
+              <img src={keyVisual} width={1400} height={823} decoding="async"
+                alt={tr('คีย์วิชวลงาน: สินค้าไทย การขายออนไลน์ การค้าระหว่างประเทศ และเวทีความรู้ด้าน AI', 'Event key visual: Thai products, live commerce, global trade and AI talks')}
+                className="motion-float relative w-full select-none drop-shadow-[0_24px_48px_rgba(0,0,0,0.35)]" draggable={false} />
+            </div>
           </div>
           {/* นับถอยหลังสู่วันงาน (เวลาจริง) */}
-          <div className="mt-10 flex flex-col gap-5 rounded-2xl bg-[#001848]/60 p-5 ring-1 ring-white/20 backdrop-blur-md sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="motion-rise mt-10 flex flex-col gap-5 rounded-2xl bg-[#001848]/60 [--delay:450ms] p-5 ring-1 ring-white/20 backdrop-blur-md sm:p-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="flex flex-wrap items-center gap-3">
                 <span className="text-lg font-semibold">{tr('นับถอยหลังสู่วันงาน', 'Countdown to opening')}</span>
@@ -93,21 +100,23 @@ export default function HomePage() {
             <Countdown startsAt={EVENT.startsAt} endsAt={EVENT.endsAt} />
           </div>
         </div>
-        <div className="gold-gradient relative h-1" />
+        <div className="gold-bar-flow relative h-1" />
       </section>
 
       <div className="mx-auto max-w-7xl space-y-16 px-4 pt-14 sm:px-6">
         {/* 3 zones */}
         <section>
-          <SectionTitle title={tr('3 โซนหลักของงาน', 'Three Main Zones')} subtitle={tr(`พื้นที่จัดงานไม่น้อยกว่า ${fmtNumber(EVENT.area)} ตารางเมตร`, `At least ${fmtNumber(EVENT.area)} sqm of exhibition space`)}
-            action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('ดูผังงาน', 'View floor plan')} →</Link>} />
-          <div className="grid gap-4 lg:grid-cols-3">
+          <Reveal>
+            <SectionTitle title={tr('3 โซนหลักของงาน', 'Three Main Zones')} subtitle={tr(`พื้นที่จัดงานไม่น้อยกว่า ${fmtNumber(EVENT.area)} ตารางเมตร`, `At least ${fmtNumber(EVENT.area)} sqm of exhibition space`)}
+              action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('ดูผังงาน', 'View floor plan')} →</Link>} />
+          </Reveal>
+          <Reveal group className="grid gap-4 lg:grid-cols-3">
             {zones.map((z) => (
-              <Link key={z.no} to={z.to} className="group relative overflow-hidden rounded-2xl bg-navy p-6 text-white ring-1 ring-white/10 transition-transform hover:-translate-y-0.5">
+              <Link key={z.no} to={z.to} className="group relative overflow-hidden rounded-2xl bg-navy p-6 text-white ring-1 ring-white/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#001848]/30">
                 <div className="hero-net pointer-events-none absolute inset-0 opacity-60" />
                 <div className="relative flex items-center justify-between">
                   <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold ring-1 ring-white/20">{tr('โซนที่', 'Zone')} {z.no}</span>
-                  <span className="gold-gradient flex size-11 items-center justify-center rounded-xl text-navy"><z.icon size={22} /></span>
+                  <span className="gold-gradient flex size-11 items-center justify-center rounded-xl text-navy transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6"><z.icon size={22} /></span>
                 </div>
                 <div className="relative mt-6 text-2xl font-bold tracking-tight">{z.name}</div>
                 <div className="relative text-sm font-semibold text-gold-light">{tr(z.th, z.en)}</div>
@@ -115,12 +124,12 @@ export default function HomePage() {
                 <div className="relative mt-4 text-xs font-semibold text-white/60 group-hover:text-white">{tr('ดูเพิ่มเติม', 'Learn more')} →</div>
               </Link>
             ))}
-          </div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          </Reveal>
+          <Reveal group className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {more.map((h) => (
-              <Link key={h.en} to={h.to}>
-                <Card className="flex h-full items-start gap-3 p-4 transition-shadow hover:shadow-md">
-                  <div className="rounded-xl bg-brand-soft p-2.5 text-brand"><h.icon size={20} /></div>
+              <Link key={h.en} to={h.to} className="group">
+                <Card className="flex h-full items-start gap-3 p-4 transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md">
+                  <div className="rounded-xl bg-brand-soft p-2.5 text-brand transition-transform duration-300 group-hover:scale-110"><h.icon size={20} /></div>
                   <div>
                     <div className="font-semibold">{tr(h.th, h.en)}</div>
                     <p className="text-sm text-muted">{tr(h.dth, h.den)}</p>
@@ -128,95 +137,105 @@ export default function HomePage() {
                 </Card>
               </Link>
             ))}
-          </div>
+          </Reveal>
         </section>
 
         {/* Featured exhibitors */}
         <section>
-          <SectionTitle title={tr('ผู้ออกบูธแนะนำ', 'Featured Exhibitors')}
-            action={<Link to="/exhibitors" className="text-sm font-semibold text-brand hover:underline">{tr('ดูทั้งหมด', 'View all')} →</Link>} />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal>
+            <SectionTitle title={tr('ผู้ออกบูธแนะนำ', 'Featured Exhibitors')}
+              action={<Link to="/exhibitors" className="text-sm font-semibold text-brand hover:underline">{tr('ดูทั้งหมด', 'View all')} →</Link>} />
+          </Reveal>
+          <Reveal group className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((e) => <ExhibitorCard key={e.id} ex={e} />)}
-          </div>
+          </Reveal>
         </section>
 
         {/* Schedule + Speakers */}
         <section className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <div className="min-w-0">
-            <SectionTitle title={tr('กิจกรรมวันแรก', 'Day 1 Highlights')}
-              action={<Link to="/schedule" className="text-sm font-semibold text-brand hover:underline">{tr('ดูกำหนดการทั้งหมด', 'Full schedule')} →</Link>} />
-            <Card className="divide-y divide-line">
-              {SCHEDULE.filter((s) => s.day === 1).slice(0, 5).map((s) => (
-                <div key={s.id} className="flex items-center gap-4 px-5 py-3.5">
-                  <div className="w-14 shrink-0 font-bold tabular-nums text-brand">{s.start}</div>
-                  <div className="min-w-0 flex-1">
-                    <div className="truncate font-semibold">{L(s.title)}</div>
-                    <div className="text-xs text-muted">{L(STAGES[s.stage])}{s.speaker ? ` · ${s.speaker}` : ''}</div>
+            <Reveal>
+              <SectionTitle title={tr('กิจกรรมวันแรก', 'Day 1 Highlights')}
+                action={<Link to="/schedule" className="text-sm font-semibold text-brand hover:underline">{tr('ดูกำหนดการทั้งหมด', 'Full schedule')} →</Link>} />
+            </Reveal>
+            <Reveal>
+              <Card className="divide-y divide-line">
+                {SCHEDULE.filter((s) => s.day === 1).slice(0, 5).map((s) => (
+                  <div key={s.id} className="flex items-center gap-4 px-5 py-3.5">
+                    <div className="w-14 shrink-0 font-bold tabular-nums text-brand">{s.start}</div>
+                    <div className="min-w-0 flex-1">
+                      <div className="truncate font-semibold">{L(s.title)}</div>
+                      <div className="text-xs text-muted">{L(STAGES[s.stage])}{s.speaker ? ` · ${s.speaker}` : ''}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </Card>
+                ))}
+              </Card>
+            </Reveal>
           </div>
           <div>
-            <SectionTitle title={tr('วิทยากร & อินฟลูเอนเซอร์', 'Speakers & Influencers')} />
-            <div className="grid grid-cols-2 gap-3">
+            <Reveal><SectionTitle title={tr('วิทยากร & อินฟลูเอนเซอร์', 'Speakers & Influencers')} /></Reveal>
+            <Reveal group className="grid grid-cols-2 gap-3">
               {SPEAKERS.map((s) => (
-                <Card key={s.name} className="p-4 text-center">
-                  <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-navy text-gold-light ring-2 ring-gold/60">
+                <Card key={s.name} className="group p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                  <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-navy text-gold-light ring-2 ring-gold/60 transition duration-300 group-hover:scale-105 group-hover:ring-4">
                     <Mic2 size={24} />
                   </div>
                   <div className="mt-3 text-sm font-bold">{s.name}</div>
                   <div className="text-xs text-muted">{L(s.role)}</div>
                 </Card>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
 
         {/* Floor plan teaser */}
         <section>
-          <SectionTitle title={tr('ผังงาน', 'Floor Plan')} subtitle={L(EVENT.venue)}
-            action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('เปิดผังแบบเต็ม', 'Open full map')} →</Link>} />
-          <Link to="/floorplan" className="block"><FloorPlanMap compact /></Link>
+          <Reveal>
+            <SectionTitle title={tr('ผังงาน', 'Floor Plan')} subtitle={L(EVENT.venue)}
+              action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('เปิดผังแบบเต็ม', 'Open full map')} →</Link>} />
+          </Reveal>
+          <Reveal><Link to="/floorplan" className="block"><FloorPlanMap compact /></Link></Reveal>
         </section>
 
         {/* Quote + CTA */}
-        <section className="hero-bg relative overflow-hidden rounded-3xl p-8 text-white sm:p-10">
-          <div className="hero-net pointer-events-none absolute inset-0" />
-          <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div>
-              <div className={`font-bold text-gold-light ${lang === 'en' ? 'text-xs uppercase tracking-[0.2em]' : 'text-sm'}`}>{L(EVENT.slogan)}</div>
-              <h2 className="mt-3 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">“{L(EVENT.quote)}”</h2>
+        <Reveal>
+          <section className="hero-bg relative overflow-hidden rounded-3xl p-8 text-white sm:p-10">
+            <div className="hero-net pointer-events-none absolute inset-0" />
+            <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <div className={`font-bold text-gold-light ${lang === 'en' ? 'text-xs uppercase tracking-[0.2em]' : 'text-sm'}`}>{L(EVENT.slogan)}</div>
+                <h2 className="mt-3 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">“{L(EVENT.quote)}”</h2>
+              </div>
+              <LinkButton to="/register" variant="accent" size="lg" className="motion-shine" icon={<QrCode size={20} />}>{tr('ลงทะเบียน', 'Register Now')}</LinkButton>
             </div>
-            <LinkButton to="/register" variant="accent" size="lg" icon={<QrCode size={20} />}>{tr('ลงทะเบียน', 'Register Now')}</LinkButton>
-          </div>
-        </section>
+          </section>
+        </Reveal>
 
         {/* Organisers */}
         <section>
-          <SectionTitle title={tr('หน่วยงานร่วมจัด', 'Organising Agencies')} subtitle={tr('หน่วยงานในสังกัดกระทรวงพาณิชย์ 9 หน่วยงาน และหน่วยงานพันธมิตร 5 หน่วยงาน', '9 Ministry of Commerce agencies and 5 partner organisations')} />
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <Reveal><SectionTitle title={tr('หน่วยงานร่วมจัด', 'Organising Agencies')} subtitle={tr('หน่วยงานในสังกัดกระทรวงพาณิชย์ 9 หน่วยงาน และหน่วยงานพันธมิตร 5 หน่วยงาน', '9 Ministry of Commerce agencies and 5 partner organisations')} /></Reveal>
+          <Reveal group className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {Object.values(AGENCIES).map((a) => (
-              <div key={a.short} className="flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-4 text-center">
+              <div key={a.short} className="flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-4 text-center transition duration-300 hover:-translate-y-1 hover:shadow-md">
                 <div className="flex h-20 w-full items-center justify-center rounded-lg bg-white p-2">
                   <img src={AGENCY_LOGOS[a.short]} alt={L(a.name)} width={160} height={64} loading="lazy" decoding="async" className="h-full w-full object-contain" />
                 </div>
                 <span className="text-xs leading-relaxed text-muted">{L(a.name)}</span>
               </div>
             ))}
-          </div>
+          </Reveal>
           <div className="mt-6">
             <span className="mr-1 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-muted"><Users size={14} /> {tr('พันธมิตร', 'Partners')}</span>
-            <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            <Reveal group className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
               {PARTNERS.map((p) => (
-                <div key={p.en} className="flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-4 text-center">
+                <div key={p.en} className="flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-4 text-center transition duration-300 hover:-translate-y-1 hover:shadow-md">
                   <div className="flex h-20 w-full items-center justify-center rounded-lg bg-white p-2">
                     <img src={PARTNER_LOGOS[p.en]} alt={L(p)} width={160} height={64} loading="lazy" decoding="async" className="h-full w-full object-contain" />
                   </div>
                   <span className="text-xs leading-relaxed text-muted">{L(p)}</span>
                 </div>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       </div>
