@@ -5,6 +5,7 @@ import { Logo } from '../components/Brand'
 import { EVENT } from '../data/event'
 import { LangToggle } from './LangToggle'
 import { ThemeSwitcher } from './ThemeSwitcher'
+import { VersionSwitcher } from './VersionSwitcher'
 
 /**
  * Header / Footer เฉพาะธีม (หน้าตาคนละโครงกับธีมคลาสสิก)
@@ -25,6 +26,7 @@ export function GoldHeader({ nav, open, setOpen }: HeaderProps) {
           <span className="flex items-center gap-1.5"><CalendarDays size={13} className="text-gold-light" /> {L(EVENT.dateLabel)} · {EVENT.hours}</span>
           <span className="flex items-center gap-1.5"><MapPin size={13} className="text-gold-light" /> {L(EVENT.venue)}</span>
           <div className="ml-auto flex items-center gap-2">
+            <VersionSwitcher light />
             <ThemeSwitcher light />
             <LangToggle light />
           </div>
@@ -62,7 +64,7 @@ export function GoldHeader({ nav, open, setOpen }: HeaderProps) {
               ))}
             </div>
             <div className="mt-4 flex items-center justify-between gap-3">
-              <LangToggle />
+              <div className="flex items-center gap-2"><LangToggle /><VersionSwitcher /></div>
               <Link to="/register" className="bg-brand px-5 py-2 text-sm font-semibold text-white dark:text-[#0a1120]">{tr('ลงทะเบียน', 'Register')}</Link>
             </div>
           </nav>
@@ -111,6 +113,7 @@ export function MidnightHeader({ nav, open, setOpen }: HeaderProps) {
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-2 xl:ml-0">
+            <span className="hidden sm:block"><VersionSwitcher /></span>
             <ThemeSwitcher />
             <span className="hidden sm:block"><LangToggle /></span>
             <Link to="/register" className="gold-gradient hidden rounded-full px-4 py-2 text-sm font-bold text-on-accent shadow-[0_0_20px_rgba(34,211,238,0.35)] sm:inline-block">
@@ -130,7 +133,7 @@ export function MidnightHeader({ nav, open, setOpen }: HeaderProps) {
               </NavLink>
             ))}
             <div className="col-span-2 mt-1 flex items-center justify-between">
-              <LangToggle />
+              <div className="flex items-center gap-2"><LangToggle /><VersionSwitcher /></div>
               <Link to="/register" className="gold-gradient rounded-full px-4 py-2 text-sm font-bold text-on-accent">{tr('ลงทะเบียน', 'Register')}</Link>
             </div>
           </nav>

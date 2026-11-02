@@ -17,6 +17,8 @@ import { HomeExtras, NewsSection } from './HomeExtras'
 import HomeGold from './HomeGold'
 import HomeMidnight from './HomeMidnight'
 import { useSkin } from '../../lib/skin'
+import { useVersion } from '../../lib/version'
+import HomeV2 from './HomeV2'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
@@ -27,9 +29,14 @@ const SPEAKERS = [
   { name: 'Arthit W.', role: { th: 'ผู้ก่อตั้งแบรนด์ 300 สาขา', en: 'Founder, 300-branch brand' } },
 ]
 
-/** หน้าแรก: ธีมทองคำและมิดไนท์มีโครงหน้าของตัวเอง ธีมคลาสสิกใช้โครงเดิมด้านล่าง */
+/**
+ * หน้าแรก: V2 ใช้หน้าแบบกระชับทุกธีม
+ * V1: ธีมทองคำและมิดไนท์มีโครงหน้าของตัวเอง ธีมคลาสสิกใช้โครงเดิมด้านล่าง
+ */
 export default function HomePage() {
   const skin = useSkin()
+  const version = useVersion()
+  if (version === 'v2') return <HomeV2 />
   if (skin === 'gold') return <HomeGold />
   if (skin === 'midnight') return <HomeMidnight />
   return <ClassicHome />

@@ -10,6 +10,7 @@ const SchedulePage = lazy(() => import('./pages/public/SchedulePage'))
 const ExhibitorsPage = lazy(() => import('./pages/public/ExhibitorsPage'))
 const ExhibitorDetailPage = lazy(() => import('./pages/public/ExhibitorDetailPage'))
 const FloorPlanPage = lazy(() => import('./pages/public/FloorPlanPage'))
+const GuidePage = lazy(() => import('./pages/public/GuidePage'))
 const DemoStoryPage = lazy(() => import('./pages/public/DemoStoryPage'))
 const RegisterPage = lazy(() => import('./pages/register/RegisterPage'))
 const RegisterSuccessPage = lazy(() => import('./pages/register/RegisterSuccessPage'))
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="exhibitors" element={<ExhibitorsPage />} />
           <Route path="exhibitors/:id" element={<ExhibitorDetailPage />} />
           <Route path="floorplan" element={<FloorPlanPage />} />
+          <Route path="guide/:topic" element={<GuidePage />} />
           <Route path="register" element={<RegisterPage />} />
           <Route path="register/success/:id" element={<RegisterSuccessPage />} />
           <Route path="register/exhibitor" element={<ExhibitorRegisterPage />} />

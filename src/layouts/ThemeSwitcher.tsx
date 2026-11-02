@@ -4,7 +4,7 @@ import { useI18n } from '../i18n/I18nProvider'
 import { SKINS, setSkin, useSkin } from '../lib/skin'
 
 /** ปุ่มสลับธีม (คลาสสิก / หยกมรกต / มิดไนท์) — light ใช้บน header พื้นเข้ม */
-export function ThemeSwitcher({ light = false, align = 'right' }: { light?: boolean; align?: 'left' | 'right' }) {
+export function ThemeSwitcher({ light = false, align = 'right', labelClass = 'hidden md:inline' }: { light?: boolean; align?: 'left' | 'right'; labelClass?: string }) {
   const { tr, L } = useI18n()
   const skin = useSkin()
   const [open, setOpen] = useState(false)
@@ -29,7 +29,7 @@ export function ThemeSwitcher({ light = false, align = 'right' }: { light?: bool
         <span className="flex -space-x-1">
           {active.swatch.slice(0, 2).map((c) => <span key={c} className="size-3 rounded-full ring-2 ring-white/80" style={{ background: c }} />)}
         </span>
-        <span className="hidden md:inline">{L(active.name)}</span>
+        <span className={`whitespace-nowrap ${labelClass}`}>{L(active.name)}</span>
       </button>
       {open && (
         <div role="menu" className={`absolute top-10 z-50 w-64 rounded-2xl border border-line bg-surface p-2 text-fg shadow-xl ${align === 'right' ? 'right-0' : 'left-0'}`}>
