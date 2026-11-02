@@ -4,6 +4,7 @@ import { BarChart3, ChevronDown, Map, PlayCircle, QrCode, RotateCcw, User, Spark
 import { useI18n } from '../i18n/I18nProvider'
 import { useDemoStore } from '../store/demoStore'
 import { LangToggle } from './LangToggle'
+import { resetPromoSeen } from '../components/PromoPopup'
 
 const ROLES = [
   { to: '/', match: ['/', '/event', '/schedule', '/exhibitors', '/floorplan', '/register', '/survey'], icon: User, th: 'ผู้เข้าชม', en: 'Visitor' },
@@ -55,6 +56,7 @@ export function DemoNav() {
             onClick={() => {
               if (window.confirm(tr('ล้างข้อมูลที่สร้างระหว่างเดโมทั้งหมด?', 'Clear all data created during this demo?'))) {
                 reset()
+                resetPromoSeen()
                 setOpen(false)
                 navigate('/demo')
               }

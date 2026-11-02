@@ -6,6 +6,7 @@ import { Logo } from '../components/Brand'
 import { LinkButton } from '../components/ui/Button'
 import { LangToggle } from './LangToggle'
 import { EVENT } from '../data/event'
+import { PromoPopup } from '../components/PromoPopup'
 
 export const PUBLIC_NAV = [
   { to: '/', th: 'หน้าแรก', en: 'Home', end: true },
@@ -65,6 +66,8 @@ export function PublicLayout() {
           </nav>
         )}
       </header>
+
+      <PromoPopup />
 
       <main className="flex-1">
         <Suspense fallback={<div className="py-24 text-center text-sm text-muted">Loading…</div>}>
