@@ -1,10 +1,11 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useLayoutEffect } from 'react'
 import { Navigate, Route, Routes, useParams } from 'react-router-dom'
 import { PublicLayout } from './layouts/PublicLayout'
 import { StaffLayout } from './layouts/StaffLayout'
 import { AdminLayout } from './layouts/AdminLayout'
 import { DemoNav } from './layouts/DemoNav'
 import HomePage from './pages/public/HomePage'
+import { setVersion, type SiteVersion } from './lib/version'
 const EventPage = lazy(() => import('./pages/public/EventPage'))
 const SchedulePage = lazy(() => import('./pages/public/SchedulePage'))
 const ExhibitorsPage = lazy(() => import('./pages/public/ExhibitorsPage'))
@@ -37,6 +38,12 @@ const AdminExhibitorsPage = lazy(() => import('./pages/admin/AdminExhibitorsPage
 const AdminMatchingPage = lazy(() => import('./pages/admin/AdminMatchingPage'))
 const ReportsPage = lazy(() => import('./pages/admin/ReportsPage'))
 
+/** URL แยกเวอร์ชัน /v1 และ /v2: แสดงหน้าแรกเวอร์ชันนั้น และจำเวอร์ชันไว้สำหรับหน้าอื่น */
+function VersionHome({ v }: { v: SiteVersion }) {
+  useLayoutEffect(() => setVersion(v), [v])
+  return <HomePage forceVersion={v} />
+}
+
 /** ลิงก์เดิม /matching/* และ /booth ย้ายเข้า SME Portal แล้ว */
 function LegacyRedirect({ to }: { to: string }) {
   const { '*': rest = '' } = useParams()
@@ -49,6 +56,8 @@ export default function App() {
       <Routes>
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="v1" element={<VersionHome v="v1" />} />
+          <Route path="v2" element={<VersionHome v="v2" />} />
           <Route path="booth" element={<Navigate to="/portal/booth" replace />} />
           <Route path="event" element={<EventPage />} />
           <Route path="schedule" element={<SchedulePage />} />
