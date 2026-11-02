@@ -18,7 +18,7 @@ const TONE: Record<BandTone, string> = {
 
 export function Band({ tone = 'plain', id, children }: { tone?: BandTone; id?: string; children: ReactNode }) {
   return (
-    <section id={id} className={`relative scroll-mt-16 overflow-hidden py-14 sm:py-20 ${TONE[tone]}`}>
+    <section id={id} className={`relative scroll-mt-16 overflow-hidden py-10 sm:py-12 ${TONE[tone]}`}>
       {tone === 'navy' && <div className="hero-net pointer-events-none absolute inset-0 opacity-70" />}
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6">{children}</div>
     </section>
@@ -30,7 +30,7 @@ export function BandTitle({ eyebrow, title, subtitle, action, dark = false }: {
   eyebrow?: string; title: ReactNode; subtitle?: ReactNode; action?: ReactNode; dark?: boolean
 }) {
   return (
-    <Reveal className="mb-8 flex flex-wrap items-end justify-between gap-4">
+    <Reveal className="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div>
         {eyebrow && (
           <div className={`mb-2.5 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] ${dark ? 'text-gold-light' : 'text-gold-text'}`}>
