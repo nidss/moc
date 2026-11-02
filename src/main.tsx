@@ -4,6 +4,10 @@ import { HashRouter } from 'react-router-dom'
 import { I18nProvider } from './i18n/I18nProvider'
 import App from './App'
 import './index.css'
+import { applySkin } from './lib/skin'
+
+// ใส่ธีมที่เลือกไว้ก่อน render เพื่อไม่ให้หน้ากะพริบ
+applySkin()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

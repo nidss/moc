@@ -10,7 +10,7 @@ function split(ms: number) {
 }
 
 /** ค่าเวลาปัจจุบันที่อัปเดตทุกวินาที */
-function useNow() {
+export function useNow() {
   const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
     const id = window.setInterval(() => setNow(Date.now()), 1000)
@@ -60,4 +60,12 @@ export function Countdown({ startsAt, endsAt }: { startsAt: string; endsAt: stri
       ))}
     </div>
   )
+}
+
+/** เวลาที่เหลือก่อนเปิดงาน + สถานะ (ใช้กับตัวนับถอยหลังแบบอื่นในแต่ละธีม) */
+export function useTimeLeft(startsAt: string, endsAt: string) {
+  const now = useNow()
+  const start = new Date(startsAt).getTime()
+  const state: 'before' | 'live' | 'ended' = now < start ? 'before' : now < new Date(endsAt).getTime() ? 'live' : 'ended'
+  return { ...split(start - now), state, pad }
 }

@@ -14,6 +14,9 @@ import { Countdown } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
 import { Band, BandLink, BandTitle } from '../../components/Band'
 import { HomeExtras, NewsSection } from './HomeExtras'
+import HomeGold from './HomeGold'
+import HomeMidnight from './HomeMidnight'
+import { useSkin } from '../../lib/skin'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
@@ -24,7 +27,15 @@ const SPEAKERS = [
   { name: 'Arthit W.', role: { th: 'ผู้ก่อตั้งแบรนด์ 300 สาขา', en: 'Founder, 300-branch brand' } },
 ]
 
+/** หน้าแรก: ธีมทองคำและมิดไนท์มีโครงหน้าของตัวเอง ธีมคลาสสิกใช้โครงเดิมด้านล่าง */
 export default function HomePage() {
+  const skin = useSkin()
+  if (skin === 'gold') return <HomeGold />
+  if (skin === 'midnight') return <HomeMidnight />
+  return <ClassicHome />
+}
+
+function ClassicHome() {
   const { lang, tr, L, fmtNumber } = useI18n()
 
   const zones = [
@@ -62,9 +73,9 @@ export default function HomePage() {
       {/* Hero: ภาพพื้นหลังลูกโลก/เมือง + โลโก้และข้อมูลงาน (ซ้าย) + คีย์วิชวลริบบิ้นอินฟินิตี้ (ขวา) */}
       <section className="relative overflow-hidden bg-navy text-white">
         {/* ภาพพื้นหลังลูกโลก/เมือง (อยู่นิ่ง ไม่มีแอนิเมชัน) */}
-        <div className="pointer-events-none absolute inset-0 bg-cover bg-right-bottom" style={{ backgroundImage: `url(${heroBg})` }} />
+        <div className="hero-photo pointer-events-none absolute inset-0 bg-cover bg-right-bottom" style={{ backgroundImage: `url(${heroBg})` }} />
         {/* ไล่สีกรมท่าทับภาพพื้นหลัง ให้ข้อความอ่านง่าย (มือถือทึบกว่าเพราะข้อความทับเมือง/ลูกโลก) */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#001848]/75 via-[#001848]/55 to-[#001848]/35 lg:bg-gradient-to-r lg:from-[#001848]/55 lg:via-[#001848]/10 lg:to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--hero-1)]/75 via-[var(--hero-1)]/55 to-[var(--hero-1)]/35 lg:bg-gradient-to-r lg:from-[var(--hero-1)]/55 lg:via-[var(--hero-1)]/10 lg:to-transparent" />
         <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
           <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-6">
             <div>
@@ -91,7 +102,7 @@ export default function HomePage() {
             </div>
           </div>
           {/* นับถอยหลังสู่วันงาน (เวลาจริง) */}
-          <div className="motion-rise mt-10 flex flex-col gap-5 rounded-2xl bg-[#001848]/60 [--delay:450ms] p-5 ring-1 ring-white/20 backdrop-blur-md sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="motion-rise mt-10 flex flex-col gap-5 rounded-2xl bg-[var(--hero-1)]/60 [--delay:450ms] p-5 ring-1 ring-white/20 backdrop-blur-md sm:p-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="flex flex-wrap items-center gap-3">
                 <span className="text-lg font-semibold">{tr('นับถอยหลังสู่วันงาน', 'Countdown to opening')}</span>
@@ -113,7 +124,7 @@ export default function HomePage() {
             action={<BandLink to="/floorplan">{tr('ดูผังงาน', 'View floor plan')}</BandLink>} />
           <Reveal group className="grid gap-4 lg:grid-cols-3">
             {zones.map((z) => (
-              <Link key={z.no} to={z.to} className="group relative overflow-hidden rounded-2xl bg-navy p-6 text-white ring-1 ring-white/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#001848]/30">
+              <Link key={z.no} to={z.to} className="group relative overflow-hidden rounded-2xl bg-navy p-6 text-white ring-1 ring-white/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[var(--hero-1)]/30">
                 <div className="hero-net pointer-events-none absolute inset-0 opacity-60" />
                 <div className="relative flex items-center justify-between">
                   <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold ring-1 ring-white/20">{tr('โซนที่', 'Zone')} {z.no}</span>

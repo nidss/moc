@@ -4,6 +4,7 @@ import { BarChart3, Briefcase, ExternalLink, FileSpreadsheet, Menu, Store, Users
 import { useI18n } from '../i18n/I18nProvider'
 import { Logo } from '../components/Brand'
 import { LangToggle } from './LangToggle'
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 const NAV = [
   { to: '/admin', icon: BarChart3, th: 'ภาพรวม', en: 'Dashboard', end: true },
@@ -60,6 +61,7 @@ export function AdminLayout() {
         <button className="rounded-lg p-2 hover:bg-surface-2 lg:hidden" onClick={() => setOpen(true)} aria-label="Menu"><Menu size={22} /></button>
         <div className="truncate text-sm font-semibold text-muted"><span className="hidden sm:inline">MOC Expo 2026 · </span><span className="text-fg">{tr('ระบบบริหารจัดการงาน', 'Event Management')}</span></div>
         <div className="ml-auto flex items-center gap-3">
+          <ThemeSwitcher />
           <LangToggle />
           <div className="hidden items-center gap-2 sm:flex">
             <span className="flex size-8 items-center justify-center rounded-full bg-brand text-xs font-bold text-white dark:text-[#0a1120]">AD</span>

@@ -29,6 +29,24 @@
   --series-2: #eb6834;
   --series-3: #1baf7a;
   --grid: #e8ecf3;
+  /* สีและฟอนต์ที่ธีม (data-skin) เปลี่ยนได้ — ค่าด้านล่างคือธีมคลาสสิก */
+  --navy: #001a52;
+  --navy-2: #002a6e;
+  --gold: #c8902a;
+  --gold-light: #e8bd5c;
+  --hero-1: #001848;
+  --hero-2: #002a6e;
+  --hero-3: #003c8c;
+  --hero-glow-a: rgba(232, 189, 92, 0.32);
+  --hero-glow-b: rgba(40, 110, 220, 0.38);
+  --grad-1: #e8bd5c;
+  --grad-2: #c8902a;
+  --grad-3: #a87418;
+  --gtext-1: #f0cc74;
+  --gtext-2: #d39b33;
+  --gtext-3: #b5801f;
+  --skin-font-sans: "Inter", "IBM Plex Sans Thai", ui-sans-serif, system-ui, sans-serif;
+  --skin-font-display: "Prompt", "Inter", "IBM Plex Sans Thai", ui-sans-serif, sans-serif;
   color-scheme: light;
 }
 
@@ -67,10 +85,10 @@
   --font-sans: "Inter", "IBM Plex Sans Thai", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Prompt", "Inter", "IBM Plex Sans Thai", ui-sans-serif, sans-serif;
   /* พื้นกรมท่าเข้มคงที่ทั้งสองธีม (Hero, footer, sidebar) */
-  --color-navy: #001a52;
-  --color-navy-2: #002a6e;
-  --color-gold: #c8902a;
-  --color-gold-light: #e8bd5c;
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
   --color-on-accent: var(--on-accent);
   --color-gold-text: var(--gold-text);
   --color-bg: var(--bg);
@@ -100,16 +118,16 @@ html, body {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--skin-font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
 /* พื้นหลัง hero ใช้สีกรมท่าเข้มเสมอทั้งสองธีม */
 .hero-bg {
   background:
-    radial-gradient(900px 420px at 88% -12%, rgba(232, 189, 92, 0.32), transparent 62%),
-    radial-gradient(800px 480px at -8% 112%, rgba(40, 110, 220, 0.38), transparent 60%),
-    linear-gradient(135deg, #001848 0%, #002a6e 52%, #003c8c 100%);
+    radial-gradient(900px 420px at 88% -12%, var(--hero-glow-a), transparent 62%),
+    radial-gradient(800px 480px at -8% 112%, var(--hero-glow-b), transparent 60%),
+    linear-gradient(135deg, var(--hero-1) 0%, var(--hero-2) 52%, var(--hero-3) 100%);
 }
 
 /* ลายเส้นเครือข่ายจาง ๆ แบบในอินโฟกราฟิกของงาน */
@@ -121,18 +139,18 @@ body {
 }
 
 .gold-gradient {
-  background: linear-gradient(135deg, #e8bd5c 0%, #c8902a 55%, #a87418 100%);
+  background: linear-gradient(135deg, var(--grad-1) 0%, var(--grad-2) 55%, var(--grad-3) 100%);
 }
 
 .gold-text-gradient {
-  background: linear-gradient(135deg, #f0cc74 0%, #d39b33 50%, #b5801f 100%);
+  background: linear-gradient(135deg, var(--gtext-1) 0%, var(--gtext-2) 50%, var(--gtext-3) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 h1, h2, .font-display {
-  font-family: var(--font-display);
+  font-family: var(--skin-font-display);
   letter-spacing: -0.01em;
 }
 
@@ -213,7 +231,7 @@ h1, h2, .font-display {
 
 /* เส้นทองไหลใต้ hero (ลวดลายต่อกันพอดี จึงวนได้ไม่สะดุด) */
 .gold-bar-flow {
-  background: linear-gradient(90deg, #a87418, #e8bd5c, #fbe7a1, #e8bd5c, #a87418) 0 0 / 50% 100% repeat-x;
+  background: linear-gradient(90deg, var(--grad-3), var(--grad-1), var(--gtext-1), var(--grad-1), var(--grad-3)) 0 0 / 50% 100% repeat-x;
   animation: bar-flow 5s linear infinite;
 }
 
@@ -232,6 +250,11 @@ h1, h2, .font-display {
 .reveal-group > :nth-child(9) { --i: 8; }
 .reveal-group > :nth-child(n + 10) { --i: 9; }
 
+/* แถบตัวอักษร/โลโก้เลื่อนวนไม่สิ้นสุด (เนื้อหาซ้ำ 2 ชุดใน .marquee-track) */
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee-track { display: flex; width: max-content; animation: marquee var(--marquee-speed, 32s) linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
 /* พิมพ์หน้า: แสดงทุกส่วนแม้ยังไม่ได้เลื่อนไปถึง */
 @media print {
   .reveal, .reveal-group > * { opacity: 1 !important; animation: none !important; }
@@ -239,7 +262,134 @@ h1, h2, .font-display {
 
 @media (prefers-reduced-motion: reduce) {
   .motion-rise, .motion-pop, .motion-float, .motion-glow, .motion-tick,
-  .gold-bar-flow, .reveal.is-in, .reveal-group.is-in > * { animation: none !important; }
+  .gold-bar-flow, .marquee-track, .reveal.is-in, .reveal-group.is-in > * { animation: none !important; }
   .motion-shine::after { display: none; }
   .reveal:not(.is-in), .reveal-group:not(.is-in) > * { opacity: 1; }
 }
+
+/* ===================================================================
+ * ธีม (data-skin บน <html>) — ฟังก์ชันเหมือนเดิม เปลี่ยนสี ฟอนต์ มุมโค้ง และสไตล์การ์ด
+ * ค่าเริ่มต้น (ไม่มี data-skin) = ธีมคลาสสิก
+ * =================================================================== */
+
+/* ---------- ธีมทองคำ (Royal Gold): งาช้าง + ทอง + น้ำตาลเข้ม หัวข้อตัวมีเชิง มุมคม สไตล์นิตยสาร ---------- */
+:root[data-skin="gold"] {
+  --bg: #fbf7ee;
+  --surface: #fffdf8;
+  --surface-2: #f4ecda;
+  --fg: #2a2015;
+  --muted: #7b6a50;
+  --line: #e9dcc2;
+  --brand: #8a5d0b;
+  --brand-strong: #6b4708;
+  --brand-soft: #f5e9cf;
+  --accent: #c9952b;
+  --accent-soft: #f8ecd0;
+  --on-accent: #2a1d05;
+  --gold-text: #8a5d0b;
+  --navy: #1f170d;
+  --navy-2: #2f2416;
+  --gold: #c9952b;
+  --gold-light: #e9c46a;
+  --hero-1: #17110a;
+  --hero-2: #2b2013;
+  --hero-3: #4a3518;
+  --hero-glow-a: rgba(233, 196, 106, 0.3);
+  --hero-glow-b: rgba(201, 149, 43, 0.22);
+  --grad-1: #f3d98b;
+  --grad-2: #d4a537;
+  --grad-3: #a8781a;
+  --gtext-1: #f6e3a1;
+  --gtext-2: #e2b84f;
+  --gtext-3: #b8862a;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.5rem;
+  --radius-3xl: 0.75rem;
+  --skin-font-display: "Noto Serif Thai", "Prompt", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-skin="gold"]:not([data-theme="light"]) {
+    --bg: #0f0b06;
+    --surface: #1a140c;
+    --surface-2: #241b11;
+    --fg: #f5ecd9;
+    --muted: #b5a383;
+    --line: #3a2d1c;
+    --brand: #e2b84f;
+    --brand-strong: #f3d98b;
+    --brand-soft: #2e2412;
+    --accent: #e2b84f;
+    --accent-soft: #33280f;
+    --on-accent: #1d1405;
+    --gold-text: #f0cf7a;
+  }
+}
+[data-skin="gold"] .ui-card { box-shadow: none; }
+[data-skin="gold"] h1,
+[data-skin="gold"] h2 { letter-spacing: 0; font-weight: 700; }
+
+/* ---------- ธีมมิดไนท์ (Midnight): มืดเสมอ ม่วง + ฟ้านีออน การ์ดกระจกเรืองแสง ---------- */
+:root[data-skin="midnight"],
+:root[data-skin="midnight"]:not([data-theme="light"]) {
+  --bg: #07070f;
+  --surface: #11121f;
+  --surface-2: #1a1b2e;
+  --fg: #eceefe;
+  --muted: #9c9ec8;
+  --line: #272944;
+  --brand: #8b5cf6;
+  --brand-strong: #a78bfa;
+  --brand-soft: #211a45;
+  --accent: #22d3ee;
+  --accent-soft: #0b2f38;
+  --on-accent: #04161b;
+  --gold-text: #67e8f9;
+  --success: #4ade80;
+  --success-soft: #11321f;
+  --warning: #fbbf24;
+  --warning-soft: #36280b;
+  --danger: #f87171;
+  --danger-soft: #3b1515;
+  --info: #67e8f9;
+  --info-soft: #0b2a33;
+  --grid: #22243a;
+  --navy: #0d0b22;
+  --navy-2: #1a1442;
+  --gold: #22d3ee;
+  --gold-light: #67e8f9;
+  --hero-1: #07061a;
+  --hero-2: #1b1145;
+  --hero-3: #33116e;
+  --hero-glow-a: rgba(34, 211, 238, 0.26);
+  --hero-glow-b: rgba(139, 92, 246, 0.42);
+  --grad-1: #67e8f9;
+  --grad-2: #818cf8;
+  --grad-3: #c084fc;
+  --gtext-1: #a5f3fc;
+  --gtext-2: #67e8f9;
+  --gtext-3: #a78bfa;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+  --radius-3xl: 1.5rem;
+  --skin-font-display: "Bai Jamjuree", "Inter", "IBM Plex Sans Thai", ui-sans-serif, sans-serif;
+  color-scheme: dark;
+}
+[data-skin="midnight"] body {
+  background:
+    radial-gradient(1100px 600px at 0% -10%, rgba(139, 92, 246, 0.16), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(34, 211, 238, 0.1), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+[data-skin="midnight"] .ui-card {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-color: color-mix(in srgb, var(--brand) 22%, var(--line));
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.06), 0 14px 34px -18px rgba(139, 92, 246, 0.45);
+}
+
+/* ภาพพื้นหลังลูกโลกบน banner ปรับโทนตามธีม */
+[data-skin="gold"] .hero-photo { filter: sepia(0.75) hue-rotate(-12deg) saturate(1.3) brightness(0.8); }
+[data-skin="midnight"] .hero-photo { filter: hue-rotate(38deg) saturate(1.25) brightness(0.75); }
+
