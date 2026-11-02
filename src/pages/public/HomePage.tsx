@@ -12,6 +12,7 @@ import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { Logo } from '../../components/Brand'
 import { Countdown } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
+import { HomeExtras } from './HomeExtras'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
@@ -196,6 +197,9 @@ export default function HomePage() {
           </Reveal>
           <Reveal><Link to="/floorplan" className="block"><FloorPlanMap compact /></Link></Reveal>
         </section>
+
+        {/* Workshop, เวทีกลาง, โปรโมชั่น, การเดินทาง, ข่าว/Live, คลิป, FAQ */}
+        <HomeExtras />
 
         {/* Quote + CTA */}
         <Reveal>
