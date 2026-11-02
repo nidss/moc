@@ -10,7 +10,8 @@ import { Card, SectionTitle } from '../../components/ui/Card'
 import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { Logo } from '../../components/Brand'
-import heroBg from '../../assets/brand/hero-bg.webp'
+import { Countdown } from '../../components/Countdown'
+import keyVisual from '../../assets/brand/key-visual.webp'
 
 const SPEAKERS = [
   { name: 'Dr. Pimchanok S.', role: { th: 'ผู้เชี่ยวชาญการตลาดดิจิทัล', en: 'Digital marketing expert' } },
@@ -20,8 +21,7 @@ const SPEAKERS = [
 ]
 
 export default function HomePage() {
-  const { tr, L, fmtNumber } = useI18n()
-  const daysLeft = Math.max(0, Math.ceil((new Date(EVENT.days[0]).getTime() - Date.now()) / 86_400_000))
+  const { lang, tr, L, fmtNumber } = useI18n()
 
   const zones = [
     {
@@ -55,48 +55,40 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-navy bg-cover bg-right-bottom text-white" style={{ backgroundImage: `url(${heroBg})` }}>
-        {/* ไล่สีกรมท่าทับภาพพื้นหลัง ให้ข้อความอ่านง่าย (มือถือทึบกว่าเพราะข้อความทับเมือง/ลูกโลก) */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#001848]/75 via-[#001848]/55 to-[#001848]/35 lg:bg-gradient-to-r lg:from-[#001848]/55 lg:via-[#001848]/10 lg:to-transparent" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.25fr_1fr] lg:items-center">
-          <div>
-            <Logo tone="light" className="h-24 sm:h-32" />
-            <h1 className="mt-6 max-w-xl text-2xl font-semibold leading-snug sm:text-3xl">{L(EVENT.tagline)}</h1>
-            <div className="mt-5 flex flex-col gap-2 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-5">
-              <span className="flex items-center gap-2"><CalendarDays size={18} className="text-gold-light" /> {L(EVENT.dateLabel)}</span>
-              <span className="flex items-center gap-2"><Clock size={18} className="text-gold-light" /> {EVENT.hours}</span>
-              <span className="flex items-center gap-2"><MapPin size={18} className="text-gold-light" /> {L(EVENT.venue)}</span>
+      {/* Hero: โลโก้ + ข้อมูลงาน (ซ้าย) และคีย์วิชวลริบบิ้นอินฟินิตี้ (ขวา) */}
+      <section className="hero-bg relative overflow-hidden text-white">
+        <div className="hero-net pointer-events-none absolute inset-0 opacity-70" />
+        <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
+          <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-6">
+            <div>
+              <Logo tone="light" className="h-36 sm:h-44" />
+              <h1 className="mt-6 max-w-xl text-2xl font-semibold leading-snug sm:text-3xl">{L(EVENT.tagline)}</h1>
+              <div className="mt-5 flex flex-col gap-2 text-sm text-white/85 sm:flex-row sm:flex-wrap sm:gap-5">
+                <span className="flex items-center gap-2"><CalendarDays size={18} className="text-gold-light" /> {L(EVENT.dateLabel)}</span>
+                <span className="flex items-center gap-2"><Clock size={18} className="text-gold-light" /> {EVENT.hours}</span>
+                <span className="flex items-center gap-2"><MapPin size={18} className="text-gold-light" /> {L(EVENT.venue)}</span>
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <LinkButton to="/register" variant="accent" size="lg" icon={<QrCode size={20} />}>{tr('ลงทะเบียนเข้างาน', 'Register Now')}</LinkButton>
+                <LinkButton to="/exhibitors" size="lg" className="bg-white/10 text-white! ring-1 ring-white/30 hover:bg-white/20">
+                  {tr('ดูผู้ออกบูธ', 'Explore Exhibitors')} <ArrowRight size={18} />
+                </LinkButton>
+              </div>
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <LinkButton to="/register" variant="accent" size="lg" icon={<QrCode size={20} />}>{tr('ลงทะเบียนเข้างาน', 'Register Now')}</LinkButton>
-              <LinkButton to="/exhibitors" size="lg" className="bg-white/10 text-white ring-1 ring-white/30 hover:bg-white/20">
-                {tr('ดูผู้ออกบูธ', 'Explore Exhibitors')} <ArrowRight size={18} />
-              </LinkButton>
-            </div>
+            <img src={keyVisual} width={1400} height={823} decoding="async"
+              alt={tr('คีย์วิชวลงาน: สินค้าไทย การขายออนไลน์ การค้าระหว่างประเทศ และเวทีความรู้ด้าน AI', 'Event key visual: Thai products, live commerce, global trade and AI talks')}
+              className="mx-auto w-full max-w-2xl select-none drop-shadow-[0_24px_48px_rgba(0,0,0,0.35)] lg:max-w-none" draggable={false} />
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-2 flex items-end justify-between rounded-2xl bg-[#001848]/55 p-5 ring-1 ring-white/20 backdrop-blur-md">
-              <div>
-                <div className="text-sm text-white/70">{tr('นับถอยหลังสู่วันงาน', 'Countdown to opening')}</div>
-                <div className="mt-1 flex items-baseline gap-2">
-                  <span className="gold-text-gradient text-5xl font-extrabold tabular-nums">{daysLeft}</span>
-                  <span className="text-lg text-white/80">{tr('วัน', 'days')}</span>
-                </div>
+          {/* นับถอยหลังสู่วันงาน (เวลาจริง) */}
+          <div className="mt-10 flex flex-col gap-5 rounded-2xl bg-white/[0.07] p-5 ring-1 ring-white/20 backdrop-blur-md sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="text-lg font-semibold">{tr('นับถอยหลังสู่วันงาน', 'Countdown to opening')}</span>
+                <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/20">{tr('เข้าชมฟรี', 'Free entry')}</span>
               </div>
-              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-white/80 ring-1 ring-white/20">{tr('เข้าชมฟรี', 'Free entry')}</span>
+              <div className="mt-1 text-sm text-white/70">{tr(`เปิดงาน ${L(EVENT.dateLabel)} เวลา ${EVENT.hours} น.`, `Opens ${L(EVENT.dateLabel)}, ${EVENT.hours}`)}</div>
             </div>
-            {[
-              [fmtNumber(EVENT.targets.participants), tr('ผู้เข้าร่วมงาน', 'Participants')],
-              [fmtNumber(EVENT.targets.hubExhibitors), tr('ผู้ประกอบการออกบูธ', 'SME exhibitors')],
-              [fmtNumber(EVENT.targets.tasteBooths), tr('บูธอาหาร MOC TASTE', 'MOC TASTE food booths')],
-              [`฿${EVENT.targets.economicValue / 1_000_000}M`, tr('เป้ามูลค่าเศรษฐกิจ', 'Economic value target')],
-            ].map(([n, l]) => (
-              <div key={l} className="rounded-2xl bg-[#001848]/55 p-4 ring-1 ring-white/20 backdrop-blur-md">
-                <div className="gold-text-gradient text-2xl font-extrabold">{n}</div>
-                <div className="text-sm text-white/80">{l}</div>
-              </div>
-            ))}
+            <Countdown startsAt={EVENT.startsAt} endsAt={EVENT.endsAt} />
           </div>
         </div>
         <div className="gold-gradient relative h-1" />
@@ -191,7 +183,7 @@ export default function HomePage() {
           <div className="hero-net pointer-events-none absolute inset-0" />
           <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <div className="text-xs font-bold tracking-[0.2em] text-gold-light">{EVENT.slogan}</div>
+              <div className={`font-bold text-gold-light ${lang === 'en' ? 'text-xs uppercase tracking-[0.2em]' : 'text-sm'}`}>{L(EVENT.slogan)}</div>
               <h2 className="mt-3 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">“{L(EVENT.quote)}”</h2>
             </div>
             <LinkButton to="/register" variant="accent" size="lg" icon={<QrCode size={20} />}>{tr('ลงทะเบียน', 'Register Now')}</LinkButton>
