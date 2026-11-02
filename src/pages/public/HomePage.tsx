@@ -13,14 +13,14 @@ import { Logo } from '../../components/Brand'
 import { Countdown } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
 import { Band, BandLink, BandTitle } from '../../components/Band'
-import { HomeExtras, NewsSection } from './HomeExtras'
+import { HomeExtras, NewsSection, TravelSection } from './HomeExtras'
 import HomeGold from './HomeGold'
 import HomeMidnight from './HomeMidnight'
 import { useSkin } from '../../lib/skin'
 import { useVersion } from '../../lib/version'
-import HomeV2 from './HomeV2'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
+import registerBanner from '../../assets/brand/register-banner.webp'
 
 const SPEAKERS = [
   { name: 'Dr. Pimchanok S.', role: { th: 'ผู้เชี่ยวชาญการตลาดดิจิทัล', en: 'Digital marketing expert' } },
@@ -30,19 +30,20 @@ const SPEAKERS = [
 ]
 
 /**
- * หน้าแรก: V2 ใช้หน้าแบบกระชับทุกธีม
- * V1: ธีมทองคำและมิดไนท์มีโครงหน้าของตัวเอง ธีมคลาสสิกใช้โครงเดิมด้านล่าง
+ * หน้าแรก
+ * - V1: ธีมทองคำและมิดไนท์มีโครงหน้าของตัวเอง ธีมคลาสสิกใช้โครงเดิมด้านล่าง
+ * - V2: ใช้โครงเดียวกับ V1 คลาสสิก แต่เหลือเฉพาะ section สำคัญ (เนื้อหาที่เหลืออยู่ในเมนูย่อยบน header)
  */
 export default function HomePage() {
   const skin = useSkin()
   const version = useVersion()
-  if (version === 'v2') return <HomeV2 />
+  if (version === 'v2') return <ClassicHome compact />
   if (skin === 'gold') return <HomeGold />
   if (skin === 'midnight') return <HomeMidnight />
   return <ClassicHome />
 }
 
-function ClassicHome() {
+function ClassicHome({ compact = false }: { compact?: boolean }) {
   const { lang, tr, L, fmtNumber } = useI18n()
 
   const zones = [
@@ -144,7 +145,7 @@ function ClassicHome() {
               </Link>
             ))}
           </Reveal>
-          <Reveal group className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {!compact && <Reveal group className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {more.map((h) => (
               <Link key={h.en} to={h.to} className="group">
                 <Card className="flex h-full items-start gap-3 p-4 transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md">
@@ -156,11 +157,26 @@ function ClassicHome() {
                 </Card>
               </Link>
             ))}
-          </Reveal>
+          </Reveal>}
         </Band>
+
+        {/* V2: แบนเนอร์ชวนลงทะเบียนลุ้นรางวัล */}
+        {compact && (
+          <div className="mx-auto -mt-2 max-w-7xl px-4 pb-10 sm:px-6 sm:pb-12">
+            <Reveal>
+              <Link to="/register" className="block overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/5 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl">
+                <img src={registerBanner} width={2000} height={274} loading="lazy" decoding="async" className="block w-full"
+                  alt={tr('ลงทะเบียนเข้างาน รับสิทธิ์ลุ้นรางวัลใหญ่: iPad, Samsung Fold 8, iPhone Duo และ Voucher (เงื่อนไขตามที่ผู้จัดงานกำหนด)', 'Register to win big prizes: iPad, Samsung Fold 8, iPhone Duo and vouchers (terms apply)')} />
+              </Link>
+            </Reveal>
+          </div>
+        )}
 
         {/* ข่าวประชาสัมพันธ์ & Live Streaming */}
         <NewsSection />
+
+        {/* V2 จบที่การเดินทาง ส่วนที่เหลือไม่แสดง */}
+        {compact ? <TravelSection /> : <>
 
         {/* Featured exhibitors */}
         <Band tone="tint" id="exhibitors">
@@ -261,6 +277,7 @@ function ClassicHome() {
             </Reveal>
           </div>
         </Band>
+        </>}
       </div>
     </div>
   )

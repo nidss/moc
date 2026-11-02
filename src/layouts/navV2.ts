@@ -1,5 +1,5 @@
 import {
-  Bot, Briefcase, Bus, CalendarDays, CirclePlay, Gift, Handshake, HelpCircle, Info, Map as MapIcon, Mic2, Newspaper, Store, Ticket, Wrench, type LucideIcon,
+  Bot, Briefcase, Bus, CirclePlay, Gift, Handshake, HelpCircle, Info, Mic2, Newspaper, Store, Wrench, type LucideIcon,
 } from 'lucide-react'
 
 /** เมนูของ V2: ลิงก์หลักไม่กี่อัน + เมนูย่อยสำหรับเนื้อหารองที่ย้ายออกจากหน้าแรก */
@@ -41,12 +41,4 @@ export const GROUPS_V2: NavGroupV2[] = [
       { to: '/ai', icon: Bot, th: 'Ask MOC AI', en: 'Ask MOC AI', dth: 'ผู้ช่วยแนะนำร้านและกิจกรรม', den: 'Assistant for shops and activities' },
     ],
   },
-]
-
-/** ทางลัดบนหน้าแรก V2 (สิ่งที่คนมาครั้งแรกต้องการที่สุด) */
-export const QUICK_V2: NavItemV2[] = [
-  { to: '/register', icon: Ticket, th: 'ลงทะเบียนรับ QR', en: 'Get your QR ticket', dth: 'ฟรี ใช้เวลา 1 นาที', den: 'Free, takes a minute' },
-  { to: '/exhibitors', icon: Store, th: 'ค้นหาร้านและสินค้า', en: 'Find shops & products', dth: 'กว่า 300 บูธ', den: '300+ booths' },
-  { to: '/schedule', icon: CalendarDays, th: 'กำหนดการ', en: 'Schedule', dth: 'Talk และกิจกรรม 3 วัน', den: 'Talks & activities, 3 days' },
-  { to: '/guide/travel', icon: MapIcon, th: 'เดินทางมางาน', en: 'Getting there', dth: 'MRT ศูนย์ฯ สิริกิติ์', den: 'MRT Queen Sirikit' },
 ]
