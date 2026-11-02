@@ -31,7 +31,7 @@ export function PublicLayout() {
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-30 border-b border-line bg-surface/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
-          <Link to="/" aria-label="MOC Expo 2026 home"><Logo className="h-10 sm:h-11" /></Link>
+          <Link to="/" aria-label="MOC Expo 2026 home"><Logo className="h-12" /></Link>
           <nav className="ml-4 hidden items-center gap-1 xl:flex">
             {PUBLIC_NAV.map((n) => (
               <NavLink key={n.to} to={n.to} end={n.end}
@@ -76,7 +76,7 @@ export function PublicLayout() {
         <div className="gold-gradient h-1" />
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3">
           <div>
-            <Logo tone="light" className="h-16" />
+            <Logo tone="light" className="h-24" />
             <p className="mt-3 text-sm text-white/70">{L(EVENT.tagline)}</p>
             <p className="mt-3 text-xs leading-relaxed text-white/55">
               {tr('กระทรวงพาณิชย์ · กรมพัฒนาธุรกิจการค้า · สำนักงานส่งเสริมวิสาหกิจขนาดกลางและขนาดย่อม (สสว.)', 'Ministry of Commerce · Department of Business Development · OSMEP')}

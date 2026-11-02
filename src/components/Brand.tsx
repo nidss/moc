@@ -4,12 +4,13 @@ import logoColor from '../assets/brand/moc-expo-2026.webp'
 import logoLight from '../assets/brand/moc-expo-2026-light.webp'
 
 /**
- * โลโก้งาน MOC Expo 2026 (ไฟล์ทางการจากผู้จัด)
+ * โลโก้งาน "พาณิชย์เอ็กซ์โป 2026 เพื่อธุรกิจและชีวิตที่ดี" (ไฟล์ทางการจากทีมงาน)
+ * โลโก้เป็นทรงตั้ง (กว้าง:สูง ≈ 1.36:1) จึงกำหนดขนาดด้วยความสูงผ่าน className
  * - tone="auto": สีปกติบนพื้นสว่าง และสลับเป็นตัวอักษรขาวอัตโนมัติเมื่อเป็น dark mode
- * - tone="light": ใช้บนพื้นกรมท่าเข้ม (Hero, footer, sidebar)
+ * - tone="light": ใช้บนพื้นน้ำเงินเข้ม (Hero, footer, sidebar)
  */
-export function Logo({ tone = 'auto', className = 'h-10' }: { tone?: 'auto' | 'light'; className?: string }) {
-  const alt = 'MOC Expo 2026 — Connect · Collaborate · Grow Together'
+export function Logo({ tone = 'auto', className = 'h-12' }: { tone?: 'auto' | 'light'; className?: string }) {
+  const alt = 'พาณิชย์เอ็กซ์โป 2026 เพื่อธุรกิจและชีวิตที่ดี (MOC Expo 2026)'
   if (tone === 'light') return <img src={logoLight} alt={alt} className={`w-auto select-none ${className}`} draggable={false} />
   return (
     <picture>

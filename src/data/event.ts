@@ -3,7 +3,8 @@ import type { AttendeeType, CategoryId, PavilionId, ProductType, ShopType } from
 
 export const EVENT = {
   name: 'MOC Expo 2026',
-  slogan: 'CONNECT • COLLABORATE • GROW TOGETHER',
+  /** คำขวัญจากโลโก้งาน */
+  slogan: { th: 'เพื่อธุรกิจและชีวิตที่ดี', en: 'For Better Business and Better Lives' } as LText,
   tagline: {
     th: 'โครงการเชื่อมโยงการค้าและเจรจาธุรกิจผู้ประกอบการไทย',
     en: 'Trade Linkage & Business Matching for Thai Entrepreneurs',
@@ -15,6 +16,9 @@ export const EVENT = {
   days: ['2026-12-04', '2026-12-05', '2026-12-06'],
   dateLabel: { th: '4 – 6 ธันวาคม 2569', en: '4 – 6 December 2026' } as LText,
   hours: '10:00 – 20:00',
+  /** เวลาเปิดงานวันแรกและปิดงานวันสุดท้าย (เวลาไทย) ใช้กับตัวนับถอยหลัง */
+  startsAt: '2026-12-04T10:00:00+07:00',
+  endsAt: '2026-12-06T20:00:00+07:00',
   venue: {
     th: 'ศูนย์การประชุมแห่งชาติสิริกิติ์ (QSNCC) Hall 7–8',
     en: 'Queen Sirikit National Convention Center (QSNCC), Hall 7–8',

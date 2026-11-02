@@ -36,7 +36,7 @@ export default function RegisterSuccessPage() {
           <div className="overflow-hidden rounded-[28px] bg-navy text-white shadow-2xl ring-1 ring-black/10">
             <div className="hero-bg px-6 pt-6 pb-5">
               <div className="flex items-center justify-between">
-                <Logo tone="light" className="h-10" />
+                <Logo tone="light" className="h-14" />
                 <span className="rounded-full bg-accent px-2.5 py-1 text-[11px] font-bold text-on-accent">{L(ATTENDEE_TYPES[attendee.type]).toUpperCase()}</span>
               </div>
               <div className="mt-5 text-xs text-white/60">EVENT</div>
