@@ -32,6 +32,11 @@ function readCoupons(): string[] {
   try { return JSON.parse(localStorage.getItem(COUPON_KEY) ?? '[]') } catch { return [] }
 }
 
+/** วันที่แบบย่อตามภาษา เช่น 1 พ.ย. 2569 / 1 Nov 2026 */
+function fmtDateFor(lang: string, iso: string) {
+  return new Date(iso).toLocaleDateString(lang === 'th' ? 'th-TH' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
 /** หัวข้อ section พร้อม anchor ให้ลิงก์ตรงมาได้ */
 function Block({ id, title, subtitle, action, children }: { id: string; title: ReactNode; subtitle?: ReactNode; action?: ReactNode; children: ReactNode }) {
   return (
@@ -42,11 +47,11 @@ function Block({ id, title, subtitle, action, children }: { id: string; title: R
   )
 }
 
-/** ส่วนต่อขยายของหน้าแรก: กิจกรรม โปรโมชั่น การเดินทาง ข่าว คลิป และ FAQ */
+/** ส่วนต่อขยายของหน้าแรก: กิจกรรม โปรโมชั่น การเดินทาง คลิป และ FAQ */
 export function HomeExtras() {
   const { tr, L, lang } = useI18n()
   const dayLabel = (d: number) => (d === 0 ? tr('ทุกวัน', 'Daily') : tr(`${d + 3} ธ.ค.`, `${d + 3} Dec`))
-  const fmtDate = (iso: string) => new Date(iso).toLocaleDateString(lang === 'th' ? 'th-TH' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  const fmtDate = (iso: string) => fmtDateFor(lang, iso)
 
   const [stageDay, setStageDay] = useState<0 | 1 | 2 | 3>(0)
   const acts = CENTER_STAGE.filter((a) => stageDay === 0 || a.day === stageDay || a.day === 0)
@@ -230,51 +235,6 @@ export function HomeExtras() {
         </div>
       </Block>
 
-      {/* 5) ข่าว + Live Streaming */}
-      <Block id="news" title={tr('ข่าวประชาสัมพันธ์ & Live Streaming', 'News & Live Streaming')}>
-        <div className="grid gap-4 lg:grid-cols-[1fr_1.15fr]">
-          <Reveal>
-            <div className="overflow-hidden rounded-2xl bg-navy text-white ring-1 ring-black/5">
-              <div className="relative aspect-video bg-[#001848]">
-                <img src={keyVisual} alt="" className="absolute inset-0 m-auto h-[85%] w-auto object-contain opacity-60" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001848] via-transparent to-transparent" />
-                <span className="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-xs font-semibold backdrop-blur"><Radio size={13} className="text-red-400" /> {tr('ถ่ายทอดสดเร็ว ๆ นี้', 'Live soon')}</span>
-                <div className="absolute inset-x-0 bottom-0 p-4">
-                  <div className="text-xs text-gold-light">{tr('ถ่ายทอดสดครั้งถัดไป', 'Next live stream')}</div>
-                  <div className="text-lg font-bold">{L(STREAMS[0].title)} · {L(STREAMS[0].when)}</div>
-                </div>
-              </div>
-              <div className="space-y-2 p-4">
-                {STREAMS.slice(1).map((s) => (
-                  <div key={s.title.en} className="flex items-center justify-between gap-3 text-sm">
-                    <span className="flex items-center gap-2"><CirclePlay size={16} className="text-gold-light" /> {L(s.title)}</span>
-                    <span className="shrink-0 text-white/60">{L(s.when)}</span>
-                  </div>
-                ))}
-                <div className="flex flex-wrap gap-1.5 pt-2">
-                  {STREAM_CHANNELS.map((c) => <span key={c} className="rounded-full bg-white/10 px-2.5 py-1 text-xs ring-1 ring-white/20">{c}</span>)}
-                </div>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal group className="grid gap-3">
-            {NEWS.map((n) => (
-              <Card key={n.date} className="group flex gap-4 p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
-                <div className="hidden h-fit rounded-xl bg-brand-soft p-2.5 text-brand sm:block"><Newspaper size={20} /></div>
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2 text-xs">
-                    <Badge tone="accent">{L(n.tag)}</Badge>
-                    <span className="text-muted">{fmtDate(n.date)}</span>
-                  </div>
-                  <div className="mt-1.5 font-semibold group-hover:text-brand">{L(n.title)}</div>
-                  <p className="mt-0.5 text-sm text-muted">{L(n.excerpt)}</p>
-                </div>
-              </Card>
-            ))}
-          </Reveal>
-        </div>
-      </Block>
-
       {/* 6) คลิปย้อนหลัง */}
       <Block id="replays" title={tr('คลิปย้อนหลัง', 'Replays')} subtitle={tr('ไฮไลต์ เบื้องหลัง และคลิปจากเวทีต่าง ๆ', 'Highlights, behind the scenes and stage recordings')}>
         <Reveal group className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -337,6 +297,60 @@ export function HomeExtras() {
           </Reveal>
         </div>
       </Block>
+    </>
+  )
+}
+
+/** ข่าวประชาสัมพันธ์ & Live Streaming (วางไว้ใต้ 3 โซนหลักของงาน) */
+export function NewsSection() {
+  const { tr, L, lang } = useI18n()
+  const fmtDate = (iso: string) => fmtDateFor(lang, iso)
+  return (
+    <>
+        {/* 5) ข่าว + Live Streaming */}
+        <Block id="news" title={tr('ข่าวประชาสัมพันธ์ & Live Streaming', 'News & Live Streaming')}>
+          <div className="grid gap-4 lg:grid-cols-[1fr_1.15fr]">
+            <Reveal>
+              <div className="overflow-hidden rounded-2xl bg-navy text-white ring-1 ring-black/5">
+                <div className="relative aspect-video bg-[#001848]">
+                  <img src={keyVisual} alt="" className="absolute inset-0 m-auto h-[85%] w-auto object-contain opacity-60" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#001848] via-transparent to-transparent" />
+                  <span className="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-xs font-semibold backdrop-blur"><Radio size={13} className="text-red-400" /> {tr('ถ่ายทอดสดเร็ว ๆ นี้', 'Live soon')}</span>
+                  <div className="absolute inset-x-0 bottom-0 p-4">
+                    <div className="text-xs text-gold-light">{tr('ถ่ายทอดสดครั้งถัดไป', 'Next live stream')}</div>
+                    <div className="text-lg font-bold">{L(STREAMS[0].title)} · {L(STREAMS[0].when)}</div>
+                  </div>
+                </div>
+                <div className="space-y-2 p-4">
+                  {STREAMS.slice(1).map((s) => (
+                    <div key={s.title.en} className="flex items-center justify-between gap-3 text-sm">
+                      <span className="flex items-center gap-2"><CirclePlay size={16} className="text-gold-light" /> {L(s.title)}</span>
+                      <span className="shrink-0 text-white/60">{L(s.when)}</span>
+                    </div>
+                  ))}
+                  <div className="flex flex-wrap gap-1.5 pt-2">
+                    {STREAM_CHANNELS.map((c) => <span key={c} className="rounded-full bg-white/10 px-2.5 py-1 text-xs ring-1 ring-white/20">{c}</span>)}
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+            <Reveal group className="grid gap-3">
+              {NEWS.map((n) => (
+                <Card key={n.date} className="group flex gap-4 p-4 transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                  <div className="hidden h-fit rounded-xl bg-brand-soft p-2.5 text-brand sm:block"><Newspaper size={20} /></div>
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                      <Badge tone="accent">{L(n.tag)}</Badge>
+                      <span className="text-muted">{fmtDate(n.date)}</span>
+                    </div>
+                    <div className="mt-1.5 font-semibold group-hover:text-brand">{L(n.title)}</div>
+                    <p className="mt-0.5 text-sm text-muted">{L(n.excerpt)}</p>
+                  </div>
+                </Card>
+              ))}
+            </Reveal>
+          </div>
+        </Block>
     </>
   )
 }

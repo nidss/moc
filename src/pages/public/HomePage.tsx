@@ -12,7 +12,7 @@ import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { Logo } from '../../components/Brand'
 import { Countdown } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
-import { HomeExtras } from './HomeExtras'
+import { HomeExtras, NewsSection } from './HomeExtras'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
@@ -140,6 +140,9 @@ export default function HomePage() {
             ))}
           </Reveal>
         </section>
+
+        {/* ข่าวประชาสัมพันธ์ & Live Streaming */}
+        <NewsSection />
 
         {/* Featured exhibitors */}
         <section>
