@@ -48,6 +48,10 @@ npm run preview
   - `HomePage.tsx` and `PublicLayout.tsx` choose between them by skin.
   - Every other page shares one structure and only re-colours.
   - Dark mode follows `prefers-color-scheme`. Midnight is always dark, so use `isDarkSkin()` there.
+- **Site version** (`src/lib/version.ts`, key `moc-demo-version`): `v1` or `v2`, independent of the skin.
+  - `VersionSwitcher` sits next to the theme switcher in every public header.
+  - V2 replaces the public header with `HeaderV2` (4 primary links and 3 dropdown groups defined in `src/layouts/navV2.ts`) and the home page with `ClassicHome compact` in `HomePage.tsx` (the classic layout reduced to hero, zones, register banner, news and travel), on every skin.
+  - Secondary home sections are reachable as `/guide/:topic` (`GuidePage.tsx`), which reuses the section components from `HomeExtras.tsx`.
 - **Home page content**:
   - Content shared by all three home pages: `src/pages/public/homeShared.ts`, `src/data/homeContent.ts`, and the section components in `HomeExtras.tsx`.
   - Section wrappers: `Band` / `BandTitle`.
@@ -61,5 +65,5 @@ npm run preview
 ## Conventions
 
 - Code comments are written in Thai (or English). Never use Japanese characters.
-- `localStorage` keys use the `moc-demo-*` prefix (`-lang`, `-skin`, `-promo-seen`, `-coupons`) or `moc-expo-demo` for the store. If you add one that should clear on reset, wire it into the DemoNav reset.
+- `localStorage` keys use the `moc-demo-*` prefix (`-lang`, `-skin`, `-version`, `-promo-seen`, `-coupons`) or `moc-expo-demo` for the store. If you add one that should clear on reset, wire it into the DemoNav reset.
 - Tailwind v4: tokens are declared in the `@theme inline` block in `src/index.css`. The important modifier is a suffix, for example `text-white!`.

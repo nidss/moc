@@ -10,6 +10,9 @@ import { PromoPopup } from '../components/PromoPopup'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { GoldFooter, GoldHeader, MidnightFooter, MidnightHeader } from './SkinChrome'
 import { useSkin } from '../lib/skin'
+import { useVersion } from '../lib/version'
+import { VersionSwitcher } from './VersionSwitcher'
+import { HeaderV2 } from './HeaderV2'
 
 export const PUBLIC_NAV = [
   { to: '/', th: 'หน้าแรก', en: 'Home', end: true },
@@ -26,6 +29,7 @@ export function PublicLayout() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
   const skin = useSkin()
+  const v2 = useVersion() === 'v2'
 
   useEffect(() => {
     setOpen(false)
@@ -34,9 +38,11 @@ export function PublicLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {skin === 'gold' && <GoldHeader nav={PUBLIC_NAV} open={open} setOpen={setOpen} />}
-      {skin === 'midnight' && <MidnightHeader nav={PUBLIC_NAV} open={open} setOpen={setOpen} />}
-      {skin === 'classic' && (
+      {/* V2 ใช้ header แบบมีเมนูย่อยทุกธีม (สีตามธีม) */}
+      {v2 && <HeaderV2 />}
+      {!v2 && skin === 'gold' && <GoldHeader nav={PUBLIC_NAV} open={open} setOpen={setOpen} />}
+      {!v2 && skin === 'midnight' && <MidnightHeader nav={PUBLIC_NAV} open={open} setOpen={setOpen} />}
+      {!v2 && skin === 'classic' && (
       <header className="sticky top-0 z-30 border-b border-line bg-surface/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
           <Link to="/" aria-label="MOC Expo 2026 home"><Logo className="h-12" /></Link>
@@ -49,6 +55,7 @@ export function PublicLayout() {
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-2">
+            <span className="hidden sm:block"><VersionSwitcher /></span>
             <ThemeSwitcher />
             <span className="hidden sm:block"><LangToggle /></span>
             <LinkButton to="/register" variant="accent" size="sm" className="hidden sm:inline-flex">{tr('ลงทะเบียน', 'Register')}</LinkButton>
@@ -68,7 +75,7 @@ export function PublicLayout() {
               ))}
             </div>
             <div className="mt-3 flex items-center justify-between gap-3">
-              <LangToggle />
+              <div className="flex items-center gap-2"><LangToggle /><VersionSwitcher /></div>
               <LinkButton to="/register" variant="accent" size="sm">{tr('ลงทะเบียน', 'Register')}</LinkButton>
             </div>
           </nav>
