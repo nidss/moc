@@ -10,11 +10,12 @@ import {
   CENTER_STAGE, CLIPS, COUPONS, COUPON_TERMS, FACILITIES, FAQS, LIVE_COMMERCE, LIVE_PLATFORMS, MAP_URL, NEWS, STAGE_KINDS, STREAMS,
   STREAM_CHANNELS, TRAVEL, WORKSHOPS, type Facility, type StageKind, type TravelMode,
 } from '../../data/homeContent'
-import { Card, SectionTitle } from '../../components/ui/Card'
+import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { LinkButton } from '../../components/ui/Button'
 import { Modal } from '../../components/ui/Modal'
 import { Reveal } from '../../components/Reveal'
+import { Band, BandTitle, type BandTone } from '../../components/Band'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
 const TRAVEL_ICON: Record<TravelMode, LucideIcon> = { mrt: TrainFront, bus: Bus, car: Car, taxi: CarTaxiFront }
@@ -37,13 +38,15 @@ function fmtDateFor(lang: string, iso: string) {
   return new Date(iso).toLocaleDateString(lang === 'th' ? 'th-TH' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
-/** หัวข้อ section พร้อม anchor ให้ลิงก์ตรงมาได้ */
-function Block({ id, title, subtitle, action, children }: { id: string; title: ReactNode; subtitle?: ReactNode; action?: ReactNode; children: ReactNode }) {
+/** section เต็มความกว้าง พร้อม anchor และหัวข้อ (สีตัวอักษรปรับตามพื้นหลัง) */
+function Block({ id, tone = 'plain', eyebrow, title, subtitle, action, children }: {
+  id: string; tone?: BandTone; eyebrow?: string; title: ReactNode; subtitle?: ReactNode; action?: ReactNode; children: ReactNode
+}) {
   return (
-    <section id={id} className="scroll-mt-24">
-      <Reveal><SectionTitle title={title} subtitle={subtitle} action={action} /></Reveal>
+    <Band id={id} tone={tone}>
+      <BandTitle eyebrow={eyebrow} title={title} subtitle={subtitle} action={action} dark={tone === 'navy'} />
       {children}
-    </section>
+    </Band>
   )
 }
 
@@ -75,7 +78,7 @@ export function HomeExtras() {
   return (
     <>
       {/* 1) Workshop & Live Commerce */}
-      <Block id="workshop" title={tr('Workshop & Live Commerce', 'Workshops & Live Commerce')}
+      <Block id="workshop" tone="warm" eyebrow="WORKSHOP & LIVE" title={tr('Workshop & Live Commerce', 'Workshops & Live Commerce')}
         subtitle={tr('ลงมือทำจริง ได้ของกลับบ้าน และช้อปผ่านไลฟ์จากบูธในงาน', 'Hands-on sessions to take home, plus live shopping from the booths')}
         action={<Link to="/schedule" className="text-sm font-semibold text-brand hover:underline">{tr('ดูกำหนดการทั้งหมด', 'Full schedule')} →</Link>}>
         <div className="grid gap-4 lg:grid-cols-[1.35fr_1fr]">
@@ -120,7 +123,7 @@ export function HomeExtras() {
       </Block>
 
       {/* 2) เวทีกลาง */}
-      <Block id="stage" title={tr('กิจกรรมเวทีกลาง', 'Center Stage')}
+      <Block id="stage" tone="navy" eyebrow="CENTER STAGE" title={tr('กิจกรรมเวทีกลาง', 'Center Stage')}
         subtitle={tr('บันเทิง ฮีลใจ และมอบความสุข ตลอด 3 วัน', 'Entertainment, healing and happiness all 3 days')}
         action={
           <div className="flex rounded-full border border-line bg-surface p-1 text-sm" role="tablist">
@@ -152,7 +155,7 @@ export function HomeExtras() {
       </Block>
 
       {/* 3) โปรโมชั่น / คูปอง */}
-      <Block id="promotions" title={tr('โปรโมชั่น & คูปองส่วนลด', 'Promotions & Coupons')}
+      <Block id="promotions" tone="plain" eyebrow="PROMOTIONS" title={tr('โปรโมชั่น & คูปองส่วนลด', 'Promotions & Coupons')}
         subtitle={tr('เก็บคูปองไว้ก่อน แล้วแสดงพร้อม QR Ticket ที่ร้านค้าในงาน', 'Collect now and show with your QR ticket at the shops')}>
         <Reveal group className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {COUPONS.map((c) => {
@@ -203,7 +206,7 @@ export function HomeExtras() {
       </Block>
 
       {/* 4) การเดินทาง + สิ่งอำนวยความสะดวก */}
-      <Block id="travel" title={tr('การเดินทาง & สิ่งอำนวยความสะดวก', 'Getting There & Facilities')} subtitle={L(EVENT.venue)}
+      <Block id="travel" tone="white" eyebrow="GETTING THERE" title={tr('การเดินทาง & สิ่งอำนวยความสะดวก', 'Getting There & Facilities')} subtitle={L(EVENT.venue)}
         action={<a href={MAP_URL} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-sm font-semibold text-brand hover:underline"><MapPinned size={15} /> {tr('เปิดแผนที่', 'Open map')}</a>}>
         <div className="grid gap-4 lg:grid-cols-[1.3fr_1fr]">
           <Reveal group className="grid gap-3 sm:grid-cols-2">
@@ -236,10 +239,10 @@ export function HomeExtras() {
       </Block>
 
       {/* 6) คลิปย้อนหลัง */}
-      <Block id="replays" title={tr('คลิปย้อนหลัง', 'Replays')} subtitle={tr('ไฮไลต์ เบื้องหลัง และคลิปจากเวทีต่าง ๆ', 'Highlights, behind the scenes and stage recordings')}>
+      <Block id="replays" tone="navy" eyebrow="REPLAYS" title={tr('คลิปย้อนหลัง', 'Replays')} subtitle={tr('ไฮไลต์ เบื้องหลัง และคลิปจากเวทีต่าง ๆ', 'Highlights, behind the scenes and stage recordings')}>
         <Reveal group className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {CLIPS.map((c) => (
-            <button key={c.thumb} onClick={() => setClip(c)} className="group overflow-hidden rounded-2xl border border-line bg-surface text-left transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+            <button key={c.thumb} onClick={() => setClip(c)} className="group overflow-hidden rounded-2xl border border-line bg-surface text-left text-fg transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
               <div className="relative aspect-video overflow-hidden">
                 <img src={thumb(c.thumb)} alt="" loading="lazy" decoding="async" className="size-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-black/25 transition-colors group-hover:bg-black/10" />
@@ -270,7 +273,7 @@ export function HomeExtras() {
       </Block>
 
       {/* 7) FAQ */}
-      <Block id="faq" title={tr('คำถามที่พบบ่อย', 'FAQ')}>
+      <Block id="faq" tone="tint" eyebrow="FAQ" title={tr('คำถามที่พบบ่อย', 'FAQ')}>
         <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
           <Reveal group className="space-y-2.5">
             {FAQS.map((f) => (
@@ -308,7 +311,7 @@ export function NewsSection() {
   return (
     <>
         {/* 5) ข่าว + Live Streaming */}
-        <Block id="news" title={tr('ข่าวประชาสัมพันธ์ & Live Streaming', 'News & Live Streaming')}>
+        <Block id="news" tone="white" eyebrow="NEWS & LIVE" title={tr('ข่าวประชาสัมพันธ์ & Live Streaming', 'News & Live Streaming')}>
           <div className="grid gap-4 lg:grid-cols-[1fr_1.15fr]">
             <Reveal>
               <div className="overflow-hidden rounded-2xl bg-navy text-white ring-1 ring-black/5">

@@ -6,12 +6,13 @@ import { AGENCY_LOGOS, PARTNER_LOGOS } from '../../data/agencyLogos'
 import { EXHIBITORS } from '../../data/exhibitors'
 import { SCHEDULE } from '../../data/schedule'
 import { LinkButton } from '../../components/ui/Button'
-import { Card, SectionTitle } from '../../components/ui/Card'
+import { Card } from '../../components/ui/Card'
 import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { Logo } from '../../components/Brand'
 import { Countdown } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
+import { Band, BandLink, BandTitle } from '../../components/Band'
 import { HomeExtras, NewsSection } from './HomeExtras'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
@@ -104,13 +105,12 @@ export default function HomePage() {
         <div className="gold-bar-flow relative h-1" />
       </section>
 
-      <div className="mx-auto max-w-7xl space-y-16 px-4 pt-14 sm:px-6">
+      {/* แต่ละ section เป็นแถบเต็มความกว้าง สลับสีพื้นหลังเพื่อแบ่งหัวข้อให้ชัด */}
+      <div>
         {/* 3 zones */}
-        <section>
-          <Reveal>
-            <SectionTitle title={tr('3 โซนหลักของงาน', 'Three Main Zones')} subtitle={tr(`พื้นที่จัดงานไม่น้อยกว่า ${fmtNumber(EVENT.area)} ตารางเมตร`, `At least ${fmtNumber(EVENT.area)} sqm of exhibition space`)}
-              action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('ดูผังงาน', 'View floor plan')} →</Link>} />
-          </Reveal>
+        <Band id="zones">
+          <BandTitle eyebrow="EXPLORE" title={tr('3 โซนหลักของงาน', 'Three Main Zones')} subtitle={tr(`พื้นที่จัดงานไม่น้อยกว่า ${fmtNumber(EVENT.area)} ตารางเมตร`, `At least ${fmtNumber(EVENT.area)} sqm of exhibition space`)}
+            action={<BandLink to="/floorplan">{tr('ดูผังงาน', 'View floor plan')}</BandLink>} />
           <Reveal group className="grid gap-4 lg:grid-cols-3">
             {zones.map((z) => (
               <Link key={z.no} to={z.to} className="group relative overflow-hidden rounded-2xl bg-navy p-6 text-white ring-1 ring-white/10 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-[#001848]/30">
@@ -139,88 +139,86 @@ export default function HomePage() {
               </Link>
             ))}
           </Reveal>
-        </section>
+        </Band>
 
         {/* ข่าวประชาสัมพันธ์ & Live Streaming */}
         <NewsSection />
 
         {/* Featured exhibitors */}
-        <section>
-          <Reveal>
-            <SectionTitle title={tr('ผู้ออกบูธแนะนำ', 'Featured Exhibitors')}
-              action={<Link to="/exhibitors" className="text-sm font-semibold text-brand hover:underline">{tr('ดูทั้งหมด', 'View all')} →</Link>} />
-          </Reveal>
+        <Band tone="tint" id="exhibitors">
+          <BandTitle eyebrow="EXHIBITORS" title={tr('ผู้ออกบูธแนะนำ', 'Featured Exhibitors')}
+            action={<BandLink to="/exhibitors">{tr('ดูทั้งหมด', 'View all')}</BandLink>} />
           <Reveal group className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((e) => <ExhibitorCard key={e.id} ex={e} />)}
           </Reveal>
-        </section>
+        </Band>
 
         {/* Schedule + Speakers */}
-        <section className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
-          <div className="min-w-0">
-            <Reveal>
-              <SectionTitle title={tr('กิจกรรมวันแรก', 'Day 1 Highlights')}
-                action={<Link to="/schedule" className="text-sm font-semibold text-brand hover:underline">{tr('ดูกำหนดการทั้งหมด', 'Full schedule')} →</Link>} />
-            </Reveal>
-            <Reveal>
-              <Card className="divide-y divide-line">
-                {SCHEDULE.filter((s) => s.day === 1).slice(0, 5).map((s) => (
-                  <div key={s.id} className="flex items-center gap-4 px-5 py-3.5">
-                    <div className="w-14 shrink-0 font-bold tabular-nums text-brand">{s.start}</div>
-                    <div className="min-w-0 flex-1">
-                      <div className="truncate font-semibold">{L(s.title)}</div>
-                      <div className="text-xs text-muted">{L(STAGES[s.stage])}{s.speaker ? ` · ${s.speaker}` : ''}</div>
+        <Band id="programme">
+          <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+            <div className="min-w-0">
+              <BandTitle eyebrow="PROGRAMME" title={tr('กิจกรรมวันแรก', 'Day 1 Highlights')}
+                action={<BandLink to="/schedule">{tr('ดูกำหนดการทั้งหมด', 'Full schedule')}</BandLink>} />
+              <Reveal>
+                <Card className="divide-y divide-line">
+                  {SCHEDULE.filter((s) => s.day === 1).slice(0, 5).map((s) => (
+                    <div key={s.id} className="flex items-center gap-4 px-5 py-3.5">
+                      <div className="w-14 shrink-0 font-bold tabular-nums text-brand">{s.start}</div>
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate font-semibold">{L(s.title)}</div>
+                        <div className="text-xs text-muted">{L(STAGES[s.stage])}{s.speaker ? ` · ${s.speaker}` : ''}</div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </Card>
-            </Reveal>
-          </div>
-          <div>
-            <Reveal><SectionTitle title={tr('วิทยากร & อินฟลูเอนเซอร์', 'Speakers & Influencers')} /></Reveal>
-            <Reveal group className="grid grid-cols-2 gap-3">
-              {SPEAKERS.map((s) => (
-                <Card key={s.name} className="group p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
-                  <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-navy text-gold-light ring-2 ring-gold/60 transition duration-300 group-hover:scale-105 group-hover:ring-4">
-                    <Mic2 size={24} />
-                  </div>
-                  <div className="mt-3 text-sm font-bold">{s.name}</div>
-                  <div className="text-xs text-muted">{L(s.role)}</div>
+                  ))}
                 </Card>
-              ))}
-            </Reveal>
+              </Reveal>
+            </div>
+            <div>
+              <BandTitle eyebrow="SPEAKERS" title={tr('วิทยากร & อินฟลูเอนเซอร์', 'Speakers & Influencers')} />
+              <Reveal group className="grid grid-cols-2 gap-3">
+                {SPEAKERS.map((s) => (
+                  <Card key={s.name} className="group p-4 text-center transition duration-300 hover:-translate-y-0.5 hover:shadow-md">
+                    <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-navy text-gold-light ring-2 ring-gold/60 transition duration-300 group-hover:scale-105 group-hover:ring-4">
+                      <Mic2 size={24} />
+                    </div>
+                    <div className="mt-3 text-sm font-bold">{s.name}</div>
+                    <div className="text-xs text-muted">{L(s.role)}</div>
+                  </Card>
+                ))}
+              </Reveal>
+            </div>
           </div>
-        </section>
+        </Band>
 
         {/* Floor plan teaser */}
-        <section>
-          <Reveal>
-            <SectionTitle title={tr('ผังงาน', 'Floor Plan')} subtitle={L(EVENT.venue)}
-              action={<Link to="/floorplan" className="text-sm font-semibold text-brand hover:underline">{tr('เปิดผังแบบเต็ม', 'Open full map')} →</Link>} />
-          </Reveal>
+        <Band tone="white" id="floorplan">
+          <BandTitle eyebrow="FLOOR PLAN" title={tr('ผังงาน', 'Floor Plan')} subtitle={L(EVENT.venue)}
+            action={<BandLink to="/floorplan">{tr('เปิดผังแบบเต็ม', 'Open full map')}</BandLink>} />
           <Reveal><Link to="/floorplan" className="block"><FloorPlanMap compact /></Link></Reveal>
-        </section>
+        </Band>
 
         {/* Workshop, เวทีกลาง, โปรโมชั่น, การเดินทาง, ข่าว/Live, คลิป, FAQ */}
         <HomeExtras />
 
         {/* Quote + CTA */}
-        <Reveal>
-          <section className="hero-bg relative overflow-hidden rounded-3xl p-8 text-white sm:p-10">
-            <div className="hero-net pointer-events-none absolute inset-0" />
-            <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <div className={`font-bold text-gold-light ${lang === 'en' ? 'text-xs uppercase tracking-[0.2em]' : 'text-sm'}`}>{L(EVENT.slogan)}</div>
-                <h2 className="mt-3 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">“{L(EVENT.quote)}”</h2>
+        <Band>
+          <Reveal>
+            <section className="hero-bg relative overflow-hidden rounded-3xl p-8 text-white sm:p-10">
+              <div className="hero-net pointer-events-none absolute inset-0" />
+              <div className="relative flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div>
+                  <div className={`font-bold text-gold-light ${lang === 'en' ? 'text-xs uppercase tracking-[0.2em]' : 'text-sm'}`}>{L(EVENT.slogan)}</div>
+                  <h2 className="mt-3 max-w-2xl text-2xl font-semibold leading-snug sm:text-3xl">“{L(EVENT.quote)}”</h2>
+                </div>
+                <LinkButton to="/register" variant="accent" size="lg" className="motion-shine" icon={<QrCode size={20} />}>{tr('ลงทะเบียน', 'Register Now')}</LinkButton>
               </div>
-              <LinkButton to="/register" variant="accent" size="lg" className="motion-shine" icon={<QrCode size={20} />}>{tr('ลงทะเบียน', 'Register Now')}</LinkButton>
-            </div>
-          </section>
-        </Reveal>
+            </section>
+          </Reveal>
+        </Band>
 
         {/* Organisers */}
-        <section>
-          <Reveal><SectionTitle title={tr('หน่วยงานร่วมจัด', 'Organising Agencies')} subtitle={tr('หน่วยงานในสังกัดกระทรวงพาณิชย์ 9 หน่วยงาน และหน่วยงานพันธมิตร 5 หน่วยงาน', '9 Ministry of Commerce agencies and 5 partner organisations')} /></Reveal>
+        <Band tone="white" id="organisers">
+          <BandTitle eyebrow="ORGANISERS" title={tr('หน่วยงานร่วมจัด', 'Organising Agencies')} subtitle={tr('หน่วยงานในสังกัดกระทรวงพาณิชย์ 9 หน่วยงาน และหน่วยงานพันธมิตร 5 หน่วยงาน', '9 Ministry of Commerce agencies and 5 partner organisations')} />
           <Reveal group className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {Object.values(AGENCIES).map((a) => (
               <div key={a.short} className="flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-4 text-center transition duration-300 hover:-translate-y-1 hover:shadow-md">
@@ -244,7 +242,7 @@ export default function HomePage() {
               ))}
             </Reveal>
           </div>
-        </section>
+        </Band>
       </div>
     </div>
   )

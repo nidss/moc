@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react'
 
 export function Card({ className = '', ...rest }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={`rounded-2xl border border-line bg-surface shadow-[0_1px_2px_rgba(15,27,51,0.04)] ${className}`} {...rest} />
+  return <div className={`rounded-2xl border border-line bg-surface text-fg shadow-[0_1px_2px_rgba(15,27,51,0.04)] ${className}`} {...rest} />
 }
 
 export function SectionTitle({ title, subtitle, action }: { title: ReactNode; subtitle?: ReactNode; action?: ReactNode }) {
