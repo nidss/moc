@@ -2,11 +2,11 @@ import { useSyncExternalStore } from 'react'
 import type { LText } from '../i18n/I18nProvider'
 
 /** ธีมหน้าตาของระบบ (สลับได้ทุกหน้า ฟังก์ชันเหมือนเดิม) */
-export type Skin = 'classic' | 'jade' | 'midnight'
+export type Skin = 'classic' | 'gold' | 'midnight'
 
 export const SKINS: { id: Skin; name: LText; desc: LText; swatch: [string, string, string]; dark?: boolean }[] = [
   { id: 'classic', name: { th: 'คลาสสิก', en: 'Classic' }, desc: { th: 'น้ำเงินกรมท่า + ทอง', en: 'Navy & gold' }, swatch: ['#002a6e', '#c8902a', '#f3f6fb'] },
-  { id: 'jade', name: { th: 'หยกมรกต', en: 'Jade' }, desc: { th: 'เขียวหยก + อำพัน โค้งมน', en: 'Teal & amber, rounded' }, swatch: ['#0f766e', '#f59e0b', '#f1f8f6'] },
+  { id: 'gold', name: { th: 'ทองคำ', en: 'Royal Gold' }, desc: { th: 'งาช้าง + ทอง สไตล์นิตยสาร', en: 'Ivory & gold, editorial' }, swatch: ['#8a5d0b', '#e9c46a', '#fbf7ee'] },
   { id: 'midnight', name: { th: 'มิดไนท์', en: 'Midnight' }, desc: { th: 'โหมดมืด ม่วง + ฟ้านีออน', en: 'Dark violet & neon cyan' }, swatch: ['#8b5cf6', '#22d3ee', '#0b0b18'], dark: true },
 ]
 
@@ -16,7 +16,8 @@ const listeners = new Set<() => void>()
 function read(): Skin {
   try {
     const v = localStorage.getItem(KEY)
-    if (v === 'jade' || v === 'midnight') return v
+    if (v === 'gold' || v === 'midnight') return v
+    if (v === 'jade') return 'gold' // ชื่อเดิมของธีมทอง
   } catch { /* storage ถูกปิด: ใช้ธีมเริ่มต้น */ }
   return 'classic'
 }

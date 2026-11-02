@@ -8,6 +8,8 @@ import { LangToggle } from './LangToggle'
 import { EVENT } from '../data/event'
 import { PromoPopup } from '../components/PromoPopup'
 import { ThemeSwitcher } from './ThemeSwitcher'
+import { GoldFooter, GoldHeader, MidnightFooter, MidnightHeader } from './SkinChrome'
+import { useSkin } from '../lib/skin'
 
 export const PUBLIC_NAV = [
   { to: '/', th: 'หน้าแรก', en: 'Home', end: true },
@@ -23,6 +25,7 @@ export function PublicLayout() {
   const { tr, L } = useI18n()
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
+  const skin = useSkin()
 
   useEffect(() => {
     setOpen(false)
@@ -31,6 +34,9 @@ export function PublicLayout() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      {skin === 'gold' && <GoldHeader nav={PUBLIC_NAV} open={open} setOpen={setOpen} />}
+      {skin === 'midnight' && <MidnightHeader nav={PUBLIC_NAV} open={open} setOpen={setOpen} />}
+      {skin === 'classic' && (
       <header className="sticky top-0 z-30 border-b border-line bg-surface/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
           <Link to="/" aria-label="MOC Expo 2026 home"><Logo className="h-12" /></Link>
@@ -68,6 +74,7 @@ export function PublicLayout() {
           </nav>
         )}
       </header>
+      )}
 
       <PromoPopup />
 
@@ -77,6 +84,9 @@ export function PublicLayout() {
         </Suspense>
       </main>
 
+      {skin === 'gold' && <GoldFooter nav={PUBLIC_NAV} />}
+      {skin === 'midnight' && <MidnightFooter nav={PUBLIC_NAV} />}
+      {skin === 'classic' && (
       <footer className="mt-16 bg-navy text-white/80">
         <div className="gold-gradient h-1" />
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-3">
@@ -97,6 +107,7 @@ export function PublicLayout() {
           </div>
         </div>
       </footer>
+      )}
     </div>
   )
 }
