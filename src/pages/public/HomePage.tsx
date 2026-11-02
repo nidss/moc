@@ -11,6 +11,7 @@ import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { Logo } from '../../components/Brand'
 import { Countdown } from '../../components/Countdown'
+import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
 const SPEAKERS = [
@@ -55,9 +56,10 @@ export default function HomePage() {
 
   return (
     <div>
-      {/* Hero: โลโก้ + ข้อมูลงาน (ซ้าย) และคีย์วิชวลริบบิ้นอินฟินิตี้ (ขวา) */}
-      <section className="hero-bg relative overflow-hidden text-white">
-        <div className="hero-net pointer-events-none absolute inset-0 opacity-70" />
+      {/* Hero: ภาพพื้นหลังลูกโลก/เมือง + โลโก้และข้อมูลงาน (ซ้าย) + คีย์วิชวลริบบิ้นอินฟินิตี้ (ขวา) */}
+      <section className="relative overflow-hidden bg-navy bg-cover bg-right-bottom text-white" style={{ backgroundImage: `url(${heroBg})` }}>
+        {/* ไล่สีกรมท่าทับภาพพื้นหลัง ให้ข้อความอ่านง่าย (มือถือทึบกว่าเพราะข้อความทับเมือง/ลูกโลก) */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#001848]/75 via-[#001848]/55 to-[#001848]/35 lg:bg-gradient-to-r lg:from-[#001848]/55 lg:via-[#001848]/10 lg:to-transparent" />
         <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
           <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-6">
             <div>
@@ -80,7 +82,7 @@ export default function HomePage() {
               className="mx-auto w-full max-w-2xl select-none drop-shadow-[0_24px_48px_rgba(0,0,0,0.35)] lg:max-w-none" draggable={false} />
           </div>
           {/* นับถอยหลังสู่วันงาน (เวลาจริง) */}
-          <div className="mt-10 flex flex-col gap-5 rounded-2xl bg-white/[0.07] p-5 ring-1 ring-white/20 backdrop-blur-md sm:p-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="mt-10 flex flex-col gap-5 rounded-2xl bg-[#001848]/60 p-5 ring-1 ring-white/20 backdrop-blur-md sm:p-6 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="flex flex-wrap items-center gap-3">
                 <span className="text-lg font-semibold">{tr('นับถอยหลังสู่วันงาน', 'Countdown to opening')}</span>
