@@ -13,6 +13,7 @@ import { Reveal } from '../../components/Reveal'
 import { FaqSection, PromoSection, ReplaysSection, StageSection, TravelSection, WorkshopSection } from './HomeExtras'
 import { HOME_FEATURED, HOME_SPEAKERS, HOME_ZONES } from './homeShared'
 import keyVisual from '../../assets/brand/key-visual.webp'
+import goldMap from '../../assets/brand/hero-gold-map.webp'
 
 /** หัวข้อ section แบบนิตยสาร: ป้ายเล็ก หัวข้อตัวมีเชิงกึ่งกลาง และเส้นประดับทอง */
 function GoldTitle({ eyebrow, title, sub }: { eyebrow: string; title: string; sub?: string }) {
@@ -32,14 +33,14 @@ function GoldTitle({ eyebrow, title, sub }: { eyebrow: string; title: string; su
 function GoldCountdown() {
   const { tr, lang } = useI18n()
   const t = useTimeLeft(EVENT.startsAt, EVENT.endsAt)
-  if (t.state !== 'before') return <div className="font-display text-2xl text-gold-text">{t.state === 'live' ? tr('งานกำลังจัดอยู่ตอนนี้', 'The event is on now') : tr('จบงานแล้ว ขอบคุณที่ร่วมงาน', 'Thank you for joining')}</div>
+  if (t.state !== 'before') return <div className="font-display text-2xl text-gold-light">{t.state === 'live' ? tr('งานกำลังจัดอยู่ตอนนี้', 'The event is on now') : tr('จบงานแล้ว ขอบคุณที่ร่วมงาน', 'Thank you for joining')}</div>
   const parts = [[String(t.d), tr('วัน', 'Days')], [t.pad(t.h), tr('ชั่วโมง', 'Hours')], [t.pad(t.m), tr('นาที', 'Min')], [t.pad(t.s), tr('วินาที', 'Sec')]]
   return (
-    <div role="timer" aria-label={tr(`เหลืออีก ${t.d} วัน`, `${t.d} days to go`)} className="flex divide-x divide-[var(--gold)]/50 border-y border-[var(--gold)]/50">
+    <div role="timer" aria-label={tr(`เหลืออีก ${t.d} วัน`, `${t.d} days to go`)} className="flex divide-x divide-[var(--gold-light)]/40 border-y border-[var(--gold-light)]/40">
       {parts.map(([n, l]) => (
         <div key={l} className="flex-1 px-3 py-3 text-center sm:px-5" aria-hidden>
           <div key={n} className="motion-tick font-display text-3xl font-bold tabular-nums sm:text-4xl">{n}</div>
-          <div className={`mt-0.5 text-muted ${lang === 'en' ? 'text-[11px] tracking-widest uppercase' : 'text-xs'}`}>{l}</div>
+          <div className={`mt-0.5 text-white/60 ${lang === 'en' ? 'text-[11px] tracking-widest uppercase' : 'text-xs'}`}>{l}</div>
         </div>
       ))}
     </div>
@@ -56,37 +57,41 @@ export default function HomeGold() {
 
   return (
     <div>
-      {/* ===== Hero: ตัวอักษรใหญ่ด้านซ้าย + คีย์วิชวลในกรอบซุ้มโค้ง ===== */}
-      <section className="relative overflow-hidden bg-[radial-gradient(900px_500px_at_85%_10%,var(--accent-soft),transparent_70%)]">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 py-12 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-20">
+      {/* ===== Hero: แผนที่โลกสีทองเต็มจอ + ข้อความด้านซ้าย + คีย์วิชวลในกรอบซุ้มโค้ง ===== */}
+      <section className="relative overflow-hidden bg-[#0b0905] text-white">
+        <img src={goldMap} alt="" aria-hidden className="pointer-events-none absolute inset-0 size-full object-cover object-center" />
+        {/* ไล่สีเข้มทับแผนที่ให้ข้อความอ่านง่าย (มือถือทึบกว่า) */}
+        <div className="pointer-events-none absolute inset-0 bg-[#0b0905]/70 lg:bg-transparent lg:bg-gradient-to-r lg:from-[#0b0905]/92 lg:via-[#0b0905]/55 lg:to-[#0b0905]/15" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0b0905]/80 to-transparent" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-14 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:py-20">
           <div>
-            <div className="motion-rise text-xs font-semibold tracking-[0.3em] text-gold-text">4 – 6 DEC 2026 · QSNCC BANGKOK</div>
-            <div className="motion-rise mt-6 [--delay:80ms]"><Logo className="h-28 sm:h-36" /></div>
+            <div className="motion-rise text-xs font-semibold tracking-[0.3em] text-gold-light">4 – 6 DEC 2026 · QSNCC BANGKOK</div>
+            <div className="motion-rise mt-6 [--delay:80ms]"><Logo tone="light" className="h-28 sm:h-36" /></div>
             <h1 className="motion-rise mt-8 text-3xl leading-tight sm:text-5xl [--delay:160ms]">{L(EVENT.tagline)}</h1>
-            <p className="motion-rise mt-5 max-w-xl text-lg text-muted [--delay:220ms]">“{L(EVENT.quote)}”</p>
+            <p className="motion-rise mt-5 max-w-xl text-lg text-white/75 [--delay:220ms]">“{L(EVENT.quote)}”</p>
             <div className="motion-rise mt-8 flex flex-wrap gap-3 [--delay:280ms]">
-              <Link to="/register" className="motion-shine inline-flex items-center gap-2 bg-navy px-7 py-3.5 font-semibold text-white">
+              <Link to="/register" className="motion-shine gold-gradient inline-flex items-center gap-2 px-7 py-3.5 font-semibold text-on-accent">
                 {tr('ลงทะเบียนเข้างานฟรี', 'Register free')} <ArrowRight size={18} />
               </Link>
-              <Link to="/exhibitors" className="inline-flex items-center gap-2 border border-fg/30 px-7 py-3.5 font-semibold hover:border-fg">
+              <Link to="/exhibitors" className="inline-flex items-center gap-2 border border-white/40 px-7 py-3.5 font-semibold hover:border-white hover:bg-white/5">
                 {tr('ดูผู้ออกบูธ', 'Explore exhibitors')}
               </Link>
             </div>
             <div className="motion-rise mt-10 max-w-lg [--delay:340ms]">
-              <div className={`mb-2 text-xs text-muted ${lang === 'en' ? 'tracking-[0.2em]' : ''}`}>{tr('นับถอยหลังสู่วันงาน', 'COUNTDOWN TO OPENING')}</div>
+              <div className={`mb-2 text-xs text-white/60 ${lang === 'en' ? 'tracking-[0.2em]' : ''}`}>{tr('นับถอยหลังสู่วันงาน', 'COUNTDOWN TO OPENING')}</div>
               <GoldCountdown />
             </div>
           </div>
-          {/* กรอบซุ้มโค้ง */}
+          {/* กรอบซุ้มโค้งเส้นทอง */}
           <div className="motion-pop relative mx-auto w-full max-w-md [--delay:200ms] lg:max-w-none">
-            <div className="rounded-t-full border border-[var(--gold)] p-3">
-              <div className="relative flex aspect-[4/5] items-center overflow-hidden rounded-t-full bg-navy">
+            <div className="rounded-t-full border border-[var(--gold-light)]/70 p-3">
+              <div className="relative flex aspect-[4/5] items-center overflow-hidden rounded-t-full bg-[#0b0905]/55 backdrop-blur-[2px]">
                 <div className="absolute inset-0 bg-[radial-gradient(closest-side,var(--hero-glow-a),transparent)]" />
                 <img src={keyVisual} width={1400} height={823} alt={tr('คีย์วิชวลงาน', 'Event key visual')} className="motion-float relative w-full scale-110 select-none" draggable={false} />
               </div>
             </div>
-            <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap bg-surface px-5 py-2 text-center text-sm shadow-sm ring-1 ring-line">
-              <span className="font-display font-semibold">{L(EVENT.dateLabel)}</span> · {EVENT.hours}
+            <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap border border-[var(--gold-light)]/60 bg-[#0b0905] px-5 py-2 text-center text-sm">
+              <span className="font-display font-semibold text-gold-light">{L(EVENT.dateLabel)}</span> · {EVENT.hours}
             </div>
           </div>
         </div>
