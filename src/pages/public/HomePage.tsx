@@ -9,12 +9,12 @@ import { LinkButton } from '../../components/ui/Button'
 import { Card, SectionTitle } from '../../components/ui/Card'
 import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { FloorPlanMap } from '../../components/FloorPlanMap'
-import { Logo } from '../../components/Brand'
 import { Countdown } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
 import { HomeExtras } from './HomeExtras'
 import heroBg from '../../assets/brand/hero-bg.webp'
 import keyVisual from '../../assets/brand/key-visual.webp'
+import logoGlow from '../../assets/brand/moc-expo-2026-glow.webp'
 
 const SPEAKERS = [
   { name: 'Dr. Pimchanok S.', role: { th: 'ผู้เชี่ยวชาญการตลาดดิจิทัล', en: 'Digital marketing expert' } },
@@ -67,7 +67,11 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14">
           <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.2fr] lg:gap-6">
             <div>
-              <div className="motion-rise"><Logo tone="light" className="h-36 sm:h-44" /></div>
+              <div className="motion-rise">
+                {/* โลโก้ฉบับมีขอบเรืองแสง (outer glow) สำหรับวางบนพื้นน้ำเงินของ banner */}
+                <img src={logoGlow} width={954} height={701} alt="พาณิชย์เอ็กซ์โป 2026 เพื่อธุรกิจและชีวิตที่ดี (MOC Expo 2026)"
+                  className="h-36 w-auto select-none sm:h-44" draggable={false} />
+              </div>
               <h1 className="motion-rise mt-6 max-w-xl [--delay:120ms] text-2xl font-semibold leading-snug sm:text-3xl">{L(EVENT.tagline)}</h1>
               <div className="motion-rise mt-5 flex flex-col gap-2 text-sm text-white/85 [--delay:220ms] sm:flex-row sm:flex-wrap sm:gap-5">
                 <span className="flex items-center gap-2"><CalendarDays size={18} className="text-gold-light" /> {L(EVENT.dateLabel)}</span>
