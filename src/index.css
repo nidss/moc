@@ -29,6 +29,24 @@
   --series-2: #eb6834;
   --series-3: #1baf7a;
   --grid: #e8ecf3;
+  /* สีและฟอนต์ที่ธีม (data-skin) เปลี่ยนได้ — ค่าด้านล่างคือธีมคลาสสิก */
+  --navy: #001a52;
+  --navy-2: #002a6e;
+  --gold: #c8902a;
+  --gold-light: #e8bd5c;
+  --hero-1: #001848;
+  --hero-2: #002a6e;
+  --hero-3: #003c8c;
+  --hero-glow-a: rgba(232, 189, 92, 0.32);
+  --hero-glow-b: rgba(40, 110, 220, 0.38);
+  --grad-1: #e8bd5c;
+  --grad-2: #c8902a;
+  --grad-3: #a87418;
+  --gtext-1: #f0cc74;
+  --gtext-2: #d39b33;
+  --gtext-3: #b5801f;
+  --skin-font-sans: "Inter", "IBM Plex Sans Thai", ui-sans-serif, system-ui, sans-serif;
+  --skin-font-display: "Prompt", "Inter", "IBM Plex Sans Thai", ui-sans-serif, sans-serif;
   color-scheme: light;
 }
 
@@ -67,10 +85,10 @@
   --font-sans: "Inter", "IBM Plex Sans Thai", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Prompt", "Inter", "IBM Plex Sans Thai", ui-sans-serif, sans-serif;
   /* พื้นกรมท่าเข้มคงที่ทั้งสองธีม (Hero, footer, sidebar) */
-  --color-navy: #001a52;
-  --color-navy-2: #002a6e;
-  --color-gold: #c8902a;
-  --color-gold-light: #e8bd5c;
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
   --color-on-accent: var(--on-accent);
   --color-gold-text: var(--gold-text);
   --color-bg: var(--bg);
@@ -100,16 +118,16 @@ html, body {
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: var(--skin-font-sans);
   -webkit-font-smoothing: antialiased;
 }
 
 /* พื้นหลัง hero ใช้สีกรมท่าเข้มเสมอทั้งสองธีม */
 .hero-bg {
   background:
-    radial-gradient(900px 420px at 88% -12%, rgba(232, 189, 92, 0.32), transparent 62%),
-    radial-gradient(800px 480px at -8% 112%, rgba(40, 110, 220, 0.38), transparent 60%),
-    linear-gradient(135deg, #001848 0%, #002a6e 52%, #003c8c 100%);
+    radial-gradient(900px 420px at 88% -12%, var(--hero-glow-a), transparent 62%),
+    radial-gradient(800px 480px at -8% 112%, var(--hero-glow-b), transparent 60%),
+    linear-gradient(135deg, var(--hero-1) 0%, var(--hero-2) 52%, var(--hero-3) 100%);
 }
 
 /* ลายเส้นเครือข่ายจาง ๆ แบบในอินโฟกราฟิกของงาน */
@@ -121,18 +139,18 @@ body {
 }
 
 .gold-gradient {
-  background: linear-gradient(135deg, #e8bd5c 0%, #c8902a 55%, #a87418 100%);
+  background: linear-gradient(135deg, var(--grad-1) 0%, var(--grad-2) 55%, var(--grad-3) 100%);
 }
 
 .gold-text-gradient {
-  background: linear-gradient(135deg, #f0cc74 0%, #d39b33 50%, #b5801f 100%);
+  background: linear-gradient(135deg, var(--gtext-1) 0%, var(--gtext-2) 50%, var(--gtext-3) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 h1, h2, .font-display {
-  font-family: var(--font-display);
+  font-family: var(--skin-font-display);
   letter-spacing: -0.01em;
 }
 
@@ -213,7 +231,7 @@ h1, h2, .font-display {
 
 /* เส้นทองไหลใต้ hero (ลวดลายต่อกันพอดี จึงวนได้ไม่สะดุด) */
 .gold-bar-flow {
-  background: linear-gradient(90deg, #a87418, #e8bd5c, #fbe7a1, #e8bd5c, #a87418) 0 0 / 50% 100% repeat-x;
+  background: linear-gradient(90deg, var(--grad-3), var(--grad-1), var(--gtext-1), var(--grad-1), var(--grad-3)) 0 0 / 50% 100% repeat-x;
   animation: bar-flow 5s linear infinite;
 }
 
@@ -243,3 +261,137 @@ h1, h2, .font-display {
   .motion-shine::after { display: none; }
   .reveal:not(.is-in), .reveal-group:not(.is-in) > * { opacity: 1; }
 }
+
+/* ===================================================================
+ * ธีม (data-skin บน <html>) — ฟังก์ชันเหมือนเดิม เปลี่ยนสี ฟอนต์ มุมโค้ง และสไตล์การ์ด
+ * ค่าเริ่มต้น (ไม่มี data-skin) = ธีมคลาสสิก
+ * =================================================================== */
+
+/* ---------- ธีมหยกมรกต (Jade): เขียวหยก + อำพัน มุมโค้งมาก การ์ดลอยเงานุ่ม ---------- */
+:root[data-skin="jade"] {
+  --bg: #f1f8f6;
+  --surface: #ffffff;
+  --surface-2: #e6f3ef;
+  --fg: #0b2a24;
+  --muted: #4d6e66;
+  --line: #d3e8e0;
+  --brand: #0f766e;
+  --brand-strong: #0b5a54;
+  --brand-soft: #daf3ec;
+  --accent: #f59e0b;
+  --accent-soft: #fff1d2;
+  --on-accent: #3b2203;
+  --gold-text: #a15c07;
+  --info: #0369a1;
+  --info-soft: #e0f2fe;
+  --navy: #053b35;
+  --navy-2: #0a5048;
+  --gold: #f59e0b;
+  --gold-light: #fcd34d;
+  --hero-1: #032e29;
+  --hero-2: #075a50;
+  --hero-3: #0f7a6c;
+  --hero-glow-a: rgba(252, 211, 77, 0.28);
+  --hero-glow-b: rgba(45, 212, 191, 0.32);
+  --grad-1: #fcd34d;
+  --grad-2: #f59e0b;
+  --grad-3: #d97706;
+  --gtext-1: #fde68a;
+  --gtext-2: #fbbf24;
+  --gtext-3: #f59e0b;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1.125rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+  --skin-font-display: "Kanit", "Inter", "IBM Plex Sans Thai", ui-sans-serif, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-skin="jade"]:not([data-theme="light"]) {
+    --bg: #04130f;
+    --surface: #0a221c;
+    --surface-2: #0f2e27;
+    --fg: #e1f5ef;
+    --muted: #8fb5aa;
+    --line: #1a3f36;
+    --brand: #5eead4;
+    --brand-strong: #99f6e4;
+    --brand-soft: #0e3a32;
+    --accent: #fbbf24;
+    --accent-soft: #3a2a07;
+    --on-accent: #3b2203;
+    --gold-text: #fcd34d;
+    --info: #7dd3fc;
+    --info-soft: #0c2a3a;
+  }
+}
+[data-skin="jade"] .ui-card {
+  border-color: transparent;
+  box-shadow: 0 12px 32px -20px rgba(15, 118, 110, 0.45), 0 1px 2px rgba(15, 118, 110, 0.06);
+}
+[data-skin="jade"] h1,
+[data-skin="jade"] h2 { letter-spacing: 0; }
+
+/* ---------- ธีมมิดไนท์ (Midnight): มืดเสมอ ม่วง + ฟ้านีออน การ์ดกระจกเรืองแสง ---------- */
+:root[data-skin="midnight"],
+:root[data-skin="midnight"]:not([data-theme="light"]) {
+  --bg: #07070f;
+  --surface: #11121f;
+  --surface-2: #1a1b2e;
+  --fg: #eceefe;
+  --muted: #9c9ec8;
+  --line: #272944;
+  --brand: #8b5cf6;
+  --brand-strong: #a78bfa;
+  --brand-soft: #211a45;
+  --accent: #22d3ee;
+  --accent-soft: #0b2f38;
+  --on-accent: #04161b;
+  --gold-text: #67e8f9;
+  --success: #4ade80;
+  --success-soft: #11321f;
+  --warning: #fbbf24;
+  --warning-soft: #36280b;
+  --danger: #f87171;
+  --danger-soft: #3b1515;
+  --info: #67e8f9;
+  --info-soft: #0b2a33;
+  --grid: #22243a;
+  --navy: #0d0b22;
+  --navy-2: #1a1442;
+  --gold: #22d3ee;
+  --gold-light: #67e8f9;
+  --hero-1: #07061a;
+  --hero-2: #1b1145;
+  --hero-3: #33116e;
+  --hero-glow-a: rgba(34, 211, 238, 0.26);
+  --hero-glow-b: rgba(139, 92, 246, 0.42);
+  --grad-1: #67e8f9;
+  --grad-2: #818cf8;
+  --grad-3: #c084fc;
+  --gtext-1: #a5f3fc;
+  --gtext-2: #67e8f9;
+  --gtext-3: #a78bfa;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+  --radius-3xl: 1.5rem;
+  --skin-font-display: "Bai Jamjuree", "Inter", "IBM Plex Sans Thai", ui-sans-serif, sans-serif;
+  color-scheme: dark;
+}
+[data-skin="midnight"] body {
+  background:
+    radial-gradient(1100px 600px at 0% -10%, rgba(139, 92, 246, 0.16), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(34, 211, 238, 0.1), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+[data-skin="midnight"] .ui-card {
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-color: color-mix(in srgb, var(--brand) 22%, var(--line));
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.06), 0 14px 34px -18px rgba(139, 92, 246, 0.45);
+}
+
+/* ภาพพื้นหลังลูกโลกบน banner ปรับโทนตามธีม */
+[data-skin="jade"] .hero-photo { filter: hue-rotate(-48deg) saturate(0.95); }
+[data-skin="midnight"] .hero-photo { filter: hue-rotate(38deg) saturate(1.25) brightness(0.75); }
+

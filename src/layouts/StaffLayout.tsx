@@ -4,6 +4,7 @@ import { LayoutDashboard, ScanLine, Wifi } from 'lucide-react'
 import { useI18n } from '../i18n/I18nProvider'
 import { Logo } from '../components/Brand'
 import { LangToggle } from './LangToggle'
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 /** หน้าจอแอปเช็คอินสำหรับเจ้าหน้าที่ (ออกแบบสำหรับมือถือ / แท็บเล็ต) */
 export function StaffLayout() {
@@ -27,6 +28,7 @@ export function StaffLayout() {
             <span className="hidden items-center gap-1 rounded-full bg-emerald-500/20 px-2 py-1 text-[11px] font-semibold text-emerald-300 sm:flex">
               <Wifi size={12} /> Online
             </span>
+            <ThemeSwitcher light />
             <LangToggle light />
           </div>
         </div>

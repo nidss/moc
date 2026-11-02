@@ -2,6 +2,7 @@ import { Apple, Cpu, Flower2, Gem, Home, Leaf, Shirt, Store, type LucideIcon } f
 import type { CategoryId, Exhibitor, Buyer } from '../data/types'
 import logoColor from '../assets/brand/moc-expo-2026.webp'
 import logoLight from '../assets/brand/moc-expo-2026-light.webp'
+import { isDarkSkin, useSkin } from '../lib/skin'
 
 /**
  * โลโก้งาน "พาณิชย์เอ็กซ์โป 2026 เพื่อธุรกิจและชีวิตที่ดี" (ไฟล์ทางการจากทีมงาน)
@@ -11,7 +12,9 @@ import logoLight from '../assets/brand/moc-expo-2026-light.webp'
  */
 export function Logo({ tone = 'auto', className = 'h-12' }: { tone?: 'auto' | 'light'; className?: string }) {
   const alt = 'พาณิชย์เอ็กซ์โป 2026 เพื่อธุรกิจและชีวิตที่ดี (MOC Expo 2026)'
-  if (tone === 'light') return <img src={logoLight} alt={alt} className={`w-auto select-none ${className}`} draggable={false} />
+  // ธีมที่เป็นพื้นเข้มเสมอ (มิดไนท์) ใช้โลโก้ตัวอักษรขาว
+  const darkSkin = isDarkSkin(useSkin())
+  if (tone === 'light' || darkSkin) return <img src={logoLight} alt={alt} className={`w-auto select-none ${className}`} draggable={false} />
   return (
     <picture>
       <source srcSet={logoLight} media="(prefers-color-scheme: dark)" />

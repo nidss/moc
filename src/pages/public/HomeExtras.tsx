@@ -315,9 +315,9 @@ export function NewsSection() {
           <div className="grid gap-4 lg:grid-cols-[1fr_1.15fr]">
             <Reveal>
               <div className="overflow-hidden rounded-2xl bg-navy text-white ring-1 ring-black/5">
-                <div className="relative aspect-video bg-[#001848]">
+                <div className="relative aspect-video bg-[var(--hero-1)]">
                   <img src={keyVisual} alt="" className="absolute inset-0 m-auto h-[85%] w-auto object-contain opacity-60" loading="lazy" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#001848] via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--hero-1)] via-transparent to-transparent" />
                   <span className="absolute top-3 left-3 flex items-center gap-1.5 rounded-full bg-black/50 px-2.5 py-1 text-xs font-semibold backdrop-blur"><Radio size={13} className="text-red-400" /> {tr('ถ่ายทอดสดเร็ว ๆ นี้', 'Live soon')}</span>
                   <div className="absolute inset-x-0 bottom-0 p-4">
                     <div className="text-xs text-gold-light">{tr('ถ่ายทอดสดครั้งถัดไป', 'Next live stream')}</div>

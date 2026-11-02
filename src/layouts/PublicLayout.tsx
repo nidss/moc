@@ -7,6 +7,7 @@ import { LinkButton } from '../components/ui/Button'
 import { LangToggle } from './LangToggle'
 import { EVENT } from '../data/event'
 import { PromoPopup } from '../components/PromoPopup'
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 export const PUBLIC_NAV = [
   { to: '/', th: 'หน้าแรก', en: 'Home', end: true },
@@ -42,6 +43,7 @@ export function PublicLayout() {
             ))}
           </nav>
           <div className="ml-auto flex items-center gap-2">
+            <ThemeSwitcher />
             <span className="hidden sm:block"><LangToggle /></span>
             <LinkButton to="/register" variant="accent" size="sm" className="hidden sm:inline-flex">{tr('ลงทะเบียน', 'Register')}</LinkButton>
             <button className="rounded-lg p-2 hover:bg-surface-2 xl:hidden" onClick={() => setOpen((o) => !o)} aria-label="Menu" aria-expanded={open}>
