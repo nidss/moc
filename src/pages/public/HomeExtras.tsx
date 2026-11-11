@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Accessibility, Baby, BatteryCharging, Bus, Car, CarTaxiFront, Check, ChevronDown, CirclePlay, Clock, Copy, ExternalLink, Gift,
   HeartPulse, Landmark, MapPinned, Mic2, Newspaper, Package, Radio, Smartphone, Sparkles, Ticket, TrainFront, Users, Wifi, type LucideIcon,
@@ -15,7 +15,10 @@ import { Badge } from '../../components/ui/Badge'
 import { LinkButton } from '../../components/ui/Button'
 import { Modal } from '../../components/ui/Modal'
 import { Reveal } from '../../components/Reveal'
-import { Band, BandTitle, type BandTone } from '../../components/Band'
+import { Band, BandLink, BandTitle, type BandTone } from '../../components/Band'
+import { FloorPlanMap } from '../../components/FloorPlanMap'
+import { FloorPlanMapV1 } from '../../components/FloorPlanMapV1'
+import { FloorPlanVersionToggle, floorPlanHref, type MapVersion } from '../../components/FloorPlanVersionToggle'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
 const TRAVEL_ICON: Record<TravelMode, LucideIcon> = { mrt: TrainFront, bus: Bus, car: Car, taxi: CarTaxiFront }
@@ -47,6 +50,26 @@ function Block({ id, tone = 'plain', eyebrow, title, subtitle, action, children 
       <BandTitle eyebrow={eyebrow} title={title} subtitle={subtitle} action={action} dark={tone === 'navy'} />
       {children}
     </Band>
+  )
+}
+
+/** ผังงานบนหน้าแรก สลับ V1 (2.5D เดิม) / V2 (ผังตามแบบจริง) ได้ คลิกโซนเพื่อเปิดผังเต็มที่โซนนั้น */
+export function FloorPlanSection({ tone = 'white' }: { tone?: BandTone }) {
+  const { tr, L } = useI18n()
+  const navigate = useNavigate()
+  const [map, setMap] = useState<MapVersion>('v2')
+  const open = (zone: string) => navigate(floorPlanHref(map, zone))
+  return (
+    <Block id="floorplan" tone={tone} eyebrow="FLOOR PLAN" title={tr('ผังงาน', 'Floor Plan')} subtitle={L(EVENT.venue)}
+      action={<BandLink to={floorPlanHref(map)} dark={tone === 'navy'}>{tr('เปิดผังแบบเต็ม', 'Open full map')}</BandLink>}>
+      <Reveal>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <FloorPlanVersionToggle value={map} onChange={setMap} />
+          <span className={`text-xs ${tone === 'navy' ? 'text-white/70' : 'text-muted'}`}>{tr('คลิกโซนเพื่อดูรายละเอียด', 'Click a zone for details')}</span>
+        </div>
+        {map === 'v2' ? <FloorPlanMap compact onSelect={open} /> : <FloorPlanMapV1 compact onSelect={open} />}
+      </Reveal>
+    </Block>
   )
 }
 

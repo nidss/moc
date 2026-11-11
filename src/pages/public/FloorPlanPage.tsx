@@ -1,5 +1,5 @@
 import { useSearchParams, Link } from 'react-router-dom'
-import { Layers, MapPin, MousePointerClick } from 'lucide-react'
+import { MapPin, MousePointerClick } from 'lucide-react'
 import { useI18n } from '../../i18n/I18nProvider'
 import { HUB_PAVILIONS, ZONES, hubPavilionOf, type Zone } from '../../data/zones'
 import { ZONES as ZONES_V1 } from '../../data/zonesV1'
@@ -10,8 +10,8 @@ import { Card, PageHeader } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
 import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { FloorPlanMapV1 } from '../../components/FloorPlanMapV1'
+import { FloorPlanVersionToggle, type MapVersion } from '../../components/FloorPlanVersionToggle'
 
-type MapVersion = 'v1' | 'v2'
 /** ฟิลด์ที่ทั้งผัง V1 และ V2 มีร่วมกัน */
 type ZoneInfo = Pick<Zone, 'id' | 'label' | 'desc' | 'color' | 'pavilion'> & { kind: string }
 import { OrgAvatar } from '../../components/Brand'
@@ -32,10 +32,6 @@ export default function FloorPlanPage() {
   }
   const exhibitors = zone.pavilion ? all.filter((e) => e.pavilion === zone.pavilion)
     .sort((a, b) => v2 ? (hubPavilionOf(a.agency)?.no ?? 99) - (hubPavilionOf(b.agency)?.no ?? 99) : 0) : []
-  const versions: { id: MapVersion; hint: string }[] = [
-    { id: 'v1', hint: tr('ผังแนวคิด 2.5D', '2.5D concept map') },
-    { id: 'v2', hint: tr('ผังตามแบบจริง', 'Actual venue layout') },
-  ]
   const stageKey = zone.kind === 'stage' ? 'main' : zone.kind === 'workshop' ? 'workshop' : zone.kind === 'matching' ? 'matching' : zone.id === 'taste' ? 'taste' : null
   const sessions = stageKey ? SCHEDULE.filter((s) => s.stage === stageKey && s.day === 1) : []
 
@@ -43,17 +39,7 @@ export default function FloorPlanPage() {
     <div className="mx-auto max-w-[1440px] px-4 py-10 sm:px-6">
       <PageHeader eyebrow={tr('ผังงาน', 'Floor Plan')} title={tr('ผังพื้นที่จัดงาน', 'Event Floor Plan')}
         subtitle={<span className="inline-flex items-center gap-1.5"><MousePointerClick size={16} /> {tr('คลิกที่โซนเพื่อดูรายละเอียดและผู้ออกบูธ', 'Click a zone to see details and exhibitors')}</span>}
-        actions={
-          <div role="group" aria-label={tr('เวอร์ชันผังงาน', 'Floor plan version')} className="inline-flex items-center rounded-full border border-line bg-surface p-1 text-xs font-semibold">
-            <Layers size={14} className="mx-2 text-muted" aria-hidden />
-            {versions.map((v) => (
-              <button key={v.id} type="button" onClick={() => go({ map: v.id })} aria-pressed={version === v.id} title={v.hint}
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 transition-colors ${version === v.id ? 'bg-brand text-white dark:text-[#0a1120]' : 'text-muted hover:text-fg'}`}>
-                <span className="uppercase">{v.id}</span><span className="hidden font-medium opacity-80 sm:inline">· {v.hint}</span>
-              </button>
-            ))}
-          </div>
-        } />
+        actions={<FloorPlanVersionToggle value={version} onChange={(map) => go({ map })} />} />
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="min-w-0">

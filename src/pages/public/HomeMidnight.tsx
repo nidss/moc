@@ -11,7 +11,7 @@ import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { Logo } from '../../components/Brand'
 import { useTimeLeft } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
-import { FaqSection, PromoSection, ReplaysSection, StageSection, TravelSection, WorkshopSection } from './HomeExtras'
+import { FaqSection, FloorPlanSection, PromoSection, ReplaysSection, StageSection, TravelSection, WorkshopSection } from './HomeExtras'
 import { HOME_FEATURED, HOME_SPEAKERS, HOME_ZONES } from './homeShared'
 import keyVisual from '../../assets/brand/key-visual.webp'
 
@@ -121,6 +121,8 @@ export default function HomeMidnight() {
           <Tile to="/floorplan" icon={Map} title={tr('ผังงาน', 'Floor plan')} />
         </Reveal>
       </section>
+
+      <FloorPlanSection tone="plain" />
 
       {/* ===== ข่าว: ฟีดเลื่อนแนวนอน + การ์ดไลฟ์ ===== */}
       <section id="news" className="mx-auto max-w-6xl px-4 py-14 sm:px-6">

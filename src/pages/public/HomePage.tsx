@@ -8,12 +8,11 @@ import { SCHEDULE } from '../../data/schedule'
 import { LinkButton } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
 import { ExhibitorCard } from '../../components/ExhibitorCard'
-import { FloorPlanMap } from '../../components/FloorPlanMap'
 import { Logo } from '../../components/Brand'
 import { Countdown } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
 import { Band, BandLink, BandTitle } from '../../components/Band'
-import { HomeExtras, NewsSection, TravelSection } from './HomeExtras'
+import { FloorPlanSection, HomeExtras, NewsSection, TravelSection } from './HomeExtras'
 import HomeGold from './HomeGold'
 import HomeMidnight from './HomeMidnight'
 import { useSkin } from '../../lib/skin'
@@ -173,6 +172,9 @@ function ClassicHome({ compact = false }: { compact?: boolean }) {
           </div>
         )}
 
+        {/* V2: ผังงาน (V1 แสดงด้านล่างก่อนส่วนต่อขยาย) */}
+        {compact && <FloorPlanSection />}
+
         {/* ข่าวประชาสัมพันธ์ & Live Streaming */}
         <NewsSection />
 
@@ -226,11 +228,7 @@ function ClassicHome({ compact = false }: { compact?: boolean }) {
         </Band>
 
         {/* Floor plan teaser */}
-        <Band tone="white" id="floorplan">
-          <BandTitle eyebrow="FLOOR PLAN" title={tr('ผังงาน', 'Floor Plan')} subtitle={L(EVENT.venue)}
-            action={<BandLink to="/floorplan">{tr('เปิดผังแบบเต็ม', 'Open full map')}</BandLink>} />
-          <Reveal><Link to="/floorplan" className="block"><FloorPlanMap compact /></Link></Reveal>
-        </Band>
+        <FloorPlanSection />
 
         {/* Workshop, เวทีกลาง, โปรโมชั่น, การเดินทาง, ข่าว/Live, คลิป, FAQ */}
         <HomeExtras />
