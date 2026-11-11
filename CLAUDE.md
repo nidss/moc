@@ -51,12 +51,16 @@ npm run preview
 - **Site version** (`src/lib/version.ts`, key `moc-demo-version`): `v1` or `v2`, independent of the skin.
   - `VersionSwitcher` sits next to the theme switcher in every public header.
   - `/v1` and `/v2` routes (`VersionHome` in `App.tsx`) render that version's home page and store the choice; the switcher swaps the URL when on either route.
-  - V2 replaces the public header with `HeaderV2` (4 primary links and 3 dropdown groups defined in `src/layouts/navV2.ts`) and the home page with `ClassicHome compact` in `HomePage.tsx` (the classic layout reduced to hero, zones, register banner, news and travel), on every skin.
+  - V2 replaces the public header with `HeaderV2` (4 primary links and 3 dropdown groups defined in `src/layouts/navV2.ts`) and the home page with `ClassicHome compact` in `HomePage.tsx` (the classic layout reduced to hero, zones, register banner, floor plan, news and travel), on every skin.
   - Secondary home sections are reachable as `/guide/:topic` (`GuidePage.tsx`), which reuses the section components from `HomeExtras.tsx`.
 - **Home page content**:
   - Content shared by all three home pages: `src/pages/public/homeShared.ts`, `src/data/homeContent.ts`, and the section components in `HomeExtras.tsx`.
   - Section wrappers: `Band` / `BandTitle`.
   - Scroll animations: `Reveal`, an IntersectionObserver that adds `.reveal` / `.reveal-group`. The motion keyframes live in `index.css` and are disabled under `prefers-reduced-motion`.
+- **Floor plan** has two versions, switched with `FloorPlanVersionToggle` (`src/components/FloorPlanVersionToggle.tsx`):
+  - V2 (default): `FloorPlanMap` + `src/data/zones.ts`, drawn from the actual Hall 7–8 plan; coordinates are pixels of the source plan image.
+  - V1: the original 2.5D concept map, `FloorPlanMapV1` + `src/data/zonesV1.ts`.
+  - `/floorplan` keeps the choice in the URL (`?map=v1`); the home pages show it through `FloorPlanSection` in `HomeExtras.tsx`, where clicking a zone opens `/floorplan` at that zone.
 - **Brand assets** are in `src/assets/brand/`:
   - `moc-expo-2026.webp` / `-light.webp`: the logo. Use it through `<Logo tone>` in `components/Brand.tsx`.
   - `key-visual.webp`, `hero-bg.webp`, `hero-gold-map.webp`.

@@ -138,7 +138,7 @@ export function FloorPlanMap({ selected, onSelect, compact = false }: { selected
 
       <div className="flex items-start justify-center gap-6 p-2 sm:p-5">
         <svg viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} ${VIEW.h}`}
-          className={`block h-auto w-full min-w-0 select-none ${compact ? 'max-w-[520px]' : 'max-w-[min(100%,calc(84vh*0.81))]'} ${zoom > 1 ? 'cursor-grab active:cursor-grabbing' : ''}`}
+          className={`block h-auto w-full min-w-0 select-none ${compact ? 'max-w-[640px]' : 'max-w-[min(100%,calc(84vh*0.81))]'} ${zoom > 1 ? 'cursor-grab active:cursor-grabbing' : ''}`}
           style={{ touchAction: zoom > 1 ? 'none' : 'pan-y' }} role="group" aria-labelledby={`${uid}-title ${uid}-desc`}
           onPointerDown={(e) => { drag.current = { x: e.clientX, y: e.clientY, px: pan.x, py: pan.y, active: zoom > 1, moved: false } }}
           onPointerMove={(e) => {

@@ -10,7 +10,7 @@ import { ExhibitorCard } from '../../components/ExhibitorCard'
 import { Logo } from '../../components/Brand'
 import { useTimeLeft } from '../../components/Countdown'
 import { Reveal } from '../../components/Reveal'
-import { FaqSection, PromoSection, ReplaysSection, StageSection, TravelSection, WorkshopSection } from './HomeExtras'
+import { FaqSection, FloorPlanSection, PromoSection, ReplaysSection, StageSection, TravelSection, WorkshopSection } from './HomeExtras'
 import { HOME_FEATURED, HOME_SPEAKERS, HOME_ZONES } from './homeShared'
 import keyVisual from '../../assets/brand/key-visual.webp'
 import goldMap from '../../assets/brand/hero-gold-map.webp'
@@ -112,6 +112,8 @@ export default function HomeGold() {
           ))}
         </Reveal>
       </section>
+
+      <FloorPlanSection tone="plain" />
 
       {/* ===== ข่าว: เรื่องเด่น + รายการข่าว (สไตล์นิตยสาร) ===== */}
       <section id="news" className="border-y border-line bg-surface">
