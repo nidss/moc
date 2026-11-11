@@ -118,7 +118,7 @@ export default function HomeMidnight() {
             <div className="mt-3 flex flex-wrap gap-1.5">{LIVE_PLATFORMS.map((p) => <span key={p} className="flex items-center gap-1 rounded-full bg-white/10 px-2.5 py-0.5 text-xs"><Smartphone size={11} /> {p}</span>)}</div>
           </Tile>
           <Tile to="/ai" icon={Bot} title="Ask MOC AI" desc={tr('ผู้ช่วย AI ประจำงาน', 'Your event AI assistant')} />
-          <Tile to="/floorplan" icon={Map} title={tr('ผังงาน 2.5D', '2.5D floor plan')} />
+          <Tile to="/floorplan" icon={Map} title={tr('ผังงาน', 'Floor plan')} />
         </Reveal>
       </section>
 
